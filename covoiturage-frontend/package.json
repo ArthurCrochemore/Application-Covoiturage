@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "serve": "vue-cli-service serve",
     "build": "vite build",
     "test:unit": "cypress run --component",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
