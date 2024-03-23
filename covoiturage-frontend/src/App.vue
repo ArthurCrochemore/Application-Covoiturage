@@ -1,14 +1,10 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
+import BlocDeRecherche from './components/BlocDeRecherche.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
-
+  <BlocDeRecherche />
   <BarreDeNavigation />
 </template>
 
