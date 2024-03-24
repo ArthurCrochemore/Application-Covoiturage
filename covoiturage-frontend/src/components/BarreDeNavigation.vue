@@ -12,39 +12,59 @@ function updateSelection(id) {
   <div class="navigation-bar">
     <div
       class="enfant-navigation-bar"
+      style="
+        background: url('src/assets/icons/navigation-recherche.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: center;
+      "
       :class="{ selectionne: idSelectione === 'recherche' }"
       @click="updateSelection('recherche')"
-    >
-      Recherche
-    </div>
+    ></div>
     <div
       class="enfant-navigation-bar"
+      style="
+        background: url('src/assets/icons/navigation-add.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: center;
+      "
       :class="{ selectionne: idSelectione === 'creation' }"
       @click="updateSelection('creation')"
-    >
-      Creation
-    </div>
+    ></div>
     <div
       class="enfant-navigation-bar"
+      style="
+        background: url('src/assets/icons/navigation-map-marker.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: center;
+      "
       :class="{ selectionne: idSelectione === 'vos trajet' }"
       @click="updateSelection('vos trajet')"
-    >
-      Vos Trajets
-    </div>
+    ></div>
     <div
       class="enfant-navigation-bar"
+      style="
+        background: url('src/assets/icons/navigation-profil.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: center;
+      "
       :class="{ selectionne: idSelectione === 'profil' }"
       @click="updateSelection('profil')"
-    >
-      Profil
-    </div>
+    ></div>
     <div
       class="enfant-navigation-bar"
+      style="
+        background: url('src/assets/icons/navigation-message.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: center;
+      "
       :class="{ selectionne: idSelectione === 'message' }"
       @click="updateSelection('message')"
-    >
-      Message
-    </div>
+    ></div>
   </div>
 </template>
 
@@ -59,8 +79,9 @@ function updateSelection(id) {
 }
 
 .enfant-navigation-bar {
-  padding: 40px 0;
-  width: 25%;
+  padding: 50px 0;
+  width: 24.8%;
+  margin: 0.1%;
   color: #000;
   float: left;
   text-align: center;
@@ -70,7 +91,14 @@ function updateSelection(id) {
   background-color: #f0f0f0;
 }
 
-.selectionne {
-  background-color: #7e7b7b;
+.enfant-navigation-bar.selectionne {
+  box-shadow: 0 0 0 2px #bbbbbb;
+}
+
+i {
+  height: 60px;
+  width: 60px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>
