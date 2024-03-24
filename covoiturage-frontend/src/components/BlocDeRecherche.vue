@@ -2,10 +2,22 @@
 import { ref } from 'vue'
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
+const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
 const indexTypeDeTrajetActif = ref(0)
+
+const bouttonSwitch = ref([
+  'src/assets/icons/boutton-switch-off.png',
+  'src/assets/icons/boutton-switch-on.png'
+])
+const dateId = ref(['non-grise', 'grise'])
+const indexBouttonSwitch = ref(0)
 
 const basculerTypeDeTrajet = () => {
   indexTypeDeTrajetActif.value = (indexTypeDeTrajetActif.value + 1) % typesDeTrajet.value.length
+}
+
+const activerDesactiverBouttonSwitch = () => {
+  indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
 }
 </script>
 
@@ -23,19 +35,48 @@ const basculerTypeDeTrajet = () => {
       <input type="text" class="label" id="arrive-label" placeholder="Arrivé" />
     </div>
     <div class="date-et-heure">
-      <div class="bloc-date">
+      <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
         <div class="icone-date"></div>
-        <input type="text" class="date" placeholder="Date" />
+        <p class="date">Date</p>
       </div>
       <div class="bloc-heure">
         <div class="icone-heure"></div>
-        <input type="text" class="heure" placeholder="Heure de départ" />
+        <p class="heure">{{ heureDepartArrive[indexTypeDeTrajetActif] }}</p>
+        <v-app>
+          <v-container style="max-width: 600px">
+            <v-digital-time-picker v-model="timeValue" rounded filled />
+          </v-container>
+        </v-app>
       </div>
     </div>
-    <div class="trajet-regulier"><p class="intitule-trajet-regulier">Trajet Regulier</p></div>
+    <div class="trajet-regulier">
+      <div
+        class="icone-boutton-switch"
+        @click="activerDesactiverBouttonSwitch"
+        :style="{
+          backgroundImage: 'url(' + (bouttonSwitch[indexBouttonSwitch] || '') + ')',
+          backgroundSize: '50px 50px',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          width: '50px',
+          height: '50px'
+        }"
+      ></div>
+      <p class="intitule-trajet-regulier">Trajet Regulier</p>
+    </div>
     <div class="rechercher"><p class="intitule-rechercher">Rechercher</p></div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      timeValue: '8:00'
+    }
+  }
+}
+</script>
 
 <style scoped>
 .bloc-de-recherche {
@@ -72,7 +113,7 @@ const basculerTypeDeTrajet = () => {
 
 .icone-map {
   background: url('src/assets/icons/navigation-map-marker.png');
-  background-size: 40px 40px;
+  background-size: 30px 30px;
   background-repeat: no-repeat;
   background-position: center;
   width: 50px;
@@ -100,7 +141,7 @@ const basculerTypeDeTrajet = () => {
 
 .heure,
 .date {
-  border: none;
+  border-top: 5px;
   margin-left: 10px;
 }
 
@@ -128,15 +169,30 @@ const basculerTypeDeTrajet = () => {
   height: 50px;
 }
 
+#grise {
+  filter: opacity(50%);
+  transition: filter 0.5s ease;
+}
+
+#non-grise {
+  filter: opacity(100%);
+  transition: filter 0.5s ease;
+}
+
 p {
   border-top: 5px;
   color: black;
 }
 
 .trajet-regulier {
-  width: 90%;
-  margin: auto 5%;
+  display: flex;
+  flex-direction: row;
+  width: 180px;
+  margin: auto;
   text-align: center;
+  height: auto;
+
+  justify-content: space-between;
 }
 
 .rechercher {
@@ -155,5 +211,10 @@ p {
 p,
 input {
   font-size: 20px;
+}
+
+v-digital-time-picker {
+  width: 100px;
+  height: 100px;
 }
 </style>
