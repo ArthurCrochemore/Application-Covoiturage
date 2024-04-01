@@ -1,24 +1,11 @@
-<script setup>
-import { RouterView } from 'vue-router';
-import BarreDeNavigation from './components/BarreDeNavigation.vue';
-</script>
-
 <template>
-  <header>
-  </header>
-
-  <main>
-    
-    
-  </main>
-  <BarreDeNavigation />
-  <RouterView></RouterView>
  
   <v-app>
     <v-main>
-      <BlocDeRecherche />
+      
       <BarreDeNavigation />
-      <RouterView></RouterView>
+      <!-- <CreationTrajet /> -->
+      <BlocDeRecherche />
     </v-main>
 
   </v-app>
@@ -27,7 +14,7 @@ import BarreDeNavigation from './components/BarreDeNavigation.vue';
 <script setup>
 import BarreDeNavigation from './components/BarreDeNavigation.vue';
 import BlocDeRecherche from './components/BlocDeRecherche.vue';
-
+import { RouterView } from 'vue-router';
+import CreationTrajet from './components/CreationTrajet.vue';
   //
 </script>
->>>>>>> a09691705e34ce7e135b22394d1fbed872843ee7
