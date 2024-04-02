@@ -1,0 +1,78 @@
+CREATE TABLE Utilisateur(
+   Id_Utilisateur SERIAL,
+   NID VARCHAR(10)  NOT NULL,
+   Nom VARCHAR(50)  NOT NULL,
+   Prenom VARCHAR(50)  NOT NULL,
+   Unité VARCHAR(50) ,
+   NumeroPoste VARCHAR(10) ,
+   AdressePostale VARCHAR(100) ,
+   Tel VARCHAR(50) ,
+   Mail VARCHAR(50) ,
+   Coordonnees VARCHAR(50) ,
+   PRIMARY KEY(Id_Utilisateur)
+);
+
+CREATE TABLE Trajet(
+   Id_Trajet SERIAL,
+   PointDepart VARCHAR(50) ,
+   PointArrive VARCHAR(50) ,
+   DateDepart DATE,
+   NbrePlaces INTEGER,
+   QteBagages INTEGER,
+   Desciption VARCHAR(50) ,
+   TrajetRegulier BOOLEAN,
+   Statut INTEGER,
+   Id_Utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_Trajet),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur)
+);
+
+CREATE TABLE Reservation(
+   Id_Reservation SERIAL,
+   DateReservation TIMESTAMP,
+   Statut INTEGER,
+   Id_Utilisateur INTEGER NOT NULL,
+   Id_Trajet INTEGER NOT NULL,
+   PRIMARY KEY(Id_Reservation),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur),
+   FOREIGN KEY(Id_Trajet) REFERENCES Trajet(Id_Trajet)
+);
+
+CREATE TABLE Rapport(
+   Id_Rapport SERIAL,
+   Description VARCHAR(50) ,
+   DateRapport TIMESTAMP,
+   Status INTEGER,
+   Id_Utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_Rapport),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur)
+);
+
+CREATE TABLE Message(
+   Id_Message SERIAL,
+   Message VARCHAR(50) ,
+   DateMessage TIMESTAMP,
+   Lu BOOLEAN,
+   Id_Utilisateur INTEGER NOT NULL,
+   Id_Utilisateur_1 INTEGER NOT NULL,
+   PRIMARY KEY(Id_Message),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur),
+   FOREIGN KEY(Id_Utilisateur_1) REFERENCES Utilisateur(Id_Utilisateur)
+);
+
+CREATE TABLE Voisinage(
+   Id_Voisinage SERIAL,
+   Id_Utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_Voisinage),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur)
+);
+
+CREATE TABLE Alerte(
+   Id_Alerte SERIAL,
+   Statut INTEGER,
+   Id_Trajet INTEGER NOT NULL,
+   Id_Utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_Alerte),
+   FOREIGN KEY(Id_Trajet) REFERENCES Trajet(Id_Trajet),
+   FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur)
+);
