@@ -1,53 +1,80 @@
-
 <template>
     <div class="creation">
         <h1>Création trajet</h1>
         <div class="form-container">
-        <form>
-            <div class="input-container">
-                <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
-                <input type="text" v-model="pointDepart" placeholder="Départ">
-            </div>
+            <form>
+                <div class="input-container">
+                    <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
+                    <input type="text" v-model="pointDepart" placeholder="Départ">
+                </div>
 
-            <div class="input-container">
-                <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
-                <input type="text" v-model="pointArrivee" placeholder="Arrivée">
-            </div>
+                <div class="input-container">
+                    <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
+                    <input type="text" v-model="pointArrivee" placeholder="Arrivée">
+                </div>
 
-            <input type="date" v-model="date">
+                <input type="date" v-model="date">
 
-            <input type="time" v-model="heure">
-            <div class="switch-container">
-                <input type="checkbox" id="switch1" v-model="trajetRegulier" class="input-checkbox">
-                <label for="switch1" class="switch-label"></label>
-                <label for="switch1">Trajet régulier</label>
-            </div>
-            <div class="switch-container">
-                <input type="checkbox" id="switch2" v-model="proposerTrajet" class="input-checkbox">
-                <label for="switch2" class="switch-label"></label>
-                <label for="switch2">Proposer un trajet</label>
-            </div>
-            
-            
-            <div class="input-container">
-                <select v-model="bagage">
-                    <option value="Beaucoup">Beaucoup</option>
-                    <option value="Moyen">Moyen</option>
-                    <option value="Peu">Peu</option>
-                </select>
-                <label class="label-right">Bagages</label>
-            </div>
-            
-            <div class="input-container">
-                <input type="number" v-model="nombrePassagers">
-                <label class="label-right">Passagers</label>
-            </div>
-            
-            <label>Description:</label>
-            <textarea v-model="description"></textarea>
+                <input type="time" v-model="heure">
+                <div class="switch-container">
+                    <input type="checkbox" id="switch1" v-model="trajetRegulier" class="input-checkbox">
+                    <label for="switch1" class="switch-label"></label>
+                    <label for="switch1">Trajet régulier</label>
+                </div>
+                
+                <div class="switch-container">
+                    <input type="checkbox" id="switch2" v-model="proposerTrajet" class="input-checkbox">
+                    <label for="switch2" class="switch-label"></label>
+                    <label for="switch2">Proposer un trajet</label>
+                </div>
 
-            <button type="submit">Suivant</button>
-        </form>
+                <div v-if="trajetRegulier" class="switch-container" id="switchregulier">
+
+                    <input type="checkbox" id="lundi" v-model="joursSemaine.lundi" class="input-checkbox2">
+                    <label for="lundi" class="checkbox-label">Lundi</label>
+
+
+                    <input type="checkbox" id="mardi" v-model="joursSemaine.mardi" class="input-checkbox2">
+                    <label for="mardi" class="checkbox-label">Mardi</label>
+
+                    <input type="checkbox" id="mercredi" v-model="joursSemaine.mercredi" class="input-checkbox2">
+                    <label for="mercredi" class="checkbox-label">Mercredi</label>
+
+                    <input type="checkbox" id="jeudi" v-model="joursSemaine.jeudi" class="input-checkbox2">
+                    <label for="jeudi" class="checkbox-label">Jeudi</label>
+                    
+                    <input type="checkbox" id="vendredi" v-model="joursSemaine.vendredi" class="input-checkbox2">
+                    <label for="vendredi" class="checkbox-label">Vendredi</label>
+
+                    <input type="checkbox" id="samedi" v-model="joursSemaine.samedi" class="input-checkbox2">
+                    <label for="samedi" class="checkbox-label">Samedi</label>
+
+                    <input type="checkbox" id="dimanche" v-model="joursSemaine.dimanche" class="input-checkbox2">
+                    <label for="dimanche" class="checkbox-label">Dimanche</label>
+
+                </div>
+
+
+
+                <div class="input-container">
+                    <select v-model="bagage">
+                        <option value="Beaucoup">Beaucoup</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Peu">Peu</option>
+                    </select>
+                    <label class="label-right">Bagages</label>
+                </div>
+
+                <div class="input-container">
+                    <input type="number" v-model="nombrePassagers">
+                    <label class="label-right">Passagers</label>
+                </div>
+
+                <label>Description:</label>
+                <textarea v-model="description"></textarea>
+
+                <button type="submit">Suivant</button>
+            </form>
         </div>
     </div>
 </template>
@@ -63,29 +90,41 @@ export default {
             date: '',
             heure: '',
             trajetRegulier: false,
+            joursSemaine: {
+                lundi: false,
+                mardi: false,
+                mercredi: false,
+                jeudi: false,
+                vendredi: false,
+                samedi: false,
+                dimanche: false
+            },
+            proposerTrajet: false,
             bagage: '',
             nombrePassagers: 1,
             description: ''
         }
     }
-    
+
 }
 </script>
 
 <style scoped>
 .creation {
-  width: 80%;
-  height: auto;
-  position: fixed;
-  top: 50px;
-  bottom: 150px;
-  left: 10%;
-  right: 10%;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 30px;
+    width: 80%;
+    height: auto;
+    position: fixed;
+    top: 50px;
+    bottom: 150px;
+    left: 10%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 30px;
+    overflow: hidden;
 }
+
 h1 {
     text-align: center;
     margin-top: 5px;
@@ -94,23 +133,25 @@ h1 {
 
 label {
     display: block;
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-weight: bold;
     color: black;
     margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
-input[type="text"]{
+input[type="text"] {
     width: 100%;
     padding: 5px;
     margin-top: 25px;
     margin-right: 50px;
-    border: none; 
+    border: none;
     border-bottom: 1px solid black;
-    outline: none; 
+    outline: none;
     color: black;
 }
+
 input[type="date"],
 input[type="time"] {
     width: 40%;
@@ -136,35 +177,40 @@ input[type="time"] {
     margin-left: 2.5%;
     position: relative;
 }
+
 .input-checkbox {
-  display: none;
+    display: none;
 }
+
 .switch-label {
-  display: block;
-  width: 40px;
-  height: 20px; 
-  background-color: #ccc; 
-  border-radius: 10px; 
-  position: relative;
-  cursor: pointer;
-  margin-right: 5px;
+    display: block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    margin-right: 5px;
 }
-.input-checkbox:checked + .switch-label {
-  background-color: #007bff; 
+
+.input-checkbox:checked+.switch-label {
+    background-color: #007bff;
 }
+
 .switch-label::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px; 
-  width: 16px; 
-  height: 16px;
-  background-color: white; 
-  border-radius: 50%;
-  transition: transform 0.3s; 
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
 }
-.input-checkbox:checked + .switch-label::after {
-  transform: translateX(20px);
+
+.input-checkbox:checked+.switch-label::after {
+    transform: translateX(20px);
 }
 
 select {
@@ -181,9 +227,9 @@ input[type="number"] {
     width: 20%;
     padding: 5px;
     margin-top: 5px;
-    border: none; 
+    border: none;
     border-bottom: 1px solid black;
-    outline: none; 
+    outline: none;
     text-align: center;
     color: black;
     margin-left: 2.5%;
@@ -192,7 +238,7 @@ input[type="number"] {
 .label-right {
     margin-left: 25px;
     color: black;
-    
+
 }
 
 textarea {
@@ -204,8 +250,8 @@ textarea {
     margin-right: 2.5%;
     height: 100px;
     color: black;
-    border: 1px solid black; 
-    border-radius: 5px; 
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 button[type="submit"] {
@@ -227,14 +273,13 @@ button[type="submit"]:hover {
 }
 
 .form-container {
-        padding-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 
 .input-container {
     display: flex;
     align-items: center;
-    
 }
 
 .icon {
@@ -246,12 +291,26 @@ button[type="submit"]:hover {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(100%); 
+    filter: invert(100%);
 }
+
 input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(100%);
+    filter: invert(100%);
 }
+
 input[type="number"]::-webkit-calendar-picker-indicator {
-  filter: invert(100%);
+
+    filter: invert(100%);
+}
+
+.switch-container#switchregulier{
+    color: black;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.checkbox-label {
+    margin-left: 5px;
+    margin-right: 15px;
+    color: black;
 }
 </style>
