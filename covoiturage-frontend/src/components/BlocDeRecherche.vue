@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import PopupDatePicker from './PopupDatePicker.vue'; // Assurez-vous que le chemin d'importation est correct
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
@@ -20,7 +21,7 @@ const basculerTypeDeTrajet = () => {
 const activerDesactiverBouttonSwitch = () => {
   indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
 }
-const router = useRouter() 
+const router = useRouter()
 
 const recherche = () => {
   router.push({

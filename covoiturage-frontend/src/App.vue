@@ -1,39 +1,25 @@
 <script setup>
+import HelloWorld from './components/HelloWorld.vue'
+import TheWelcome from './components/TheWelcome.vue'
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
 </script>
 
 <template>
-  <!-- BlocResultatRecherche ptDepart = "St Avertin" ptArrive="Base Aerienne" typeTrajet= "Regulier" heure="10h50" directionTrajet="Arrivé"/ -->
-  <!-- BlocDeRecherche /-->
-  <router-view></router-view>
-  <BarreDeNavigation />
+
+  <v-app>
+    <v-main>
+
+      <BarreDeNavigation />
+      <router-view></router-view>
+    </v-main>
+
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<script setup>
+import BarreDeNavigation from './components/BarreDeNavigation.vue';
+import BlocDeRecherche from './components/BlocDeRecherche.vue';
+import { RouterView } from 'vue-router';
+import CreationTrajet from './components/CreationTrajet.vue';
+  //
+</script>

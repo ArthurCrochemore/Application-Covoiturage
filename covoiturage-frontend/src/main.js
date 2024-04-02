@@ -1,6 +1,13 @@
-import './assets/main.css'
+/**
+ * main.js
+ *
+ * Bootstraps Vuetify and other plugins then mounts the App`
+ */
 
-import { createApp } from 'vue'
+// Plugins
+import { registerPlugins } from '@/plugins'
+
+// Components
 import App from './App.vue'
 
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -25,4 +32,6 @@ const router = createRouter({
   routes,
 })
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App).use(router).mount('#app')
+
+registerPlugins(app)

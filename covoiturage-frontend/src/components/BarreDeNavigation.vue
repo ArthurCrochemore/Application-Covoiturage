@@ -1,17 +1,23 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const idSelectione = ref('recherche')
+const router = useRouter()
 
 function updateSelection(id) {
+  console.log(id)
   idSelectione.value = id
+  if (id === 'creation') {
+    router.push('/creation-trajet')
+  }
 }
 </script>
 
 <template>
   <div class="navigation-bar">
     <div
-      
+
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'recherche' }"
       @click="updateSelection('recherche')"
