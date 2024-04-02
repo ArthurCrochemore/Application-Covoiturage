@@ -19,6 +19,10 @@ const basculerTypeDeTrajet = () => {
 const activerDesactiverBouttonSwitch = () => {
   indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
 }
+
+const recherche = () => {
+    window.open('https://javascript.info');
+}
 </script>
 
 <template>
@@ -64,7 +68,8 @@ const activerDesactiverBouttonSwitch = () => {
       ></div>
       <p class="intitule-trajet-regulier">Trajet Regulier</p>
     </div>
-    <div class="rechercher"><p class="intitule-rechercher">Rechercher</p></div>
+    <div class="rechercher"
+        @click="recherche"><p class="intitule-rechercher">Rechercher</p></div>
   </div>
 </template>
 
@@ -83,8 +88,8 @@ export default {
   width: 60%;
   height: auto;
   position: fixed;
-  top: 100px;
-  bottom: 200px;
+  top: 150px;
+  bottom: 150px;
   left: 20%;
   display: flex;
   flex-direction: column;
@@ -217,4 +222,62 @@ v-digital-time-picker {
   width: 100px;
   height: 100px;
 }
+
+@media (max-height: 750px) {
+    .entete {
+        height: 60px;
+    }
+    .retour {
+        background-size: 30px 30px;
+
+    }
+    .entete > h1 {
+        font-size: medium;
+        width : 100%;
+        color : black;
+        text-align: center;
+    }
+    .bloc-de-recherche {
+        bottom: 80px;
+        top: 80px;
+    }
+}
+
+@media (max-width : 1300px) {
+    .bloc-de-recherche {
+        width: 70%;
+        left: 15%;
+    }
+}
+
+@media (max-width : 900px) {
+    .bloc-de-recherche {
+        width: 80%;
+        left: 10%;
+    }
+}
+
+@media (max-width : 800px) {
+    .bloc-de-recherche {
+        width: 85%;
+        left: 7.5%;
+    }
+}
+
+@media (max-width : 700px) {
+    .bloc-de-recherche {
+        width: 90%;
+        left: 5%;
+    }
+}
+
+@media (max-width : 600px) {
+    .bloc-de-recherche {
+        width: 96%;
+        left: 2%;
+    }
+}
+
 </style>
+
+
