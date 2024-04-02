@@ -1,70 +1,51 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const idSelectione = ref('recherche')
+const router = useRouter()
 
 function updateSelection(id) {
+  console.log(id) 
   idSelectione.value = id
+  if (id === 'creation') {
+    router.push('/creation-trajet')
+  }
 }
 </script>
 
 <template>
   <div class="navigation-bar">
-    <div
-      class="enfant-navigation-bar"
-      style="
+    <div class="enfant-navigation-bar" style="
         background: url('src/assets/icons/navigation-recherche.png');
         background-size: 60px 60px;
         background-repeat: no-repeat;
         background-position: center;
-      "
-      :class="{ selectionne: idSelectione === 'recherche' }"
-      @click="updateSelection('recherche')"
-    ></div>
-    <div
-      class="enfant-navigation-bar"
-      style="
+      " :class="{ selectionne: idSelectione === 'recherche' }" @click="updateSelection('recherche')"></div>
+    <div class="enfant-navigation-bar" style="
         background: url('src/assets/icons/navigation-add.png');
         background-size: 60px 60px;
         background-repeat: no-repeat;
         background-position: center;
-      "
-      :class="{ selectionne: idSelectione === 'creation' }"
-      @click="updateSelection('creation')"
-    ></div>
-    <div
-      class="enfant-navigation-bar"
-      style="
+      " :class="{ selectionne: idSelectione === 'creation' }" @click="updateSelection('creation')"></div>
+    <div class="enfant-navigation-bar" style="
         background: url('src/assets/icons/navigation-map-marker.png');
         background-size: 60px 60px;
         background-repeat: no-repeat;
         background-position: center;
-      "
-      :class="{ selectionne: idSelectione === 'vos trajet' }"
-      @click="updateSelection('vos trajet')"
-    ></div>
-    <div
-      class="enfant-navigation-bar"
-      style="
+      " :class="{ selectionne: idSelectione === 'vos trajet' }" @click="updateSelection('vos trajet')"></div>
+    <div class="enfant-navigation-bar" style="
         background: url('src/assets/icons/navigation-profil.png');
         background-size: 60px 60px;
         background-repeat: no-repeat;
         background-position: center;
-      "
-      :class="{ selectionne: idSelectione === 'profil' }"
-      @click="updateSelection('profil')"
-    ></div>
-    <div
-      class="enfant-navigation-bar"
-      style="
+      " :class="{ selectionne: idSelectione === 'profil' }" @click="updateSelection('profil')"></div>
+    <div class="enfant-navigation-bar" style="
         background: url('src/assets/icons/navigation-message.png');
         background-size: 60px 60px;
         background-repeat: no-repeat;
         background-position: center;
-      "
-      :class="{ selectionne: idSelectione === 'message' }"
-      @click="updateSelection('message')"
-    ></div>
+      " :class="{ selectionne: idSelectione === 'message' }" @click="updateSelection('message')"></div>
   </div>
 </template>
 
