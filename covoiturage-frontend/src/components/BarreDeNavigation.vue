@@ -1,44 +1,64 @@
 <script setup>
-import { ref } from 'vue'
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
 
-const idSelectione = ref('recherche')
+  const idSelectione = ref('recherche')
 
-function updateSelection(id) {
-  idSelectione.value = id
-}
+  function updateSelection(id) {
+    idSelectione.value = id
+  }
+
+  const props = defineProps({
+    ptDepart: String,
+    ptArrive: String,
+    typeTrajet: String,
+    directionTrajet: String,
+    heure: String
+  })
+
+  const router = useRouter()
+
+  const ouvrir = (lien, id) =>{
+
+    updateSelection(id);
+    router.push({
+    path: lien
+  });
+
+  }
 </script>
 
 <template>
   <div class="navigation-bar">
     <div
-      
+
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'recherche' }"
-      @click="updateSelection('recherche')"
+      @click="ouvrir('/', 'recherche')"
       classe-icone="recherche"
     ></div>
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'creation' }"
-      @click="updateSelection('creation')"
+      @click="ouvrir('/creation-trajet', 'creation')"
       classe-icone="creation"
     ></div>
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'vos trajet' }"
-      @click="updateSelection('vos trajet')"
+      @click="ouvrir('/vos-trajets', 'vos trajet')"
       classe-icone="vos trajet"
     ></div>
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'profil' }"
-      @click="updateSelection('profil')"
+      @click="ouvrir('/profil', 'profil')"
       classe-icone="profil"
     ></div>
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'message' }"
-      @click="updateSelection('message')"
+      @click="ouvrir('/message', 'message')"
       classe-icone="message"
     ></div>
   </div>

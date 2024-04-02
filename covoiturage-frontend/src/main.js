@@ -7,7 +7,10 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 
 import BlocDeRecherche from './components/BlocDeRecherche.vue'
 import BlocResultatRecherche from './components/BlocResultatRecherche.vue'
+import BlocTrajets from './components/BlocTrajets.vue'
 import CreationTrajet from './components/CreationTrajet.vue'
+import Profil from './components/Profil.vue'
+import Message from './components/Message.vue'
 
 const routes = [
   { path: '/', component: BlocDeRecherche },
@@ -19,7 +22,10 @@ const routes = [
     heure: route.query.heure,
     directionTrajet: route.query.directionTrajet
   }) },
+  { path: '/vos-trajets', component: BlocTrajets },
   { path: '/creation-trajet', component: CreationTrajet },
+  { path: '/profil', component: Profil },
+  { path: '/message', component: Message }
 ]
 
 const router = createRouter({
