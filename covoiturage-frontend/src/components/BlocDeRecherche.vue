@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
@@ -19,9 +20,19 @@ const basculerTypeDeTrajet = () => {
 const activerDesactiverBouttonSwitch = () => {
   indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
 }
+const router = useRouter() 
 
 const recherche = () => {
-    window.open('https://javascript.info');
+  router.push({
+    path: '/resultat-recherche',
+    query: {
+      ptDepart: 'St Avertin',
+      ptArrive: 'Base Aerienne',
+      typeTrajet: 'Regulier',
+      heure: '10h50',
+      directionTrajet: 'Arrivé'
+    }
+  });
 }
 </script>
 

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   ptDepart: String,
@@ -9,8 +10,13 @@ const props = defineProps({
   heure: String
 })
 
-function retour() {
-    window.open('https://javascript.info');
+const router = useRouter() 
+
+const retour = () => {
+  router.push({
+    path: '/'
+    
+  });
 }
 
 function alerte() {

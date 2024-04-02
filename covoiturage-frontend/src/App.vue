@@ -1,13 +1,11 @@
 <script setup>
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
-import BlocDeRecherche from './components/BlocDeRecherche.vue'
-import BlocResultatRecherche from './components/BlocResultatRecherche.vue'
-
 </script>
 
 <template>
   <!-- BlocResultatRecherche ptDepart = "St Avertin" ptArrive="Base Aerienne" typeTrajet= "Regulier" heure="10h50" directionTrajet="Arrivé"/ -->
-  <BlocDeRecherche />
+  <!-- BlocDeRecherche /-->
+  <router-view></router-view>
   <BarreDeNavigation />
 </template>
 
