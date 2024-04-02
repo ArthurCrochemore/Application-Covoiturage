@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import PopupDatePicker from './PopupDatePicker.vue'; // Assurez-vous que le chemin d'importation est correct
+import { useRouter } from 'vue-router'
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
@@ -20,12 +20,20 @@ const basculerTypeDeTrajet = () => {
 const activerDesactiverBouttonSwitch = () => {
   indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
 }
+const router = useRouter() 
 
-const ouvrirDatePicker = () => {
-  document.getElementsByClassName("date").innerText = date;
+const recherche = () => {
+  router.push({
+    path: '/resultat-recherche',
+    query: {
+      ptDepart: 'St Avertin',
+      ptArrive: 'Base Aerienne',
+      typeTrajet: 'Regulier',
+      heure: '10h50',
+      directionTrajet: 'Arrivé'
+    }
+  });
 }
-
-const selectedDate = ref(null)
 </script>
 
 <template>
@@ -45,10 +53,15 @@ const selectedDate = ref(null)
       <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
         <div class="icone-date"></div>
         <p class="date">Date</p>
-     </div>
+      </div>
       <div class="bloc-heure">
         <div class="icone-heure"></div>
         <p class="heure">{{ heureDepartArrive[indexTypeDeTrajetActif] }}</p>
+        <v-app>
+          <v-container style="max-width: 600px">
+            <v-digital-time-picker v-model="timeValue" rounded filled />
+          </v-container>
+        </v-app>
       </div>
     </div>
     <div class="trajet-regulier">
@@ -66,17 +79,16 @@ const selectedDate = ref(null)
       ></div>
       <p class="intitule-trajet-regulier">Trajet Regulier</p>
     </div>
-    <div class="rechercher"><p class="intitule-rechercher">Rechercher</p></div>
-  <PopupDatePicker></PopupDatePicker>
+    <div class="rechercher"
+        @click="recherche"><p class="intitule-rechercher">Rechercher</p></div>
   </div>
-
 </template>
 
 <script>
 export default {
   data() {
     return {
-      date : new Date()
+      timeValue: '8:00'
     }
   }
 }
@@ -87,13 +99,12 @@ export default {
   width: 60%;
   height: auto;
   position: fixed;
-  top: 100px;
-  bottom: 200px;
+  top: 150px;
+  bottom: 150px;
   left: 20%;
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 30px;
 }
 
 .type-de-trajet {
@@ -137,24 +148,17 @@ export default {
 .date-et-heure {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  margin: auto;
+  width: 50%;
+  margin: auto 25%;
   height: auto;
 
   justify-content: space-between;
 }
 
-.bloc-date {
-  padding-left: 20%;
-}
-
-.bloc-heure {
-  padding-right: 20%;
-}
-
 .heure,
 .date {
   border-top: 5px;
+  margin-left: 10px;
 }
 
 .bloc-date,
@@ -225,26 +229,66 @@ input {
   font-size: 20px;
 }
 
-@media only screen and (max-width: 945px) {
-  .bloc-date {
-    padding-left: 10%;
-  }
-  .bloc-heure {
-    padding-right: 10%;
-  }
+v-digital-time-picker {
+  width: 100px;
+  height: 100px;
 }
 
-@media only screen and (max-width: 600px) {
-  .bloc-date {
-    padding-left: 10px;
-  }
-  .bloc-heure {
-    padding-right: 10px;
-  }
+@media (max-height: 750px) {
+    .entete {
+        height: 60px;
+    }
+    .retour {
+        background-size: 30px 30px;
+
+    }
+    .entete > h1 {
+        font-size: medium;
+        width : 100%;
+        color : black;
+        text-align: center;
+    }
+    .bloc-de-recherche {
+        bottom: 80px;
+        top: 80px;
+    }
 }
 
-v-date-picker {
-  position: relative;
-  z-index: -1;
+@media (max-width : 1300px) {
+    .bloc-de-recherche {
+        width: 70%;
+        left: 15%;
+    }
 }
+
+@media (max-width : 900px) {
+    .bloc-de-recherche {
+        width: 80%;
+        left: 10%;
+    }
+}
+
+@media (max-width : 800px) {
+    .bloc-de-recherche {
+        width: 85%;
+        left: 7.5%;
+    }
+}
+
+@media (max-width : 700px) {
+    .bloc-de-recherche {
+        width: 90%;
+        left: 5%;
+    }
+}
+
+@media (max-width : 600px) {
+    .bloc-de-recherche {
+        width: 96%;
+        left: 2%;
+    }
+}
+
 </style>
+
+

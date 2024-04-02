@@ -1,21 +1,30 @@
-/**
- * main.js
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
+import './assets/main.css'
 
-// Plugins
-import { registerPlugins } from '@/plugins'
-
-// Components
+import { createApp } from 'vue'
 import App from './App.vue'
 
-// Composables
-import { createApp } from 'vue'
-import router from './router'
+import { createMemoryHistory, createRouter } from 'vue-router'
 
-const app = createApp(App)
+import BlocDeRecherche from './components/BlocDeRecherche.vue'
+import BlocResultatRecherche from './components/BlocResultatRecherche.vue'
+import CreationTrajet from './components/CreationTrajet.vue'
 
-registerPlugins(app)
+const routes = [
+  { path: '/', component: BlocDeRecherche },
+  { path: '/resultat-recherche', component: BlocResultatRecherche,
+  props: route => ({
+    ptDepart: route.query.ptDepart,
+    ptArrive: route.query.ptArrive,
+    typeTrajet: route.query.typeTrajet,
+    heure: route.query.heure,
+    directionTrajet: route.query.directionTrajet
+  }) },
+  { path: '/creation-trajet', component: CreationTrajet },
+]
 
-app.mount('#app')
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes,
+})
+
+createApp(App).use(router).mount('#app')
