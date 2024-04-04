@@ -9,6 +9,7 @@ CREATE TABLE Utilisateur(
    Tel VARCHAR(50) ,
    Mail VARCHAR(50) ,
    Coordonnees VARCHAR(50) ,
+   MdP VARCHAR(50),
    PRIMARY KEY(Id_Utilisateur)
 );
 
@@ -63,8 +64,10 @@ CREATE TABLE Message(
 CREATE TABLE Voisinage(
    Id_Voisinage SERIAL,
    Id_Utilisateur INTEGER NOT NULL,
+   Id_Utilisateur1 INTEGER NOT NULL,
    PRIMARY KEY(Id_Voisinage),
    FOREIGN KEY(Id_Utilisateur) REFERENCES Utilisateur(Id_Utilisateur)
+   FOREIGN KEY(Id_Utilisateur1) REFERENCES Utilisateur(Id_Utilisateur)
 );
 
 CREATE TABLE Alerte(
