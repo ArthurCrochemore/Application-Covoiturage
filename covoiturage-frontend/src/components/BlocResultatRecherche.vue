@@ -10,12 +10,12 @@ const props = defineProps({
   heure: String
 })
 
-const router = useRouter() 
+const router = useRouter()
 
 const retour = () => {
   router.push({
     path: '/'
-    
+
   });
 }
 
@@ -81,6 +81,7 @@ function alerte() {
   display: flex;
   flex-direction: column;
   background-color: white;
+    border-radius: 40px;
 }
 
 .alerte {
