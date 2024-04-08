@@ -6,21 +6,20 @@ const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base']
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
 const indexTypeDeTrajetActif = ref(0)
 
-const bouttonSwitch = ref([
-  'src/assets/icons/boutton-switch-off.png',
-  'src/assets/icons/boutton-switch-on.png'
-])
 const dateId = ref(['non-grise', 'grise'])
 const indexBouttonSwitch = ref(0)
+const estGrise = ref(false)
 
 const basculerTypeDeTrajet = () => {
   indexTypeDeTrajetActif.value = (indexTypeDeTrajetActif.value + 1) % typesDeTrajet.value.length
 }
 
-const activerDesactiverBouttonSwitch = () => {
-  indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % bouttonSwitch.value.length
+const router = useRouter()
+
+const changerIdGrise = () => {
+  indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
+  estGrise.value = !estGrise.value
 }
-const router = useRouter() 
 
 const recherche = () => {
   router.push({
@@ -52,31 +51,18 @@ const recherche = () => {
     <div class="date-et-heure">
       <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
         <div class="icone-date"></div>
-        <p class="date">Date</p>
+        <input type="date" v-model="date" :disabled="estGrise">
       </div>
       <div class="bloc-heure">
         <div class="icone-heure"></div>
-        <p class="heure">{{ heureDepartArrive[indexTypeDeTrajetActif] }}</p>
-        <v-app>
-          <v-container style="max-width: 600px">
-            <v-digital-time-picker v-model="timeValue" rounded filled />
-          </v-container>
-        </v-app>
+        <input type="time" v-model="heure">
       </div>
     </div>
     <div class="trajet-regulier">
-      <div
-        class="icone-boutton-switch"
-        @click="activerDesactiverBouttonSwitch"
-        :style="{
-          backgroundImage: 'url(' + (bouttonSwitch[indexBouttonSwitch] || '') + ')',
-          backgroundSize: '50px 50px',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          width: '50px',
-          height: '50px'
-        }"
-      ></div>
+      <div class="switch-container">
+          <input type="checkbox" id="switch1" v-model="trajetRegulier" class="input-checkbox" @change="changerIdGrise">
+          <label for="switch1" class="switch-label"></label>
+      </div>
       <p class="intitule-trajet-regulier">Trajet Regulier</p>
     </div>
     <div class="rechercher"
@@ -105,6 +91,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: white;
+    border-radius: 40px;
 }
 
 .type-de-trajet {
@@ -125,6 +112,10 @@ export default {
 .bloc-label-depart-arrive {
   display: flex;
   flex-direction: row;
+  height : 50px;
+  width: 75%;
+  margin-left : 12.5%;
+  justify-content: space-between;
 }
 
 .icone-map {
@@ -134,37 +125,46 @@ export default {
   background-position: center;
   width: 50px;
   height: 50px;
-  margin-left: 5%;
 }
 
 .label {
   border: none;
   border-bottom: 1px solid #dddddd;
-  width: 75%;
-  height: 40px;
-  margin: auto 10% auto 3%;
+  height: 50px;
+  width: 100%;
 }
 
 .date-et-heure {
   display: flex;
   flex-direction: row;
-  width: 50%;
-  margin: auto 25%;
-  height: auto;
+  width: 65%;
+  margin-top : 30px;
+  margin-left: 17.5%;
+  height: 50px;
 
   justify-content: space-between;
-}
-
-.heure,
-.date {
-  border-top: 5px;
-  margin-left: 10px;
 }
 
 .bloc-date,
 .bloc-heure {
   display: flex;
   flex-direction: row;
+}
+
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    height : 40px;
+    float: right;
+    color: black;
+    border: 1px solid black;
+    border-radius: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+input[type="time"] {
+    clear: both;
 }
 
 .icone-date {
@@ -174,6 +174,8 @@ export default {
   background-position: center;
   width: 50px;
   height: 50px;
+  padding-right: 50px;
+  padding-bottom: 10px;
 }
 
 .icone-heure {
@@ -183,6 +185,43 @@ export default {
   background-position: center;
   width: 50px;
   height: 50px;
+  padding-right: 50px;
+  padding-bottom: 10px;
+}
+
+.input-checkbox {
+    display: none;
+}
+
+.switch-label {
+    display: block;
+    width: 50px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.input-checkbox:checked+.switch-label {
+    background-color: #007bff;
+}
+
+.switch-label::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.input-checkbox:checked+.switch-label::after {
+    transform: translateX(20px);
 }
 
 #grise {
@@ -203,7 +242,8 @@ p {
 .trajet-regulier {
   display: flex;
   flex-direction: row;
-  width: 180px;
+  height: 50px;
+  width: 190px;
   margin: auto;
   text-align: center;
   height: auto;
@@ -288,7 +328,6 @@ v-digital-time-picker {
         left: 2%;
     }
 }
-
 </style>
 
 
