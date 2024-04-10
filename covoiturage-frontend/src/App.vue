@@ -1,5 +1,6 @@
 <script setup>
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
+
 </script>
 
 <template>
@@ -7,7 +8,21 @@ import BarreDeNavigation from './components/BarreDeNavigation.vue'
   <!-- BlocDeRecherche /-->
   <router-view></router-view>
   <BarreDeNavigation />
+
 </template>
+
+<script>
+export default {
+  computed: {
+    message() {
+      return this.$store.state.message
+    },
+    showMessage() {
+      return this.$store.state.showMessage
+    }
+  }
+}
+</script>
 
 <style scoped>
 header {
