@@ -9,7 +9,21 @@
   const mail = ref('jhon@mail.com')
   const telephone = ref('+33 7 78 67 78 67')
 
+  const router = useRouter()
+
   const modifier = () => {
+    router.push({
+    path: '/modification-profil',
+    query: {
+      mail: "jhon@mail.com",
+      unite: "Unite",
+      numPoste: "14243",
+      prenom: "Jhon",
+      nomFamille: "Doe",
+      adressePostale: "8 Rue Auguste Chevalier, Tours",
+      telephone: "+33 7 78 67 78 67"
+    }
+  });
 }
 
 const deconnexion = () => {

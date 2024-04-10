@@ -11,6 +11,7 @@ import BlocTrajets from './components/BlocTrajets.vue'
 import CreationTrajet from './components/CreationTrajet.vue'
 import Profil from './components/Profil.vue'
 import Message from './components/Message.vue'
+import BlocModificationProfil from './components/BlocModificationProfil.vue'
 
 const routes = [
   { path: '/', component: BlocDeRecherche },
@@ -25,7 +26,17 @@ const routes = [
   { path: '/vos-trajets', component: BlocTrajets },
   { path: '/creation-trajet', component: CreationTrajet },
   { path: '/profil', component: Profil },
-  { path: '/message', component: Message }
+  { path: '/message', component: Message },
+  { path: '/modification-profil', component: BlocModificationProfil,
+  props: route => ({
+    mail: route.query.mail,
+    unite: route.query.unite,
+    numPoste: route.query.numPoste,
+    prenom: route.query.prenom,
+    nomFamille: route.query.nomFamille,
+    adressePostale: route.query.adressePostale,
+    telephone: route.query.telephone
+  }) }
 ]
 
 const router = createRouter({
