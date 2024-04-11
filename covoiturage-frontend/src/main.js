@@ -12,6 +12,7 @@ import CreationTrajet from './components/CreationTrajet.vue'
 import Profil from './components/Profil.vue'
 import Message from './components/Message.vue'
 import BlocModificationProfil from './components/BlocModificationProfil.vue'
+import BlocRapporterUnBug from './components/BlocRapporterUnBug.vue'
 
 const routes = [
   { path: '/', component: BlocDeRecherche },
@@ -36,7 +37,8 @@ const routes = [
     nomFamille: route.query.nomFamille,
     adressePostale: route.query.adressePostale,
     telephone: route.query.telephone
-  }) }
+  }) },
+  { path: '/rapport-bug', component: BlocRapporterUnBug }
 ]
 
 const router = createRouter({
