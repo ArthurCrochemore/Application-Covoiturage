@@ -28,6 +28,13 @@
 
 const deconnexion = () => {
 }
+
+const rapportBug = () => {
+    router.push({
+    path: '/rapport-bug'
+  });
+}
+
 </script>
 
 <template>
@@ -60,6 +67,10 @@ const deconnexion = () => {
         @click="modifier"><p class="intitule-modifer">Modifier</p></div>
         <div class="deconnexion"
         @click="deconnexion"><p class="intitule-deconnexion">Déconnexion</p></div>
+        </div>
+        <div class="bouton-rapport-bug">
+          <div class="rapport-bug"
+        @click="rapportBug"><p class="intitule-rapport-bug">Rapporter un bug</p></div>
         </div>
       </div>
 </template>
@@ -139,7 +150,7 @@ const deconnexion = () => {
   margin-left: 5%;
 }
 
-.boutons {
+.boutons, .bouton-rapport-bug {
   display: flex;
   flex-direction: row;
   height : 50px;
@@ -148,7 +159,7 @@ const deconnexion = () => {
   justify-content: space-between;
 }
 
-.modifier, .deconnexion {
+.modifier, .deconnexion, .rapport-bug {
   background-color: #bbbbbb;
   width: 120px;
   height: 35px;
@@ -156,12 +167,17 @@ const deconnexion = () => {
   border-radius: 10px;
 }
 
-.modifier {
-  background-color: #bbbbbb;
-}
-
 .deconnexion {
   background-color: #e33333;
+}
+
+.bouton-rapport-bug {
+  border-top: auto;
+  justify-content: right;
+}
+
+.rapport-bug {
+  width : 300px;
 }
 
 p{

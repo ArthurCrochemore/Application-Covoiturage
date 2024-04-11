@@ -21,9 +21,10 @@ const retour = () => {
   });
   }
 
-  const valider = () => {
+  const envoyer = () => {
   router.push({
     path: '/profil'
+    // Valider l'envoi
 
   });
   retour();
@@ -43,57 +44,18 @@ const retour = () => {
       "
       @click="retour()"
     ></div>
-        <h1>Modification du Profil</h1>
+    <h1>Rapporter un bug</h1>
   </div>
-  <div class="bloc-modification-profil">
-    <div class="bloc-haut"></div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="mail-label" placeholder="Mail" v-model="mailValue"/>
+  <div class="bloc-rapporter-bug">
+    <div class="bloc-texte">
+      <textarea class="texte" cols="40" rows="5" v-model="message" :maxlength="250"></textarea>
     </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="unite-label" placeholder="N° Unité" v-model="uniteValue"/>
-    </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="num-poste-label" placeholder="N° de Poste" v-model="numPosteValue"/>
-    </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="prenom-label" placeholder="Prénom" v-model="prenomValue"/>
-    </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="nom-famille-label" placeholder="Nom de Famille" v-model="nomFamilleValue"/>
-    </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="adresse-postale-label" placeholder="Adresse Postale" v-model="adressePostaleValue"/>
-    </div>
-    <div class="bloc-label">
-      <input type="text" class="label" id="telephone-label" placeholder="Téléphone" v-model="telephoneValue"/>
-    </div>
-
-    <div class="boutons">
-      <div class="valider"
-          @click="valider"><p class="intitule-valider">Valider</p></div>
+  <div class="boutons">
+      <div class="envoyer"
+          @click="envoyer"><p class="intitule-envoyer">Envoyer</p></div>
     </div>
   </div>
 </template>
-
-<script>
-
-export default {
-    name: 'BlocModificationProfil',
-    data() {
-        return {
-          mailValue: this.mail,
-          uniteValue: this.unite,
-          numPosteValue: this.numPoste,
-          prenomValue: this.prenom,
-          nomFamilleValue: this.nomFamille,
-          adressePostaleValue: this.adressePostale,
-          telephoneValue: this.telephone
-                }
-      }
-
-}
-</script>
 
 <style scoped>
 .entete {
@@ -122,7 +84,7 @@ export default {
     margin : auto;
 }
 
-.bloc-modification-profil {
+.bloc-rapporter-bug {
   width: 60%;
   height: auto;
   position: fixed;
@@ -135,23 +97,20 @@ export default {
     border-radius: 40px;
 }
 
-.bloc-haut {
-  height: 3%;
+.bloc-texte {
+  flex: 1;
+  margin: 30px 30px 50px 30px ;
+  background-color: #bbbbbb;
+
 }
 
-.bloc-label {
-  display: flex;
-  width : 90%;
-  padding-left: 7.5%;
-  height: 8%;
-}
-
-.label {
+.texte {
+  width : 100%;
+  height: 100%;
   border: none;
-  border-bottom: 1px solid #dddddd;
-  height: 40px;
-  font-size: medium;
-  width: 100%;
+  resize: none;
+  background-color: transparent;
+  padding: 10px;
 }
 
 .boutons {
@@ -163,13 +122,12 @@ export default {
   margin-top: auto;
 }
 
-.valider {
+.envoyer {
   background-color: #bbbbbb;
   width: 120px;
   height: 35px;
   border-radius: 10px;
 }
-
 p{
   color : black;
   text-align: center;
@@ -190,35 +148,35 @@ p{
         color : black;
         text-align: center;
     }
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         bottom: 80px;
         top: 80px;
     }
 }
 
 @media (max-width : 1300px) {
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         width: 70%;
         left: 15%;
     }
 }
 
 @media (max-width : 900px) {
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         width: 80%;
         left: 10%;
     }
 }
 
 @media (max-width : 800px) {
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         width: 85%;
         left: 7.5%;
     }
 }
 
 @media (max-width : 700px) {
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         width: 90%;
         left: 5%;
     }
@@ -229,7 +187,7 @@ p{
 }
 
 @media (max-width : 600px) {
-    .bloc-modification-profil {
+    .bloc-rapporter-bug {
         width: 96%;
         left: 2%;
     }
