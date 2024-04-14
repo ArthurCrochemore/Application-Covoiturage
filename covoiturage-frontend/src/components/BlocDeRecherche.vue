@@ -21,6 +21,101 @@ const changerIdGrise = () => {
   estGrise.value = !estGrise.value
 }
 
+const resultatsRecherche = () => {
+  return [
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "St Avertin",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h50",
+      nomConducteur: "Marie",
+      uniteConducteur: "9076908769"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    }
+  ];
+}
+
 const recherche = () => {
   router.push({
     path: '/resultat-recherche',
@@ -29,7 +124,8 @@ const recherche = () => {
       ptArrive: 'Base Aerienne',
       typeTrajet: 'Regulier',
       heure: '10h50',
-      directionTrajet: 'Arrivé'
+      directionTrajet: 'Arrivé',
+      resultats : JSON.stringify(resultatsRecherche())
     }
   });
 }

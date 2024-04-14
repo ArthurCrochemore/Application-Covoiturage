@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import ResultatRecherche from './ResultatRecherche.vue'
 
 const props = defineProps({
   ptDepart: String,
   ptArrive: String,
   typeTrajet: String,
   directionTrajet: String,
-  heure: String
+  heure: String,
+  resultats: Array
 })
 
 const router = useRouter()
-
 const retour = () => {
   router.push({
     path: '/'
@@ -36,10 +37,21 @@ function alerte() {
       "
       @click="retour()"
     ></div>
-        <h1>{{ ptDepart }} => {{ ptArrive }}</h1>
+        <h1> Départ : {{ ptDepart }}  - Arrivé : {{ ptArrive }}</h1>
         <h1>{{ typeTrajet }} - {{ directionTrajet }} {{ heure }}</h1>
     </div>
     <div class="bloc-resultats-recherche">
+      <ResultatRecherche
+            v-for="(resultat, index) in JSON.parse(resultats)"
+            :key="index"
+            :ptDepart="resultat.ptDepart"
+            :ptArrive="resultat.ptArrive"
+            :typeTrajet="resultat.typeTrajet"
+            :heureDepart="resultat.heureDepart"
+            :heureArrive="resultat.heureArrive"
+            :nomConducteur="resultat.nomConducteur"
+            :uniteConducteur="resultat.uniteConducteur"
+        />
         <div class="alerte"
       @click="alerte()"><h1>Créer une alerte</h1></div>
     </div>
@@ -75,13 +87,19 @@ function alerte() {
   width: 60%;
   height: auto;
   position: fixed;
-  top: 150px;
-  bottom: 150px;
+  top: 100px;
+  bottom: 100px;
+  padding : 10px 0;
   left: 20%;
   display: flex;
   flex-direction: column;
-  background-color: white;
-    border-radius: 40px;
+  overflow-y: auto;
+}
+
+.bloc-resultat {
+    margin : 5px 10%;
+    width : 80%;
+    height: 90px;
 }
 
 .alerte {
@@ -92,12 +110,15 @@ function alerte() {
     margin : 5px 10%;
 }
 
+.alerte:hover {
+    background-color: #7ccc84;
+}
+
 .alerte > h1{
     text-align: center;
     color : white;
     margin : auto;
 }
-
 
 @media (max-height: 750px) {
     .entete {
@@ -157,5 +178,4 @@ function alerte() {
         left: 2%;
     }
 }
-
 </style>

@@ -22,7 +22,8 @@ const routes = [
     ptArrive: route.query.ptArrive,
     typeTrajet: route.query.typeTrajet,
     heure: route.query.heure,
-    directionTrajet: route.query.directionTrajet
+    directionTrajet: route.query.directionTrajet,
+    resultats : route.query.resultats
   }) },
   { path: '/vos-trajets', component: BlocTrajets },
   { path: '/creation-trajet', component: CreationTrajet },
