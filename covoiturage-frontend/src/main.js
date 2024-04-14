@@ -5,18 +5,18 @@ import App from './App.vue'
 
 import { createMemoryHistory, createRouter } from 'vue-router'
 
-import BlocDeRecherche from './components/BlocDeRecherche.vue'
-import BlocResultatRecherche from './components/BlocResultatRecherche.vue'
-import BlocTrajets from './components/BlocTrajets.vue'
-import CreationTrajet from './components/CreationTrajet.vue'
-import Profil from './components/Profil.vue'
-import Message from './components/Message.vue'
-import BlocModificationProfil from './components/BlocModificationProfil.vue'
-import BlocRapporterUnBug from './components/BlocRapporterUnBug.vue'
+import PageDeRecherche from './components/PageDeRecherche.vue'
+import PageResultatsRecherche from './components/PageResultatsRecherche.vue'
+import PageTrajets from './components/PageTrajets.vue'
+import PageCreationTrajet from './components/PageCreationTrajet.vue'
+import PageProfil from './components/PageProfil.vue'
+import PageMessage from './components/PageMessage.vue'
+import PageModificationProfil from './components/PageModificationProfil.vue'
+import PageRapporterUnBug from './components/PageRapporterUnBug.vue'
 
 const routes = [
-  { path: '/', component: BlocDeRecherche },
-  { path: '/resultat-recherche', component: BlocResultatRecherche,
+  { path: '/', component: PageDeRecherche },
+  { path: '/resultat-recherche', component: PageResultatsRecherche,
   props: route => ({
     ptDepart: route.query.ptDepart,
     ptArrive: route.query.ptArrive,
@@ -25,11 +25,11 @@ const routes = [
     directionTrajet: route.query.directionTrajet,
     resultats : route.query.resultats
   }) },
-  { path: '/vos-trajets', component: BlocTrajets },
-  { path: '/creation-trajet', component: CreationTrajet },
-  { path: '/profil', component: Profil },
-  { path: '/message', component: Message },
-  { path: '/modification-profil', component: BlocModificationProfil,
+  { path: '/vos-trajets', component: PageTrajets },
+  { path: '/creation-trajet', component: PageCreationTrajet },
+  { path: '/profil', component: PageProfil },
+  { path: '/message', component: PageMessage },
+  { path: '/modification-profil', component: PageModificationProfil,
   props: route => ({
     mail: route.query.mail,
     unite: route.query.unite,
@@ -39,7 +39,7 @@ const routes = [
     adressePostale: route.query.adressePostale,
     telephone: route.query.telephone
   }) },
-  { path: '/rapport-bug', component: BlocRapporterUnBug }
+  { path: '/rapport-bug', component: PageRapporterUnBug }
 ]
 
 const router = createRouter({

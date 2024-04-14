@@ -1,26 +1,31 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+
+const props = defineProps({
+  message : String,
+  type : String
+})
 
 </script>
 
 <template>
     <div class="bloc-message">
-
+        <p>{{ type }}</p>
+        <p>{{ message }}</p>
     </div>
 </template>
 
 <style scoped>
-    .bloc-message {
-    width: 60%;
-    height: auto;
-    position: fixed;
-    top: 150px;
-    bottom: 150px;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 40px;
-    }
+.bloc-message {
+  position : fixed;
+  bottom : 95px;
+  width : 95%;
+  left : 2.5%;
+  height : auto;
+  z-index: 9999;
+}
+
+p {
+  color : grey;
+}
 </style>

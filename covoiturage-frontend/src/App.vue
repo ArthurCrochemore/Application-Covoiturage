@@ -1,22 +1,37 @@
 <script setup>
+import { ref } from 'vue'
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
+import Message from './components/Message.vue'
 
+const AfficherMessage = (message, type, couleur) => {
+  showMessage.value = true;
+  messageText.value = message;
+  messageType.value = type;
+  messageCouleur.value = couleur;
+  setTimeout(() => {
+    showMessage.value = false;
+  }, 3000);
+}
+
+
+const showMessage = ref(false);
+const messageText = ref('');
+const messageType = ref('');
+const messageCouleur = ref('');
 </script>
 
 <template>
-  <router-view></router-view>
+  <router-view ></router-view>
   <BarreDeNavigation />
+  <Message v-if="showMessage" :message="messageText" :type="messageType" :couleur="messageCouleur" />
 
 </template>
 
 <script>
 export default {
-  computed: {
-    message() {
-      return this.$store.state.message
-    },
-    showMessage() {
-      return this.$store.state.showMessage
+  methods: {
+    afficherMessage(message, type, couleur) {
+      this.AfficherMessage(message, type, couleur);
     }
   }
 }
@@ -30,6 +45,11 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+
+#message {
+  background-color: var(--messageCouleur);
+  visibility: hidden;
 }
 
 @media (min-width: 1024px) {

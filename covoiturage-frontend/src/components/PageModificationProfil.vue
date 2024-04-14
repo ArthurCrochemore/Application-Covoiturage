@@ -26,9 +26,9 @@ const retour = () => {
     path: '/profil'
 
   });
-  retour();
-  }
 
+  retour();
+}
 </script>
 
 <template>
