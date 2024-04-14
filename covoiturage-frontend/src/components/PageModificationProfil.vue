@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { defineProps } from 'vue'
+import { inject } from 'vue'
+
+const afficherMessageFunc = inject('afficherMessageFunc');
 
 const props = defineProps({
   mail: String,
@@ -22,11 +26,7 @@ const retour = () => {
   }
 
   const valider = () => {
-  router.push({
-    path: '/profil'
-
-  });
-
+  afficherMessageFunc("La demande de modification a été enregistrée avec succèes", "Succès");
   retour();
 }
 </script>

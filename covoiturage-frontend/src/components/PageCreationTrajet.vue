@@ -21,7 +21,7 @@
                     <label for="switch1" class="switch-label"></label>
                     <label for="switch1">Trajet régulier</label>
                 </div>
-                
+
                 <div class="switch-container">
                     <input type="checkbox" id="switch2" v-model="proposerTrajet" class="input-checkbox">
                     <label for="switch2" class="switch-label"></label>
@@ -42,7 +42,7 @@
 
                     <input type="checkbox" id="jeudi" v-model="joursSemaine.jeudi" class="input-checkbox2">
                     <label for="jeudi" class="checkbox-label">Jeudi</label>
-                    
+
                     <input type="checkbox" id="vendredi" v-model="joursSemaine.vendredi" class="input-checkbox2">
                     <label for="vendredi" class="checkbox-label">Vendredi</label>
 
