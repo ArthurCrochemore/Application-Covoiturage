@@ -342,7 +342,6 @@ p {
   width: 190px;
   margin: auto;
   text-align: center;
-  height: auto;
 
   justify-content: space-between;
 }
