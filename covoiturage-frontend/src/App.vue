@@ -4,8 +4,6 @@ import BarreDeNavigation from './components/BarreDeNavigation.vue'
 </script>
 
 <template>
-  <!-- BlocResultatRecherche ptDepart = "St Avertin" ptArrive="Base Aerienne" typeTrajet= "Regulier" heure="10h50" directionTrajet="Arrivé"/ -->
-  <!-- BlocDeRecherche /-->
   <router-view></router-view>
   <BarreDeNavigation />
 

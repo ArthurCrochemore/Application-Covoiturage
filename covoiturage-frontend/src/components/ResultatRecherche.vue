@@ -6,7 +6,8 @@ const props = defineProps({
   ptDepart: String,
   ptArrive: String,
   typeTrajet: String,
-  heure: String,
+  heureDepart: String,
+  heureArrive: String,
   nomConducteur: String,
   uniteConducteur: String
 })
@@ -25,7 +26,8 @@ const ouvrir = () => {
 <template>
     <div class="bloc-resultat" @click="ouvrir">
       <div class="bloc-heure">
-        <p>{{ heure }}</p>
+        <p>{{ heureDepart }}</p>
+        <p>{{ heureArrive }}</p>
       </div>
       <div class="bloc-depart-arrive">
         <p>{{ ptDepart }}</p>
@@ -41,10 +43,12 @@ const ouvrir = () => {
   display: flex;
   flex-direction: row;
   border-radius: 20px;
-  background-color: #bbbbbb;
+  background-color: white;
+  box-shadow: #eeeeee;
 }
 .bloc-heure {
   width : 20%;
+  border-right: 1px solid black;
 }
 .bloc-depart-arrive {
   width : 45%;
@@ -56,7 +60,7 @@ const ouvrir = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 13px;
+  margin: 13px;
 }
 p {
   color : black;
@@ -65,7 +69,7 @@ p {
 }
 
 .bloc-resultat:hover {
-  background-color: #cccccc;
+  background-color: #eeeeee;
 }
 
 </style>

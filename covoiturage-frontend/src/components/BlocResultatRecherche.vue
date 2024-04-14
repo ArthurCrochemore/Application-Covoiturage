@@ -37,7 +37,7 @@ function alerte() {
       "
       @click="retour()"
     ></div>
-        <h1>{{ ptDepart }} => {{ ptArrive }}</h1>
+        <h1> Départ : {{ ptDepart }}  - Arrivé : {{ ptArrive }}</h1>
         <h1>{{ typeTrajet }} - {{ directionTrajet }} {{ heure }}</h1>
     </div>
     <div class="bloc-resultats-recherche">
@@ -47,7 +47,8 @@ function alerte() {
             :ptDepart="resultat.ptDepart"
             :ptArrive="resultat.ptArrive"
             :typeTrajet="resultat.typeTrajet"
-            :heure="resultat.heure"
+            :heureDepart="resultat.heureDepart"
+            :heureArrive="resultat.heureArrive"
             :nomConducteur="resultat.nomConducteur"
             :uniteConducteur="resultat.uniteConducteur"
         />
@@ -86,13 +87,13 @@ function alerte() {
   width: 60%;
   height: auto;
   position: fixed;
-  top: 150px;
-  bottom: 150px;
+  top: 100px;
+  bottom: 100px;
+  padding : 10px 0;
   left: 20%;
   display: flex;
   flex-direction: column;
-  background-color: white;
-    border-radius: 40px;
+  overflow-y: auto;
 }
 
 .bloc-resultat {
@@ -109,12 +110,15 @@ function alerte() {
     margin : 5px 10%;
 }
 
+.alerte:hover {
+    background-color: #7ccc84;
+}
+
 .alerte > h1{
     text-align: center;
     color : white;
     margin : auto;
 }
-
 
 @media (max-height: 750px) {
     .entete {
@@ -174,5 +178,4 @@ function alerte() {
         left: 2%;
     }
 }
-
 </style>

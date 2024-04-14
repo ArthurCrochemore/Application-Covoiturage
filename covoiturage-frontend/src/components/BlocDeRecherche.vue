@@ -27,7 +27,8 @@ const resultatsRecherche = () => {
       ptDepart: "Paris",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
-      heure: "10h45",
+      heureDepart: "",
+      heureArrive: "10h45",
       nomConducteur: "John",
       uniteConducteur: "67890"
     },
@@ -35,9 +36,82 @@ const resultatsRecherche = () => {
       ptDepart: "St Avertin",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
-      heure: "10h50",
+      heureDepart: "",
+      heureArrive: "10h50",
       nomConducteur: "Marie",
       uniteConducteur: "9076908769"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
     }
   ];
 }
