@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import ResultatRecherche from './ResultatRecherche.vue'
 
 const props = defineProps({
   ptDepart: String,
   ptArrive: String,
   typeTrajet: String,
   directionTrajet: String,
-  heure: String
+  heure: String,
+  resultats: Array
 })
 
 const router = useRouter()
-
 const retour = () => {
   router.push({
     path: '/'
@@ -40,6 +41,16 @@ function alerte() {
         <h1>{{ typeTrajet }} - {{ directionTrajet }} {{ heure }}</h1>
     </div>
     <div class="bloc-resultats-recherche">
+      <ResultatRecherche
+            v-for="(resultat, index) in JSON.parse(resultats)"
+            :key="index"
+            :ptDepart="resultat.ptDepart"
+            :ptArrive="resultat.ptArrive"
+            :typeTrajet="resultat.typeTrajet"
+            :heure="resultat.heure"
+            :nomConducteur="resultat.nomConducteur"
+            :uniteConducteur="resultat.uniteConducteur"
+        />
         <div class="alerte"
       @click="alerte()"><h1>Créer une alerte</h1></div>
     </div>
@@ -82,6 +93,12 @@ function alerte() {
   flex-direction: column;
   background-color: white;
     border-radius: 40px;
+}
+
+.bloc-resultat {
+    margin : 5px 10%;
+    width : 80%;
+    height: 90px;
 }
 
 .alerte {
