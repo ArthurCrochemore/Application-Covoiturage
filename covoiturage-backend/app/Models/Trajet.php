@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trajet extends Model
 {
+    use HasFactory;
+
     protected $table = 'trajet'; // Nom de la table dans la base de données
 
     protected $primaryKey = 'Id_Trajet'; // Clé primaire de la table
@@ -22,12 +24,12 @@ class Trajet extends Model
         'Desciption',
         'TrajetRegulier',
         'Statut',
-        'Id_Utilisateur',
+        'id_utilisateur',
     ];
 
     public function utilisateur()
     {
-        return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
+        return $this->belongsTo(Utilisateur::class, 'id_utilisateur');
     }
 
     public function reservations()
