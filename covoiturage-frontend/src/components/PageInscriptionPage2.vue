@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { inject } from 'vue'
+
+const afficherMessageFunc = inject('afficherMessageFunc');
 
 const unite = ref('')
 const numPoste = ref('')
@@ -9,14 +12,26 @@ const nomFamille = ref('')
 const adressePostale = ref('')
 const telephone = ref('')
 
+const router = useRouter()
 const continuer = () => {
-  console.log("Mail:", mail.value)
-  console.log("NID:", nid.value)
-  console.log("Mot de passe:", motdepasse.value)
-  console.log("Mot de passe:", confirmationmotdepasse.value)
+  console.log("Unite:", unite.value)
+  console.log("Num Poste:", numPoste.value)
+  console.log("Prenom:", prenom.value)
+  console.log("Nom:", nomFamille.value)
+  console.log("Adresse:", adressePostale.value)
+  console.log("Tel:", telephone.value)
+  afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
+  router.push({
+    path: '/'
+
+  });
 }
 
 const annuler = () => {
+  router.push({
+    path: '/inscription-page1'
+
+  });
 }
 
 </script>

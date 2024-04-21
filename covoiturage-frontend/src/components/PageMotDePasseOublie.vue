@@ -10,7 +10,12 @@ const valider = () => {
   console.log("NID:", nid.value)
 }
 
+const router = useRouter()
 const annuler = () => {
+  router.push({
+    path: '/'
+
+  });
 }
 
 </script>

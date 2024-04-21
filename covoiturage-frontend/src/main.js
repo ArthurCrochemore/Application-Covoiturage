@@ -21,7 +21,20 @@ import PageMotDePasseOublie from './components/PageMotDePasseOublie.vue'
 import PageReinitialisationMotDePasse from './components/PageReinitialisationMotDePasse.vue'
 
 const routes = [
-  { path: '/', component: PageReinitialisationMotDePasse },
+  { path: '/', component: PageConnexion },
+  { path: '/inscription-page1', component: PageInscriptionPage1 },
+  { path: '/inscription-page2', component: PageInscriptionPage2 },
+  { path: '/mot-de-passe-oublie', component: PageMotDePasseOublie },
+  { path: '/reinitialisation-mot-de-passe', component: PageReinitialisationMotDePasse },
+
+
+
+
+
+
+
+
+  { path: '/recherche', component: PageDeRecherche },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
   props: route => ({
     ptDepart: route.query.ptDepart,

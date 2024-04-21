@@ -15,7 +15,7 @@ const props = defineProps({
 const router = useRouter()
 const retour = () => {
   router.push({
-    path: '/'
+    path: '/recherche'
 
   });
 }

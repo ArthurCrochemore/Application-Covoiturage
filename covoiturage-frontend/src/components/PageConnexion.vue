@@ -8,12 +8,25 @@ const motdepasse = ref('')
 const connexion = () => {
   console.log("Identifiant:", identifiant.value)
   console.log("Mot de passe:", motdepasse.value)
+  router.push({
+    path: '/recherche'
+
+  });
 }
 
+const router = useRouter()
 const inscription = () => {
+  router.push({
+    path: '/inscription-page1'
+
+  });
 }
 
 const motdepasseoublie = () => {
+  router.push({
+    path: '/mot-de-passe-oublie'
+
+  });
 }
 </script>
 
