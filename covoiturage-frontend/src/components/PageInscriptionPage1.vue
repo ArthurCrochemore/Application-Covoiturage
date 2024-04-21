@@ -7,16 +7,25 @@ const nid = ref('')
 const motdepasse = ref('')
 const confirmationmotdepasse = ref('')
 
+
+const router = useRouter()
 const continuer = () => {
   console.log("Mail:", mail.value)
   console.log("NID:", nid.value)
   console.log("Mot de passe:", motdepasse.value)
   console.log("Mot de passe:", confirmationmotdepasse.value)
+  router.push({
+    path: '/inscription-page2'
+
+  });
 }
 
 const annuler = () => {
-}
+  router.push({
+    path: '/'
 
+  });
+}
 </script>
 
 <template>
