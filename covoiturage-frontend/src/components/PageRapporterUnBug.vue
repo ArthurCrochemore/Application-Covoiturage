@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { defineProps } from 'vue'
 
 const props = defineProps({
   mail: String,
@@ -11,7 +12,6 @@ const props = defineProps({
   adressePostale: String,
   telephone: String
 })
-
 const router = useRouter()
 
 const retour = () => {

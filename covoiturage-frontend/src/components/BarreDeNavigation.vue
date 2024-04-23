@@ -31,10 +31,9 @@
 <template>
   <div class="navigation-bar">
     <div
-
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'recherche' }"
-      @click="ouvrir('/', 'recherche')"
+      @click="ouvrir('/recherche', 'recherche')"
       classe-icone="recherche"
     ></div>
     <div

@@ -1,41 +1,32 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
 import BarreDeNavigation from './components/BarreDeNavigation.vue'
 import Message from './components/Message.vue'
 
-const AfficherMessage = (message, type, couleur) => {
+const AfficherMessage = (message, type) => {
   showMessage.value = true;
   messageText.value = message;
   messageType.value = type;
-  messageCouleur.value = couleur;
+
   setTimeout(() => {
     showMessage.value = false;
   }, 3000);
 }
 
-
 const showMessage = ref(false);
 const messageText = ref('');
 const messageType = ref('');
-const messageCouleur = ref('');
+
+provide('afficherMessageFunc', AfficherMessage);
 </script>
 
 <template>
   <router-view ></router-view>
   <BarreDeNavigation />
-  <Message v-if="showMessage" :message="messageText" :type="messageType" :couleur="messageCouleur" />
+  <Message v-if="showMessage" :message="messageText" :type="messageType" />
 
 </template>
 
-<script>
-export default {
-  methods: {
-    afficherMessage(message, type, couleur) {
-      this.AfficherMessage(message, type, couleur);
-    }
-  }
-}
-</script>
 
 <style scoped>
 header {
@@ -47,9 +38,14 @@ header {
   margin: 0 auto 2rem;
 }
 
-#message {
-  background-color: var(--messageCouleur);
-  visibility: hidden;
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 
 @media (min-width: 1024px) {

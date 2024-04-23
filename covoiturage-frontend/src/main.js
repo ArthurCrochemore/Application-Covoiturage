@@ -14,8 +14,27 @@ import PageMessage from './components/PageMessage.vue'
 import PageModificationProfil from './components/PageModificationProfil.vue'
 import PageRapporterUnBug from './components/PageRapporterUnBug.vue'
 
+import PageConnexion from './components/PageConnexion.vue'
+import PageInscriptionPage1 from './components/PageInscriptionPage1.vue'
+import PageInscriptionPage2 from './components/PageInscriptionPage2.vue'
+import PageMotDePasseOublie from './components/PageMotDePasseOublie.vue'
+import PageReinitialisationMotDePasse from './components/PageReinitialisationMotDePasse.vue'
+
 const routes = [
-  { path: '/', component: PageDeRecherche },
+  { path: '/', component: PageConnexion },
+  { path: '/inscription-page1', component: PageInscriptionPage1 },
+  { path: '/inscription-page2', component: PageInscriptionPage2 },
+  { path: '/mot-de-passe-oublie', component: PageMotDePasseOublie },
+  { path: '/reinitialisation-mot-de-passe', component: PageReinitialisationMotDePasse },
+
+
+
+
+
+
+
+
+  { path: '/recherche', component: PageDeRecherche },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
   props: route => ({
     ptDepart: route.query.ptDepart,
