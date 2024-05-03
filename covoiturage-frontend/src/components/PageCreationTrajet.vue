@@ -1,396 +1,10 @@
-<!-- <template>
-    <div class="bloc-de-creation">
-        <div class="entete-bloc">
-            <h1 class="intitule-bloc">Création trajet</h1>
-        </div>
-        <div class="form-container">
-            <form>
-                <div class="input-container">
-                    <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
-                    <input type="text" v-model="pointDepart" placeholder="Départ">
-                </div>
-
-                <div class="input-container">
-                    <img src="../assets/icons/navigation-map-marker.png" alt="Localisation" class="icon">
-                    <input type="text" v-model="pointArrivee" placeholder="Arrivée">
-                </div>
-
-                <input type="date" v-model="date">
-
-                <input type="time" v-model="heure">
-                <div class="switch-container">
-                    <input type="checkbox" id="switch1" v-model="trajetRegulier" class="input-checkbox">
-                    <label for="switch1" class="switch-label"></label>
-                    <label for="switch1">Trajet régulier</label>
-                </div>
-
-                <div class="switch-container">
-                    <input type="checkbox" id="switch2" v-model="proposerTrajet" class="input-checkbox">
-                    <label for="switch2" class="switch-label"></label>
-                    <label for="switch2">Proposer un trajet</label>
-                </div>
-
-                <div v-if="trajetRegulier" class="switch-container" id="switchregulier">
-
-                    <input type="checkbox" id="lundi" v-model="joursSemaine.lundi" class="input-checkbox2">
-                    <label for="lundi" class="checkbox-label">Lundi</label>
-
-
-                    <input type="checkbox" id="mardi" v-model="joursSemaine.mardi" class="input-checkbox2">
-                    <label for="mardi" class="checkbox-label">Mardi</label>
-
-                    <input type="checkbox" id="mercredi" v-model="joursSemaine.mercredi" class="input-checkbox2">
-                    <label for="mercredi" class="checkbox-label">Mercredi</label>
-
-                    <input type="checkbox" id="jeudi" v-model="joursSemaine.jeudi" class="input-checkbox2">
-                    <label for="jeudi" class="checkbox-label">Jeudi</label>
-
-                    <input type="checkbox" id="vendredi" v-model="joursSemaine.vendredi" class="input-checkbox2">
-                    <label for="vendredi" class="checkbox-label">Vendredi</label>
-
-                    <input type="checkbox" id="samedi" v-model="joursSemaine.samedi" class="input-checkbox2">
-                    <label for="samedi" class="checkbox-label">Samedi</label>
-
-                    <input type="checkbox" id="dimanche" v-model="joursSemaine.dimanche" class="input-checkbox2">
-                    <label for="dimanche" class="checkbox-label">Dimanche</label>
-
-                </div>
-
-
-
-                <div class="input-container">
-                    <select v-model="bagage">
-                        <option value="Beaucoup">Beaucoup</option>
-                        <option value="Moyen">Moyen</option>
-                        <option value="Peu">Peu</option>
-                    </select>
-                    <label class="label-right">Bagages</label>
-                </div>
-
-                <div class="input-container">
-                    <input type="number" v-model="nombrePassagers">
-                    <label class="label-right">Passagers</label>
-                </div>
-
-                <label>Description:</label>
-                <textarea v-model="description"></textarea>
-
-                <button type="submit">Suivant</button>
-            </form>
-        </div>
-    </div>
-</template>
-
-<script>
-
-export default {
-    name: 'CreationTrajet',
-    data() {
-        return {
-            pointDepart: '',
-            pointArrivee: '',
-            date: '',
-            heure: '',
-            trajetRegulier: false,
-            joursSemaine: {
-                lundi: false,
-                mardi: false,
-                mercredi: false,
-                jeudi: false,
-                vendredi: false,
-                samedi: false,
-                dimanche: false
-            },
-            proposerTrajet: false,
-            bagage: '',
-            nombrePassagers: 1,
-            description: ''
-        }
-    }
-
-}
-</script>
-
-<style scoped>
-.bloc-de-creation {
-    width: 60%;
-     height: auto;
-     position: fixed;
-     top: 150px;
-     bottom: 150px;
-     left: 20%;
-     display: flex;
-     flex-direction: column;
-     background-color: white;
-    border-radius: 40px;
-}
-
-.creation {
-    width: 80%;
-    height: auto;
-    position: fixed;
-    top: 50px;
-    bottom: 150px;
-    left: 10%;
-    right: 10%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 30px;
-    overflow: hidden;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 5px;
-    color: black;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: black;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 5px;
-    margin-top: 25px;
-    margin-right: 50px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    color: black;
-}
-
-input[type="date"],
-input[type="time"] {
-    width: 40%;
-    padding: 5px;
-    margin-top: 20px;
-    float: right;
-    margin-right: 20px;
-    color: black;
-    border: 1px solid black;
-    border-radius: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-input[type="time"] {
-    clear: both;
-    margin-top: 15px;
-}
-
-.switch-container {
-    display: flex;
-    align-items: center;
-    margin-left: 2.5%;
-    position: relative;
-}
-
-.input-checkbox {
-    display: none;
-}
-
-.switch-label {
-    display: block;
-    width: 40px;
-    height: 20px;
-    background-color: #ccc;
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-.input-checkbox:checked+.switch-label {
-    background-color: #007bff;
-}
-
-.switch-label::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-
-.input-checkbox:checked+.switch-label::after {
-    transform: translateX(20px);
-}
-
-select {
-    width: 40%;
-    padding-left: 15px;
-    margin-top: 5px;
-    border-radius: 30px;
-    border: 1px solid black;
-    margin-left: 2.5%;
-    color: black;
-}
-
-input[type="number"] {
-    width: 20%;
-    padding: 5px;
-    margin-top: 5px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    text-align: center;
-    color: black;
-    margin-left: 2.5%;
-}
-
-.label-right {
-    margin-left: 25px;
-    color: black;
-
-}
-
-textarea {
-    width: 95%;
-    padding: 5px;
-    left: 5px;
-    right: 5px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-    height: 100px;
-    color: black;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-
-button[type="submit"] {
-    width: 40%;
-    padding: 10px;
-    margin-bottom: 20%;
-    margin-left: 58%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    background-color: grey;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 30px 30px 30px 30px;
-}
-
-button[type="submit"]:hover {
-    background-color: black;
-}
-
-.form-container {
-    padding-bottom: 100px;
-}
-
-
-.input-container {
-    display: flex;
-    align-items: center;
-}
-
-.icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    margin-top: 20px;
-    margin-left: 5px;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(100%);
-}
-
-input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(100%);
-}
-
-input[type="number"]::-webkit-calendar-picker-indicator {
-    filter: invert(100%);
-}
-
-.switch-container#switchregulier{
-    color: black;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.checkbox-label {
-    margin-left: 5px;
-    margin-right: 15px;
-    color: black;
-}
-
-@media (max-height: 750px) {
-    .creation {
-        top: 30px;
-        bottom: 100px;
-    }
-
-}
-
-@media (max-width : 1300px) {
-    .creation {
-        width: 90%;
-        left: 5%;
-        right: 5%;
-    }
-}
-
-@media (max-width : 900px) {
-    .creation {
-        width: 95%;
-        left: 2.5%;
-        right: 2.5%;
-    }
-}
-
-@media (max-width : 800px) {
-    .creation {
-        width: 97.5%;
-        left: 1.25%;
-        right: 1.25%;
-    }
-}
-
-@media (max-width : 700px) {
-    .creation {
-        width: 100%;
-        left: 0;
-        right: 0;
-    }
-}
-
-@media (max-width : 600px) {
-    .creation {
-        width: 100%;
-        left: 0;
-        right: 0;
-    }
-}
-</style> -->
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
-const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
-const indexTypeDeTrajetActif = ref(0)
-
 const dateId = ref(['non-grise', 'grise'])
 const indexBouttonSwitch = ref(0)
 const estGrise = ref(false)
-
-const basculerTypeDeTrajet = () => {
-    indexTypeDeTrajetActif.value = (indexTypeDeTrajetActif.value + 1) % typesDeTrajet.value.length
-}
 
 const router = useRouter()
 
@@ -398,115 +12,19 @@ const changerIdGrise = () => {
     indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
     estGrise.value = !estGrise.value
 }
-
-const resultatsRecherche = () => {
-    return [
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "St Avertin",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h50",
-            nomConducteur: "Marie",
-            uniteConducteur: "9076908769"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        },
-        {
-            ptDepart: "Paris",
-            ptArrive: "Base Aérienne",
-            typeTrajet: "Régulier",
-            heureDepart: "",
-            heureArrive: "10h45",
-            nomConducteur: "John",
-            uniteConducteur: "67890"
-        }
-    ];
+const inversionDepartArrivee = () => {
+    const depart = document.getElementById('depart-label').value;
+    const arrive = document.getElementById('arrive-label').value;
+    document.getElementById('depart-label').value = arrive;
+    document.getElementById('arrive-label').value = depart;
 }
 
-const recherche = () => {
+const suivant = () => {
     router.push({
-        path: '/resultat-recherche',
-        query: {
-            ptDepart: 'St Avertin',
-            ptArrive: 'Base Aerienne',
-            typeTrajet: 'Regulier',
-            heure: '10h50',
-            directionTrajet: 'Arrivé',
-            resultats: JSON.stringify(resultatsRecherche())
-        }
-    });
+        path: '/creation-suivant'
+    })
 }
+
 </script>
 
 <template>
@@ -517,6 +35,8 @@ const recherche = () => {
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
             <input type="text" class="label" id="depart-label" placeholder="Départ" />
+        </div>
+        <div class="icone-arrows" @click="inversionDepartArrivee">
         </div>
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
@@ -582,8 +102,8 @@ const recherche = () => {
             <label class="checkbox-label">Description:</label>
             <textarea class="text-area" v-model="description"></textarea>
         </div>
-        <div class="rechercher" @click="recherche">
-            <p class="intitule-rechercher">Suivant</p>
+        <div class="suivant" @click="suivant">
+            <p class="intitule-suivant">Suivant</p>
         </div>
     </div>
 </template>
@@ -644,6 +164,21 @@ export default {
     background-position: center;
     width: 50px;
     height: 50px;
+}
+
+.icone-arrows {
+    background: url('src/assets/icons/fleches-bidirection.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 20%;
+}
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .label {
@@ -854,7 +389,7 @@ p {
     justify-content: center;
 }
 
-.rechercher {
+.suivant {
     background-color: #bbbbbb;
     width: 120px;
     height: 40px;
@@ -862,7 +397,7 @@ p {
     border-radius: 10px;
 }
 
-.intitule-rechercher {
+.intitule-suivant {
     padding-top: 3px;
     text-align: center;
 }
