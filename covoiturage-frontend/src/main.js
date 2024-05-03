@@ -9,6 +9,7 @@ import PageDeRecherche from './components/PageDeRecherche.vue'
 import PageResultatsRecherche from './components/PageResultatsRecherche.vue'
 import PageTrajets from './components/PageTrajets.vue'
 import PageCreationTrajet from './components/PageCreationTrajet.vue'
+import PageCreationSuivant from './components/PageCreationSuivant.vue'
 import PageProfil from './components/PageProfil.vue'
 import PageMessage from './components/PageMessage.vue'
 import PageModificationProfil from './components/PageModificationProfil.vue'
@@ -46,6 +47,7 @@ const routes = [
   }) },
   { path: '/vos-trajets', component: PageTrajets },
   { path: '/creation-trajet', component: PageCreationTrajet },
+  { path: '/creation-suivant', component: PageCreationSuivant},
   { path: '/profil', component: PageProfil },
   { path: '/message', component: PageMessage },
   { path: '/modification-profil', component: PageModificationProfil,
