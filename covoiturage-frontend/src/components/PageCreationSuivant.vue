@@ -2,29 +2,35 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-
-const dialog = ref(false)
+const showDialog = ref(false)
+const showAddCityDialog = ref(false)
+const newCity = ref('')
+const villesAjoutees = ref([])
 
 const router = useRouter()
 const retour = () => {
   router.push({
     path: '/creation-trajet'
-
   });
 }
 
-const creerTrajet = () => {
-    dialog.value = true
-}
-
 const confirmerCreationTrajet = () => {
-    // Code pour la confirmation de création du trajet
-    dialog.value = false
+    showDialog.value = false;
+    console.log("Trajet créé");
+    router.push({
+        path: '/vos-trajets'
+    });
 }
 
-const annulerCreationTrajet = () => {
-    // Code pour annuler la création du trajet
-    dialog.value = false
+const ajouterVille = () => {
+  console.log("Ville ajoutée :", newCity.value)
+  villesAjoutees.value.push(newCity.value)
+  newCity.value = ''
+  showAddCityDialog.value = false
+}
+
+const supprimerVille = (index) => {
+  villesAjoutees.value.splice(index, 1)
 }
 
 </script>
@@ -40,50 +46,88 @@ const annulerCreationTrajet = () => {
       "
       @click="retour()"
     ></div>
-        <h1>Creation Trajet</h1>
+        <h1>Création Trajet</h1>
     </div>
     <div class = "bloc-creation-suivant">
-        <div class ="title-page">
-            <p>Ajouter des points d'arrêts :</p>
+
+         <!-- Zone pour afficher les villes ajoutées -->
+        <div class="villes-ajoutees">
+            <h3>Saisie points d'arrêts :</h3>
+            <div v-for="(ville, index) in villesAjoutees" :key="index" class="ville">
+                <span>{{ ville }}</span>
+                <button class="bouton-supprimer" @click="supprimerVille(index)">X</button>
+            </div>
         </div>
+        
         <div class="boutons-a">
-            <button class="bouton-ajouter" >Ajouter</button>
+            <button class="bouton-ajouter" @click="showAddCityDialog=true">Ajouter</button>
         </div>
         <div class="boutons-s">
-            <button class="bouton-creer" @click="creerTrajet">Créer</button>
+            <button class="bouton-creer" @click="showDialog = true">Créer</button>
             <button class="bouton-precedent"  @click="retour()">Précédent</button>
         </div>
     </div>
-    <v-dialog v-model="dialog" max-width="500px">
-        <template #activator="{ on }">
-            <button v-on="on" style="display: none;"></button>
-        </template>
-        <v-card>
-            <v-card-title>
-                Confirmation
-            </v-card-title>
-            <v-card-text>
-                Êtes-vous sûr de vouloir créer ce trajet ?
-            </v-card-text>
-            <v-card-actions>
-                <v-btn color="green darken-1" text @click="confirmerCreationTrajet">Confirmer</v-btn>
-                <v-btn color="red darken-1" text @click="annulerCreationTrajet">Annuler</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+
+     <!-- Boîte de dialogue pour ajouter une ville -->
+     <div v-if="showAddCityDialog" class="dialog">
+      <div class="dialog-content">
+        <h2>Ajouter une ville</h2>
+        <input type="text" v-model="newCity" placeholder="Saisir le nom de la ville" />
+        <div class="dialog-buttons">
+          <button class="bouton-creer" @click="ajouterVille">Ajouter</button>
+          <button class="bouton-annuler" @click="showAddCityDialog = false">Annuler</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boîte de dialogue pour confirmer la création du trajet -->
+    <div v-if="showDialog" class="dialog">
+        <div class="dialog-content">
+            <h2>Confirmation</h2>
+            <p>Êtes-vous sûr de vouloir créer ce trajet ?</p>
+            <div class="dialog-buttons">
+                <button class="bouton-creer" @click="confirmerCreationTrajet">Confirmer</button>
+                <button class="bouton-annuler" @click="showDialog=false">Annuler</button>
+            </div>
+        </div>
+    </div>
    
 </template>
 
 <style scoped>
-.entete {
-    width: 100%;
-    height: 100px;
-  background-color: white;
+
+.dialog {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.dialog-buttons {
+    padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.entete {
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .retour {
@@ -100,14 +144,15 @@ const annulerCreationTrajet = () => {
     text-align: center;
 }
 
-p{
+p, h2, h3{
     color: black;
 }
 .bouton-ajouter,
 .bouton-creer,
-.bouton-precedent {
-    width: 150px;
-    height: 40px;
+.bouton-precedent,
+.bouton-annuler {
+    width: 130px;
+    height: 30px;
     border-radius: 10%;
 }
 .boutons-a {
@@ -138,6 +183,37 @@ p{
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.villes-ajoutees {
+  margin-top: 20px;
+}
+
+.villes-ajoutees h3 {
+  margin-bottom: 10px;
+}
+
+.ville {
+    color: black;
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+.ville span {
+  margin-right: 10px;
+}
+
+.bouton-supprimer {
+  color: black;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 
