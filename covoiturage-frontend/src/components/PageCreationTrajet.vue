@@ -8,10 +8,12 @@ const estGrise = ref(false)
 
 const router = useRouter()
 
+
 const changerIdGrise = () => {
     indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
     estGrise.value = !estGrise.value
 }
+
 const inversionDepartArrivee = () => {
     const depart = document.getElementById('depart-label').value;
     const arrive = document.getElementById('arrive-label').value;
@@ -22,7 +24,7 @@ const inversionDepartArrivee = () => {
 const suivant = () => {
     router.push({
         path: '/creation-suivant'
-    })
+    });
 }
 
 </script>
@@ -51,18 +53,12 @@ const suivant = () => {
                 </div>
                 <p class="intitule-trajet-regulier">Trajet Regulier</p>
             </div>
-            <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
-                <input type="date" v-model="date" :disabled="estGrise">
-            </div>
+            
         </div>
 
         <div class="date-et-heure">
-            <div class="trajet-regulier">
-                <div class="switch-container">
-                    <input type="checkbox" id="switch2" v-model="proposerTrajet" class="input-checkbox">
-                    <label for="switch2" class="switch-label"></label>
-                </div>
-                <p class="intitule-trajet-regulier">Proposer un trajet</p>
+            <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
+                <input type="date" v-model="date" :disabled="estGrise">
             </div>
             <div class="bloc-heure">
                 <input type="time" v-model="heure">
@@ -108,15 +104,6 @@ const suivant = () => {
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            timeValue: '8:00'
-        }
-    }
-}
-</script>
 
 <style scoped>
 
@@ -244,7 +231,7 @@ input[type="number"] {
     display: flex;
     flex-direction: row;
     width: 80%;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-left: 10%;
     height: 50px;
 
