@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
+
+Route::post('/utilisateur', [UtilisateurController::class, 'store']);
+
+Route::get('/accueil', function () {return view('testAuth.accueil');})->name('accueil');
+
+Route::post('/utilisateur', [UtilisateurController::class, 'store'])->name('inscription');
