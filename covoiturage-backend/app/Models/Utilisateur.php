@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Utilisateur extends Model
+class Utilisateur extends Model implements AuthenticatableContract
 {
+
+    use Authenticatable;
+
+    use HasFactory;
+
     protected $table = 'utilisateur';
     protected $primaryKey = 'id_utilisateur';
     public $timestamps = false;
@@ -26,6 +33,8 @@ class Utilisateur extends Model
     protected $hidden = [
         'mdp',
     ];
+
+
     public function messagesEnvoyes()
     {
         return $this->hasMany(Message::class, 'Id_Utilisateur');
