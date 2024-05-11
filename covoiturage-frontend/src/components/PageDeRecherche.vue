@@ -1,6 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+
+const props = defineProps({
+  domiciles: Array,
+  basesAeriennes: Array
+})
+
+const domiciles = ref(props.domiciles)
+const basesAeriennes = ref(props.basesAeriennes)
+
+const departs = computed(() => domiciles.value.slice())
+const arrives = computed(() => basesAeriennes.value.slice())
+const depart = ref("")
+const arrive = ref("")
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
@@ -12,6 +25,16 @@ const estGrise = ref(false)
 
 const basculerTypeDeTrajet = () => {
   indexTypeDeTrajetActif.value = (indexTypeDeTrajetActif.value + 1) % typesDeTrajet.value.length
+  depart.value = ""
+  arrive.value = ""
+
+  if (indexTypeDeTrajetActif.value === 0) {
+    domiciles.value = props.domiciles.slice()
+    basesAeriennes.value = props.basesAeriennes.slice()
+  } else {
+    domiciles.value = props.basesAeriennes.slice()
+    basesAeriennes.value = props.domiciles.slice()
+  }
 }
 
 const router = useRouter()
@@ -138,11 +161,17 @@ const recherche = () => {
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
-      <input type="text" class="label" id="depart-label" placeholder="Départ" />
+      <input list="liste-departs" v-model="depart" type="text" class="label" id="depart-label" placeholder="Départ" />
+      <datalist id="liste-departs">
+            <option v-for="option in departs" :value="option">{{option}}</option>
+        </datalist>
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
-      <input type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+      <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+        <datalist id="liste-arrives">
+            <option v-for="option in arrives" :value="option">{{option}}</option>
+        </datalist>
     </div>
     <div class="date-et-heure">
       <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
@@ -168,9 +197,12 @@ const recherche = () => {
 
 <script>
 export default {
+
   data() {
     return {
-      timeValue: '8:00'
+      heure: '',
+      date: '',
+      trajetRegulier: ''
     }
   }
 }

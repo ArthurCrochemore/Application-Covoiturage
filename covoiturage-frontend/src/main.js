@@ -35,7 +35,11 @@ const routes = [
 
 
 
-  { path: '/recherche', component: PageDeRecherche },
+  { path: '/recherche', component: PageDeRecherche,
+  props: route => ({
+    domiciles: route.query.domiciles,
+    basesAeriennes: route.query.basesAeriennes
+  }) },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
   props: route => ({
     ptDepart: route.query.ptDepart,

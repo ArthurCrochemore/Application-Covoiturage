@@ -24,8 +24,21 @@
     router.push({
     path: lien
   });
+}
 
-  }
+
+  const ouvrirRecherche = (lien, id) =>{
+    updateSelection(id);
+    router.push({
+    path: lien,
+    query: {
+      domiciles: ["Rue de l'Allouette, Paris",
+      "Rue de la Fortilière, St Avertin",
+      "Rue Auguste Chevalier, Tours"],
+      basesAeriennes: ["Base aerienne de Tours"]
+    }
+  });
+}
 </script>
 
 <template>
@@ -33,7 +46,7 @@
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'recherche' }"
-      @click="ouvrir('/recherche', 'recherche')"
+      @click="ouvrirRecherche('/recherche', 'recherche')"
       classe-icone="recherche"
     ></div>
     <div
