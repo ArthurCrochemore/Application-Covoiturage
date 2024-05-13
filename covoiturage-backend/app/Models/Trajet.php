@@ -9,9 +9,9 @@ class Trajet extends Model
 {
     use HasFactory;
 
-    protected $table = 'trajet'; 
+    protected $table = 'trajet';
 
-    protected $primaryKey = 'Id_Trajet'; 
+    protected $primaryKey = 'id_trajet';
 
     public $timestamps = false;
 
