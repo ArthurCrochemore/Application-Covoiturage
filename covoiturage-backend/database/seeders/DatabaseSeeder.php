@@ -2,21 +2,28 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder; 
+use App\Models\Trajet;
+use App\Models\Utilisateur;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
+   /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-    }
+        // Créer des utilisateurs
+        Utilisateur::factory(10)->create()->each(function ($utilisateur) {
+            // Créer des trajets pour chaque utilisateur
+            $trajets = Trajet::factory()->count(rand(1, 5))->make(['id_utilisateur' => $utilisateur->id]);
+            foreach ($trajets as $trajet) {
+                dump('Utilisateur: ' . $utilisateur->id . ', Trajet: ' . $trajet->id_utilisateur);
+            }
+            // Enregistrer les trajets associés à l'utilisateur
+            $utilisateur->trajets()->saveMany($trajets);
+        });
+}
 }

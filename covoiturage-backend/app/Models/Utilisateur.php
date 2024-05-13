@@ -37,38 +37,38 @@ class Utilisateur extends Model implements AuthenticatableContract
 
     public function messagesEnvoyes()
     {
-        return $this->hasMany(Message::class, 'Id_Utilisateur');
+        return $this->hasMany(Message::class, 'id_utilisateur');
     }
 
     public function messagesRecus()
     {
-        return $this->hasMany(Message::class, 'Id_Utilisateur_1');
+        return $this->hasMany(Message::class, 'id_utilisateur');
     }
 
     public function trajets()
     {
-        return $this->hasMany(Trajet::class, 'Id_Utilisateur');
+        return $this->hasMany(Trajet::class, 'id_utilisateur');
     }
 
     public function rapports()
     {
-        return $this->hasMany(Rapport::class, 'Id_Utilisateur');
+        return $this->hasMany(Rapport::class, 'id_utilisateur');
     }
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class, 'Id_Utilisateur');
+        return $this->hasMany(Reservation::class, 'id_utilisateur');
     }
 
 
     public function alertes()
     {
-        return $this->hasMany(Alerte::class, 'Id_Utilisateur');
+        return $this->hasMany(Alerte::class, 'id_utilisateur');
     }
 
 
     public function voisinage()
     {
-        return $this->hasMany(Voisinage::class, 'Id_Utilisateur');
+        return $this->hasMany(Voisinage::class, 'id_utilisateur');
     }
 }

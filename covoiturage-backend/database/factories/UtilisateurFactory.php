@@ -2,33 +2,35 @@
 
 namespace Database\Factories;
 
-
-use app\Models\Utilisateur;
-use Hamcrest\Util;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\Utilisateur;
 
 /**
- * @extends Factory<Utilisateur>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Utilisateur>
  */
 class UtilisateurFactory extends Factory
 {
-    protected $model = Utilisateur::class;
-
-    public function definition()
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
     {
+        
         return [
-            'nid' => $this->faker->unique()->regexify('[A-Za-z0-9]{10}'),
+            'nid' => $this->faker->numerify('####'),
             'nom' => $this->faker->lastName,
             'prenom' => $this->faker->firstName,
-            'unite' => $this->faker->company,
-            'numeroposte' => $this->faker->numerify('##########'),
+            'unite' => $this->faker->randomElement(['Ventes', 'Marketing', 'Finance', 'Ressources Humaines']),
+            'numeroposte' => $this->faker->numerify('####'),
             'adressepostale' => $this->faker->address,
             'tel' => $this->faker->phoneNumber,
             'mail' => $this->faker->unique()->safeEmail,
-            'coordonnees' => $this->faker->sentence,
-            'mdp' => bcrypt('password'), // Hash du mot de passe
+            'coordonnees' => $this->faker->address,
+            'mdp' => bcrypt('password'), 
+            // 'remember_token' => Str::random(10),
         ];
     }
 }

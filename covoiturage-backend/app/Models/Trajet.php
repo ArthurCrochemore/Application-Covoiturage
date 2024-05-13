@@ -7,27 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trajet extends Model
 {
-    protected $table = 'trajet'; // Nom de la table dans la base de données
+    use HasFactory;
 
-    protected $primaryKey = 'Id_Trajet'; // Clé primaire de la table
+    protected $table = 'trajet'; 
+
+    protected $primaryKey = 'Id_Trajet'; 
 
     public $timestamps = false;
 
     protected $fillable = [
-        'PointDepart',
-        'PointArrive',
-        'DateDepart',
-        'NbrePlaces',
-        'QteBagages',
-        'Desciption',
-        'TrajetRegulier',
-        'Statut',
-        'Id_Utilisateur',
+        'pointdepart',
+        'pointarrive',
+        'datedepart',
+        'nbreplaces',
+        'qtebagages',
+        'description',
+        'trajetregulier',
+        'statut',
+        'id_utilisateur',
     ];
 
     public function utilisateur()
     {
-        return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
+        return $this->belongsTo(Utilisateur::class, 'id_utilisateur');
     }
 
     public function reservations()
