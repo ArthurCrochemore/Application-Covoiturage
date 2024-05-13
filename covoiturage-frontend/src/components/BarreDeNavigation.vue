@@ -35,7 +35,14 @@
       domiciles: ["Rue de l'Allouette, Paris",
       "Rue de la Fortilière, St Avertin",
       "Rue Auguste Chevalier, Tours"],
-      basesAeriennes: ["Base aerienne de Tours"]
+      villeDomiciles : ["Paris",
+        "St Avertin",
+        "Tours"
+      ],
+      basesAeriennes: ["Base aerienne de Tours"],
+      villeBases: ["Tours"],
+      ptDepart: "",
+      ptArrive : ""
     }
   });
 }

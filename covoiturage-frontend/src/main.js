@@ -38,15 +38,21 @@ const routes = [
   { path: '/recherche', component: PageDeRecherche,
   props: route => ({
     domiciles: route.query.domiciles,
-    basesAeriennes: route.query.basesAeriennes
+    villeDomiciles: route.query.villeDomiciles,
+    basesAeriennes: route.query.basesAeriennes,
+    villeBases: route.query.villeBases,
+    ptDepart: route.query.ptDepart,
+    ptArrive: route.query.ptArrive
   }) },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
   props: route => ({
-    ptDepart: route.query.ptDepart,
-    ptArrive: route.query.ptArrive,
+    domicile: route.query.domicile,
+    villeDomicile: route.query.villeDomicile,
+    base: route.query.base,
+    villeBase: route.query.villeBase,
+    booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile,
     typeTrajet: route.query.typeTrajet,
     heure: route.query.heure,
-    directionTrajet: route.query.directionTrajet,
     resultats : route.query.resultats
   }) },
   { path: '/vos-trajets', component: PageTrajets },
