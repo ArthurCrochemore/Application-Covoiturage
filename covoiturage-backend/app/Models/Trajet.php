@@ -9,21 +9,21 @@ class Trajet extends Model
 {
     use HasFactory;
 
-    protected $table = 'trajet'; // Nom de la table dans la base de données
+    protected $table = 'trajet'; 
 
-    protected $primaryKey = 'Id_Trajet'; // Clé primaire de la table
+    protected $primaryKey = 'Id_Trajet'; 
 
     public $timestamps = false;
 
     protected $fillable = [
-        'PointDepart',
-        'PointArrive',
-        'DateDepart',
-        'NbrePlaces',
-        'QteBagages',
-        'Desciption',
-        'TrajetRegulier',
-        'Statut',
+        'pointdepart',
+        'pointarrive',
+        'datedepart',
+        'nbreplaces',
+        'qtebagages',
+        'description',
+        'trajetregulier',
+        'statut',
         'id_utilisateur',
     ];
 
