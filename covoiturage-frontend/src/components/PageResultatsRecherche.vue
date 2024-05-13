@@ -4,19 +4,41 @@ import { useRouter } from 'vue-router'
 import BlocResultatRecherche from './BlocResultatRecherche.vue'
 
 const props = defineProps({
-  ptDepart: String,
-  ptArrive: String,
+  domicile: String,
+  villeDomicile: String,
+  base: String,
+  villeBase: String,
+  booleenTrajetBaseDomicile: Boolean,
   typeTrajet: String,
-  directionTrajet: String,
   heure: String,
   resultats: Array
 })
 
+const depart = ref(props.villeDomicile)
+const arrive = ref(props.base)
+
+var directionTrajet = ref("Départ")
+if(props.booleenTrajetBaseDomicile) {
+  directionTrajet = ref("Arrivé")
+}
+
 const router = useRouter()
 const retour = () => {
   router.push({
-    path: '/recherche'
-
+    path: '/recherche',
+  query: {
+      domiciles: ["Rue de l'Allouette, Paris",
+      "Rue de la Fortilière, St Avertin",
+      "Rue Auguste Chevalier, Tours"],
+      villeDomiciles : ["Paris",
+        "St Avertin",
+        "Tours"
+      ],
+      basesAeriennes: ["Base aerienne de Tours"],
+      villeBases: ["Tours"],
+      ptDepart: props.domicile,
+      ptArrive: props.base
+    }
   });
 }
 
@@ -37,7 +59,7 @@ function alerte() {
       "
       @click="retour()"
     ></div>
-        <h1> Départ : {{ ptDepart }}  - Arrivé : {{ ptArrive }}</h1>
+        <h1> {{ depart }}  - {{ arrive }}</h1>
         <h1>{{ typeTrajet }} - {{ directionTrajet }} {{ heure }}</h1>
     </div>
     <div class="bloc-resultats-recherche">

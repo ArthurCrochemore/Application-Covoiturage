@@ -17,9 +17,9 @@ return new class extends Migration
             $table->dateTime('datereservation');
             $table->integer('statut');
             $table->integer('id_utilisateur');
-            $table->integer('id_trajet');
+            $table->integer('Id_Trajet');
             $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateur');
-            $table->foreign('id_trajet')->references('id_trajet')->on('trajet');
+            $table->foreign('Id_Trajet')->references('Id_Trajet')->on('trajet');
 
         });
     }

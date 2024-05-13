@@ -1,17 +1,42 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+
+const props = defineProps({
+  domiciles: Array,
+  villeDomiciles: Array,
+  basesAeriennes: Array,
+  villeBases: Array,
+  ptDepart: String,
+  ptArrive: String
+})
+
+const departs = ref(props.domiciles)
+const arrives = ref(props.basesAeriennes)
+
+const depart = ref(props.ptDepart)
+const arrive = ref(props.ptArrive)
 
 const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
 const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
-const indexTypeDeTrajetActif = ref(0)
+const booleenTrajetBaseDomicile = ref(0)
 
 const dateId = ref(['non-grise', 'grise'])
 const indexBouttonSwitch = ref(0)
 const estGrise = ref(false)
 
 const basculerTypeDeTrajet = () => {
-  indexTypeDeTrajetActif.value = (indexTypeDeTrajetActif.value + 1) % typesDeTrajet.value.length
+  booleenTrajetBaseDomicile.value = (booleenTrajetBaseDomicile.value + 1) % typesDeTrajet.value.length
+  depart.value = ""
+  arrive.value = ""
+
+  if (booleenTrajetBaseDomicile.value === 0) {
+    departs.value = props.domiciles.slice()
+    arrives.value = props.basesAeriennes.slice()
+  } else {
+    departs.value = props.basesAeriennes.slice()
+    arrives.value = props.domiciles.slice()
+  }
 }
 
 const router = useRouter()
@@ -117,14 +142,18 @@ const resultatsRecherche = () => {
 }
 
 const recherche = () => {
+  const trajetBaseDomicile = Boolean(booleenTrajetBaseDomicile);
+
   router.push({
     path: '/resultat-recherche',
     query: {
-      ptDepart: 'St Avertin',
-      ptArrive: 'Base Aerienne',
+      domicile: 'Rue de la Fortilière, St Avertin',
+      villeDomicile: 'St Avertin',
+      base: "Base aerienne de Tours",
+      villeBase: "Tours",
+      booleenTrajetBaseDomicile: trajetBaseDomicile,
       typeTrajet: 'Regulier',
       heure: '10h50',
-      directionTrajet: 'Arrivé',
       resultats : JSON.stringify(resultatsRecherche())
     }
   });
@@ -134,15 +163,21 @@ const recherche = () => {
 <template>
   <div class="bloc-de-recherche">
     <div class="type-de-trajet" @click="basculerTypeDeTrajet">
-      <h1 class="intitule-type-de-trajet">{{ typesDeTrajet[indexTypeDeTrajetActif] }}</h1>
+      <h1 class="intitule-type-de-trajet">{{ typesDeTrajet[booleenTrajetBaseDomicile] }}</h1>
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
-      <input type="text" class="label" id="depart-label" placeholder="Départ" />
+      <input list="liste-departs" v-model="depart" type="text" class="label" id="depart-label" placeholder="Départ" />
+      <datalist id="liste-departs">
+            <option v-for="option in departs" :value="option">{{option}}</option>
+        </datalist>
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
-      <input type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+      <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+        <datalist id="liste-arrives">
+            <option v-for="option in arrives" :value="option">{{option}}</option>
+        </datalist>
     </div>
     <div class="date-et-heure">
       <div class="bloc-date" :id="dateId[indexBouttonSwitch]">
@@ -168,9 +203,12 @@ const recherche = () => {
 
 <script>
 export default {
+
   data() {
     return {
-      timeValue: '8:00'
+      heure: '',
+      date: '',
+      trajetRegulier: ''
     }
   }
 }
