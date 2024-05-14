@@ -11,18 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trajet', function (Blueprint $table) {
-            $table->id('id_trajet');
-            $table->string('pointdepart');
-            $table->string('pointarrive');
-            $table->dateTime('datedepart');
-            $table->integer('nbreplaces');
-            $table->integer('qtebagages');
-            $table->string('description');
-            $table->boolean('trajetregulier');
-            $table->string('statut');
-            $table->integer('id_utilisateur');
-            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateur');
+        Schema::create('Trajet', function (Blueprint $table) {
+            $table->bigIncrements('Id_Trajet');
+            $table->date('Date_Depart');
+            $table->time('Heure_Depart');
+            $table->integer('Nbre_Places');
+            $table->integer('Qte_Bagages');
+            $table->string('Description', 300)->nullable();
+            $table->boolean('Trajet_Regulier');
+            $table->integer('Statut');
+            $table->boolean('Domicile_Base');
+            $table->unsignedBigInteger('Id_Domicile');
+            $table->unsignedBigInteger('Id_Base');
+            $table->unsignedBigInteger('Id_Jours')->nullable();
+            $table->unsignedBigInteger('Id_Conducteur');
+
+            $table->foreign('Id_Domicile')->references('Id_Adresse')->on('Adresse');
+            $table->foreign('Id_Base')->references('Id_Adresse')->on('Adresse');
+            $table->foreign('Id_Jours')->references('Id_Jours')->on('Jours');
+            $table->foreign('Id_Conducteur')->references('Id_Utilisateur')->on('Utilisateur');
         });
     }
 
@@ -31,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trajet');
+        Schema::dropIfExists('Trajet');
     }
 };

@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('utilisateur', function (Blueprint $table) {
-            $table->id('id_utilisateur');
-            $table->string('nid');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('unite');
-            $table->string('numeroposte');
-            $table->string('adressepostale');
-            $table->string('tel');
-            $table->string('mail');
-            $table->string('coordonnees');
-            $table->string('mdp');
+        Schema::create('Utilisateur', function (Blueprint $table) {
+            $table->id('Id_Utilisateur');
+            $table->integer('NID');
+            $table->string('Nom');
+            $table->string('Prenom');
+            $table->string('Mail');
+            $table->string('Unite');
+            $table->string('Numero_De_Poste');
+            $table->string('Numero_De_Telephone');
+            $table->string('Mot_De_Passe');
+
+
 
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('utilisateur');
+        Schema::dropIfExists('Utilisateur');
     }
 };

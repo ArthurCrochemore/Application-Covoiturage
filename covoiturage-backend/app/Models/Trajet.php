@@ -9,27 +9,35 @@ class Trajet extends Model
 {
     use HasFactory;
 
-    protected $table = 'trajet';
+    protected $table = 'Trajet';
 
-    protected $primaryKey = 'id_trajet';
+    protected $primaryKey = 'Id_Trajet';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'pointdepart',
-        'pointarrive',
-        'datedepart',
-        'nbreplaces',
-        'qtebagages',
-        'description',
-        'trajetregulier',
-        'statut',
-        'id_utilisateur',
+        'Date_Depart',
+        'Heure_Depart',
+        'Qte_Bagages',
+        'Description',
+        'Trajet_Regulier',
+        'Statut',
+        'Id_Conducteur',
+        'Id_Domicile',
+        'Id_Base',
     ];
 
     public function utilisateur()
     {
-        return $this->belongsTo(Utilisateur::class, 'id_utilisateur');
+        return $this->belongsTo(Utilisateur::class, 'Id_Conducteur');
+    }
+    public function domicile()
+    {
+        return $this->belongsTo(Adresse::class, 'Id_Adresse');
+    }
+    public function base()
+    {
+        return $this->belongsTo(Adresse::class, 'Id_Adresse');
     }
 
     public function reservations()

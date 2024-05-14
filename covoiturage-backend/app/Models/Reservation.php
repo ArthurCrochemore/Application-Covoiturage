@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    protected $table = 'reservation';
+    protected $table = 'Reservation';
 
     protected $primaryKey = 'Id_Reservation';
 
@@ -18,6 +18,7 @@ class Reservation extends Model
         'Statut',
         'Id_Utilisateur',
         'Id_Trajet',
+        'Id_Adresse',
     ];
 
     public function utilisateur()
@@ -28,5 +29,9 @@ class Reservation extends Model
     public function trajet()
     {
         return $this->belongsTo(Trajet::class, 'Id_Trajet');
+    }
+    public function adresse()
+    {
+        return $this->belongsTo(Trajet::class, 'Id_Adresse');
     }
 }

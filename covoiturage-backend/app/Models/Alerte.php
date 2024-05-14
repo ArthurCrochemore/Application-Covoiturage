@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alerte extends Model
 {
-    protected $table = 'alerte';
+    protected $table = 'Alerte';
 
     protected $primaryKey = 'Id_Alerte';
 

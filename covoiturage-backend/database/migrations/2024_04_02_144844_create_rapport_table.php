@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rapport', function (Blueprint $table) {
-            $table->id('id_rapport');
+        Schema::create('Rapport', function (Blueprint $table) {
+            $table->id('Id_Rapport');
 
-            $table->string('description');
-            $table->timestamp('daterapport');
-            $table->integer('statut');
-            $table->integer('id_utilisateur');
-            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateur');
+            $table->string('Description');
+            $table->timestamp('Date_Rapport');
+            $table->integer('Statut');
+            $table->integer('Id_Utilisateur');
+            $table->foreign('Id_Utilisateur')->references('Id_Utilisateur')->on('Utilisateur');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rapport');
+        Schema::dropIfExists('Rapport');
     }
 };
