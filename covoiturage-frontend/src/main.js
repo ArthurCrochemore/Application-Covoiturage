@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import { createMemoryHistory, createRouter } from 'vue-router'
+import { createInertiaApp } from '@inertiajs/vue3'
 
 import PageDeRecherche from './components/PageDeRecherche.vue'
 import PageResultatsRecherche from './components/PageResultatsRecherche.vue'
@@ -78,4 +79,19 @@ const router = createRouter({
   routes,
 })
 
-createApp(App).use(router).mount('#app')
+//createApp(App).use(router).mount('#app')
+
+// Initialize the Inertia app alongside your Vue Router
+createInertiaApp({
+  // Inertia setup options
+  resolve: name => {
+    const pages = import.meta.glob('./components/*.vue', { eager: true })
+    return pages[`./Pages/${name}.vue`]
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(router) // Add Vue Router to the app instance
+      .mount(el)
+  },
+})
