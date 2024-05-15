@@ -1,4 +1,5 @@
 // router/index.js
+import PageDetailTrajetConducteur from '@/components/PageDetailTrajetConducteur.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import CreationTrajet from '../components/CreationTrajet.vue'
 
@@ -8,6 +9,12 @@ const routes = [
     path: '/creation-trajet',
     name: 'CreationTrajet',
     component: CreationTrajet
+  },
+  {
+    path: '/detail-trajet-conducteur',
+    name: 'DetailTrajetConducteur',
+    component: PageDetailTrajetConducteur,
+    props: true
   }
 ]
 
