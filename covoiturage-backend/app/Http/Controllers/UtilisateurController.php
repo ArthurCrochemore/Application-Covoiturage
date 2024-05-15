@@ -38,9 +38,9 @@ class UtilisateurController extends Controller
             'Mot_De_Passe' => 'required|string|min:6|max:50',
         ]);
 
-        $validatedData['mdp'] = Hash::make($validatedData['mdp']);
+        $validatedData['Mot_De_Passe'] = Hash::make($validatedData['Mot_De_Passe']);
 
-        $utilisateur = Utilisateur::create($validatedData);
+        $Utilisateur = Utilisateur::create($validatedData);
 
         // Redirection à définir
         return redirect('/login')->with('success', 'Utilisateur créé avec succès!');
