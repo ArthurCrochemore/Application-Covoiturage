@@ -18,18 +18,16 @@ class UtilisateurFactory extends Factory
      */
     public function definition(): array
     {
-        
+
         return [
-            'nid' => $this->faker->numerify('####'),
-            'nom' => $this->faker->lastName,
-            'prenom' => $this->faker->firstName,
-            'unite' => $this->faker->randomElement(['Ventes', 'Marketing', 'Finance', 'Ressources Humaines']),
-            'numeroposte' => $this->faker->numerify('####'),
-            'adressepostale' => $this->faker->address,
-            'tel' => $this->faker->phoneNumber,
-            'mail' => $this->faker->unique()->safeEmail,
-            'coordonnees' => $this->faker->address,
-            'mdp' => bcrypt('password'), 
+            'NID' => $this->faker->numerify('####'),
+            'Nom' => $this->faker->lastName,
+            'Prenom' => $this->faker->firstName,
+            'Unite' => $this->faker->randomElement(['Ventes', 'Marketing', 'Finance', 'Ressources Humaines']),
+            'Numero_De_Poste' => $this->faker->numerify('####'),
+            'Numero_De_Telephone' => $this->faker->phoneNumber,
+            'Mail' => $this->faker->unique()->safeEmail,
+            'Mot_De_Passe' => bcrypt('password'),
             // 'remember_token' => Str::random(10),
         ];
     }

@@ -19,15 +19,16 @@ class TrajetFactory extends Factory
     public function definition(): array
     {
         return [
-            'pointdepart' => $this->faker->city,
-            'pointarrive' => $this->faker->city,
-            'datedepart' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
-            'nbreplaces' => $this->faker->numberBetween(1, 10),
-            'qtebagages' => $this->faker->numberBetween(0, 5),
-            'description' => $this->faker->sentence,
-            'trajetregulier' => $this->faker->boolean(50),
-            'statut' => $this->faker->randomElement(['en cours', 'terminé', 'annulé']),
-            'id_utilisateur' => \App\Models\Utilisateur::factory()->create()->id,
+            'Date_Depart' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
+            'Nbre_Places' => $this->faker->numberBetween(1, 10),
+            'Qte_Bagages' => $this->faker->numberBetween(0, 5),
+            'Description' => $this->faker->sentence,
+            'Trajet_Regulier' => $this->faker->boolean(50),
+            'Statut' => $this->faker->randomElement(['en cours', 'terminé', 'annulé']),
+            'Id_Conducteur' => \App\Models\Utilisateur::factory()->create()->id,
+            'Id_Domicile' => \App\Models\Adresse::factory()->create()->id,
+            'Id_Base' => \App\Models\Adresse::factory()->create()->id,
+            'Id_Jours' => \App\Models\Jours::factory()->create()->id,
         ];
     }
 }
