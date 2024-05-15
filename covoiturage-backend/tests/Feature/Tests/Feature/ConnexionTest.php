@@ -13,15 +13,15 @@ class ConnexionTest extends TestCase
 
     public function test_connexion_reussie()
     {
-        $user = Utilisateur::factory()->create([
-            'mail' => 'test@example.com',
-            'mdp' => Hash::make('password'),
+        $user = Utilisateur::factory()->createOne([
+            'Mail' => 'test@example.com',
+            'Mot_De_Passe' => Hash::make('password'),
         ]);
-        echo "Email : " . $user->mail . "\n";
+        echo "Email : " . $user->Mail . "\n";
 
         $response = $this->post('/login', [
-            'mail' => 'test@example.com',
-            'mdp' => 'password',
+            'Mail' => 'test@example.com',
+            'Mot_De_Passe' => 'password',
         ]);
 
         $response->assertRedirect('/accueil');
@@ -31,12 +31,12 @@ class ConnexionTest extends TestCase
     public function test_identifiants_incorrects()
     {
         $response = $this->post('/login',[
-            'mail' => 'test@example.com',
-            'mdp' => 'wrongpassword',
+            'Mail' => 'test@example.com',
+            'Mot_De_Passe' => 'wrongpassword',
         ]);
 
         $response->assertRedirect('/login')
-            ->assertSessionHasErrors(['mdp']);
+            ->assertSessionHasErrors(['Mot_De_Passe']);
         $this->assertGuest();
     }
 }

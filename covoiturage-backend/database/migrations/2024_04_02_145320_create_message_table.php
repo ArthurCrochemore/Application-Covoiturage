@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('message', function (Blueprint $table) {
-            $table->id('id_message');
-            $table->string('message');
-            $table->timestamp('datemessage');
-            $table->boolean('lu');
-            $table->integer('id_expediteur');
-            $table->integer('id_recepteur');
-            $table->foreign('id_expediteur')->references('id_utilisateur')->on('utilisateur');
-            $table->foreign('id_recepteur')->references('id_utilisateur')->on('utilisateur');
+        Schema::create('Message', function (Blueprint $table) {
+            $table->id('Id_Message');
+            $table->string('Message');
+            $table->timestamp('Date_Message');
+            $table->boolean('Lu');
+            $table->integer('Id_Expediteur');
+            $table->integer('Id_Recepteur');
+            $table->foreign('Id_Expediteur')->references('Id_Utilisateur')->on('Utilisateur');
+            $table->foreign('Id_Recepteur')->references('Id_Utilisateur')->on('Utilisateur');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('message');
+        Schema::dropIfExists('Message');
     }
 };

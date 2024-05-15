@@ -19,8 +19,8 @@ class Message extends Model
         'Message',
         'DateMessage',
         'Lu',
-        'Id_Utilisateur',
-        'Id_Utilisateur_1',
+        'Id_Expediteur',
+        'Id_Recepteur',
     ];
 
 
@@ -30,7 +30,7 @@ class Message extends Model
     }
 
 
-    public function destinataire()
+    public function recepteur()
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur_1');
     }

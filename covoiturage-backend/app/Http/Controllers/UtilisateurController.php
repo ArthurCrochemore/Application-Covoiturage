@@ -11,38 +11,36 @@ class UtilisateurController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('mail', 'mdp');
-        $utilisateur = Utilisateur::where('mail', $credentials['mail'])->first();
+        $credentials = $request->only('Mail', 'Mot_De_Passe');
+        $utilisateur = Utilisateur::where('Mail', $credentials['Mail'])->first();
 
-        if ($utilisateur && Hash::check($credentials['mdp'], $utilisateur->mdp)) {
+        if ($utilisateur && Hash::check($credentials['Mot_De_Passe'], $utilisateur->Mot_De_Passe)) {
             Auth::login($utilisateur);
 
             return redirect()->intended('/accueil'); // à définir pour l'url
         }
 
-        return redirect('/login')->withInput($request->only('mail'))->withErrors([
-            'mdp' => 'Email ou mot de passe incorrect.',
+        return redirect('/login')->withInput($request->only('Mail'))->withErrors([
+            'Mot_De_Passe' => 'Email ou mot de passe incorrect.',
         ]);
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nid' => 'required|string|max:10',
-            'nom' => 'required|string|max:50',
-            'prenom' => 'required|string|max:50',
-            'unite' => 'nullable|string|max:50',
-            'numeroposte' => 'nullable|string|max:10',
-            'adressepostale' => 'nullable|string|max:100',
-            'tel' => 'nullable|string|max:50',
-            'mail' => 'required|email|unique:utilisateur|max:50',
-            'coordonnees' => 'nullable|string|max:50',
-            'mdp' => 'required|string|min:6|max:50',
+            'NID' => 'required|string|max:10',
+            'Nom' => 'required|string|max:50',
+            'Prenom' => 'required|string|max:50',
+            'Unite' => 'nullable|string|max:50',
+            'Numero_De_Poste' => 'nullable|string|max:10',
+            'Numero_De_Tel' => 'nullable|string|max:50',
+            'Mail' => 'required|email|unique:utilisateur|max:50',
+            'Mot_De_Passe' => 'required|string|min:6|max:50',
         ]);
 
-        $validatedData['mdp'] = Hash::make($validatedData['mdp']);
+        $validatedData['Mot_De_Passe'] = Hash::make($validatedData['Mot_De_Passe']);
 
-        $utilisateur = Utilisateur::create($validatedData);
+        $Utilisateur = Utilisateur::create($validatedData);
 
         // Redirection à définir
         return redirect('/login')->with('success', 'Utilisateur créé avec succès!');

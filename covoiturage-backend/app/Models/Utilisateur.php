@@ -14,61 +14,57 @@ class Utilisateur extends Model implements AuthenticatableContract
 
     use HasFactory;
 
-    protected $table = 'utilisateur';
-    protected $primaryKey = 'id_utilisateur';
+    protected $table = 'Utilisateur';
+    protected $primaryKey = 'Id_Utilisateur';
     public $timestamps = false;
     protected $fillable =
         [
-        'nid',
-        'nom',
-        'prenom',
-        'unite',
-        'numeroposte',
-        'adressepostale',
-        'tel',
-        'mail',
-        'coordonnees',
-        'mdp'
+        'NID',
+        'Nom',
+        'Prenom',
+        'Unite',
+        'Numero_De_Poste',
+        'Numero_De_Telephone',
+        'Mail',
+        'Mot_De_Passe'
     ];
     protected $hidden = [
-        'mdp',
+        'Mot_De_Passe',
     ];
 
 
     public function messagesEnvoyes()
     {
-        return $this->hasMany(Message::class, 'id_utilisateur');
+        return $this->hasMany(Message::class, 'Id_Utilisateur');
     }
 
     public function messagesRecus()
     {
-        return $this->hasMany(Message::class, 'id_utilisateur');
+        return $this->hasMany(Message::class, 'Id_Utilisateur');
     }
 
     public function trajets()
     {
-        return $this->hasMany(Trajet::class, 'id_utilisateur');
+        return $this->hasMany(Trajet::class, 'Id_Utilisateur');
     }
 
     public function rapports()
     {
-        return $this->hasMany(Rapport::class, 'id_utilisateur');
+        return $this->hasMany(Rapport::class, 'Id_Utilisateur');
     }
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class, 'id_utilisateur');
+        return $this->hasMany(Reservation::class, 'Id_Utilisateur');
     }
 
 
     public function alertes()
     {
-        return $this->hasMany(Alerte::class, 'id_utilisateur');
+        return $this->hasMany(Alerte::class, 'Id_Utilisateur');
     }
-
-
-    public function voisinage()
+    public function habiter()
     {
-        return $this->hasMany(Voisinage::class, 'id_utilisateur');
+        return $this->hasMany(Habiter::class, 'Id_Utilisateur');
     }
 }

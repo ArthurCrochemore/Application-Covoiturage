@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rapport extends Model
 {
-    protected $table = 'rapport';
+    protected $table = 'Rapport';
 
     protected $primaryKey = 'Id_Rapport';
 

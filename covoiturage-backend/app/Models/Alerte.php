@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alerte extends Model
 {
-    protected $table = 'alerte';
+    protected $table = 'Alerte';
 
     protected $primaryKey = 'Id_Alerte';
 
@@ -19,6 +19,7 @@ class Alerte extends Model
         'Statut',
         'Id_Trajet',
         'Id_Utilisateur',
+        'Id_Jours'
     ];
 
     public function trajet()
@@ -31,4 +32,9 @@ class Alerte extends Model
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
     }
+    public function jours()
+    {
+        return $this->belongsTo(Jours::class, 'Id_Jours');
+    }
+
 }

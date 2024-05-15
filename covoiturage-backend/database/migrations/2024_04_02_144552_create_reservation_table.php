@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservation', function (Blueprint $table) {
-            $table->id('id_reservation');
+        Schema::create('Reservation', function (Blueprint $table) {
+            $table->id('Id_Reservation');
             $table->timestamps();
-            $table->dateTime('datereservation');
-            $table->integer('statut');
-            $table->integer('id_utilisateur');
+            $table->dateTime('Date_Reservation');
+            $table->integer('Statut');
+            $table->integer('Id_Passager');
             $table->integer('Id_Trajet');
-            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateur');
-            $table->foreign('Id_Trajet')->references('Id_Trajet')->on('trajet');
+            $table->foreign('Id_Passager')->references('Id_Utilisateur')->on('Utilisateur');
+            $table->foreign('Id_Trajet')->references('Id_Trajet')->on('Trajet');
 
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservation');
+        Schema::dropIfExists('Reservation');
     }
 };
