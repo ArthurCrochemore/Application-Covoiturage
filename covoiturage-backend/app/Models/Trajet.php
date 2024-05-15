@@ -40,6 +40,11 @@ class Trajet extends Model
         return $this->belongsTo(Adresse::class, 'Id_Adresse');
     }
 
+    public function jours()
+    {
+        return $this->belongsTo(Jours::class, 'Id_Jours');
+    }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'Id_Trajet');

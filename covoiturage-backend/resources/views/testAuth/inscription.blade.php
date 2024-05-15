@@ -29,7 +29,7 @@
 
     <div>
         <label for="nid">NID:</label>
-        <input type="text" id="nid" name="nid" value="{{ old('nid') }}" required>
+        <input type="text" id="nid" name="nid" value="{{ old('NID') }}" required>
     </div>
 
     <div>
