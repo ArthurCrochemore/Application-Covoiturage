@@ -3,6 +3,7 @@ import { ref, provide } from 'vue'
 import BarreDeNavigation from './Pages/BarreDeNavigation.vue'
 import Message from './Pages/Message.vue'
 
+
 const AfficherMessage = (message, type) => {
   showMessage.value = true;
   messageText.value = message;
@@ -21,14 +22,17 @@ provide('afficherMessageFunc', AfficherMessage);
 </script>
 
 <template>
+    <div class="main">
   <router-view ></router-view>
   <BarreDeNavigation />
   <Message v-if="showMessage" :message="messageText" :type="messageType" />
+</div>
 
 </template>
 
 
 <style scoped>
+
 header {
   line-height: 1.5;
 }
