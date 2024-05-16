@@ -83,7 +83,7 @@ function goToProposedDetails(tripId) {
   background-color: white;
   border-radius: 40px;
   padding: 20px;
-  overflow-y: auto; 
+  overflow-y: auto;
   color: black;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
