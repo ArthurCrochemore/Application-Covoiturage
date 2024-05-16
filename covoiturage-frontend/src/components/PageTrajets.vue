@@ -21,12 +21,15 @@ const proposedTrips = ref([
 const router = useRouter()
 
 function goToConductorDetails(tripId) {
-    console.log("Navigating to details with ID:", tripId);
     router.push({path: '/detail-trajet-conducteur', params: { id: tripId } });
 }
 
-function viewTripDetails(tripId) {
-  router.push({ name: 'TripDetails', params: { id: tripId } })
+function goToPassengerDetails(tripId) {
+    router.push({path: '/detail-trajet-passager', params: { id: tripId } });
+}
+
+function goToProposedDetails(tripId) {
+  router.push({path: '/detail-trajet-conducteur', params: { id: tripId } });
 }
 
 
@@ -36,7 +39,7 @@ function viewTripDetails(tripId) {
     <div class="bloc-vos-trajets">
       <section>
         <h2>Trajets Passagers</h2>
-        <div v-for="trip in passengerTrips" :key="trip.id" class="trip-item" @click="viewTripDetails(trip.id)">
+        <div v-for="trip in passengerTrips" :key="trip.id" class="trip-item" @click="goToPassengerDetails(trip.id)">
           <div class="trip-date-time"><b>{{ trip.date }} à {{ trip.time }}</b></div>
           <div class="trip-details">
             <div class="trip-route">{{ trip.from }} - {{ trip.to }}</div>
@@ -56,7 +59,7 @@ function viewTripDetails(tripId) {
       </section>
       <section>
         <h2>Proposition de trajet</h2>
-        <div v-for="trip in proposedTrips" :key="trip.id" class="trip-item" @click="viewTripDetails(trip.id)">
+        <div v-for="trip in proposedTrips" :key="trip.id" class="trip-item" @click="goToProposedDetails(trip.id)">
           <div class="trip-date-time"><b>{{ trip.date }} à {{ trip.time }}</b></div>
           <div class="trip-details">
             <div class="trip-route">{{ trip.from }} - {{ trip.to }}</div>

@@ -1,60 +1,93 @@
 <template>
-    <div class="trip-details">
-      <button class="back-button" @click="goBack">&#8678; Back</button>
-      <h1>Trip Details</h1>
-      <div class="trip-info">
-        <p><span class="label">ID:</span> {{ trip.id }}</p>
-        <p><span class="label">Date:</span> {{ trip.date }}</p>
-        <p><span class="label">Time:</span> {{ trip.time }}</p>
-        <p><span class="label">From:</span> {{ trip.from }} <span class="label">to</span> {{ trip.to }}</p>
-      </div>
+  <div class="trip-details">
+    <button class="back-button" @click="goBack">&#8678; Retour</button>
+    <h1>Trajet Conducteur</h1>
+    <div>
+      <p><span class="label">ID du trajet:</span> {{ trip.id }}</p>
+      <p><span class="label">Date:</span> {{ trip.date }}</p>
+      <p><span class="label">Départ:</span> {{ trip.timeDeparture }} {{ trip.from }}</p>
+      <p><span class="label">Arrivée:</span> {{ trip.timeArrival }} {{ trip.to }}</p>
     </div>
-  </template>
-  
-  <script setup>
-  import { onMounted, ref } from 'vue';
-  import { useRoute } from 'vue-router';
-  import { useRouter } from 'vue-router';
-  
-  const trip = ref({});
-  const route = useRoute();
-  const router = useRouter();
-  
-  onMounted(() => {
-    fetchTripDetails();
-  });
-  
-  function fetchTripDetails() {
-    const tripId = route.params.id;
-    // Exemple
-    trip.value = { id: tripId, date: '2024-01-16', time: '08:00', from: 'Paris', to: 'Lyon' };
-  }
+    <h2 class="passengers-label">Passagers</h2>
+    <div class="passenger-info" v-for="passenger in trip.passengers" :key="passenger.id">
+      <p class="name"><span class="label">Nom:</span> {{ passenger.firstName }} {{ passenger.lastName }}</p>
+      <p class="contact-info">
+        <span class="phone"><span class="label">Téléphone:</span> {{ passenger.phone }}</span>
+        <span class="route">{{ passenger.from }} - {{ passenger.to }}</span>
+      </p>
+    </div>
+    <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
+    <div class="action-buttons">
+      <button class="modify-button" @click="modifyTrip">Modifier</button>
+      <button class="delete-button" @click="deleteTrip">Supprimer</button>
+    </div>
+  </div>
+</template>
 
-  function goBack() {
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const trip = ref({});
+const route = useRoute();
+const router = useRouter();
+
+onMounted(() => {
+  fetchTripDetails();
+});
+
+function fetchTripDetails() {
+  const tripId = route.params.id;
+  trip.value = { 
+    id: tripId, 
+    date: '2024-01-16', 
+    timeDeparture: '08:00', 
+    from: 'Paris', 
+    timeArrival: '10:25', 
+    to: 'Lyon',
+    passengers: [
+      { id: 1, firstName: 'Arthur', lastName: 'Crochemore', phone: '0123456789', from: 'Paris', to: 'Lyon' },
+      { id: 2, firstName: 'Caroline', lastName: 'Petit', phone: '9876543210', from: 'Lyon', to: 'Marseille' }
+    ],
+    nbPassagers: 3,
+    nbMaxPassagers: 5
+  };
+}
+
+function goBack() {
   router.back();
 }
+
+function modifyTrip() {
+  router.push({path: '/modification-trajet'});
+}
+
+function deleteTrip() {
+  // Slay mais pas encore
+}
+
 </script>
 
-  
-  <style scoped>
-  .trip-details {
-    width: 60%;
-    height: auto;
-    position: fixed;
-    top: 150px;
-    bottom: 150px;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 40px;
-    padding: 20px;
-    overflow-y: auto;
-    color: black;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+<style scoped>
+.trip-details {
+  width: 60%;
+  height: auto;
+  position: fixed;
+  top: 150px;
+  bottom: 150px;
+  left: 20%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 40px;
+  padding: 20px;
+  overflow-y: auto; 
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .back-button {
+.back-button {
   align-self: flex-start;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -64,30 +97,102 @@
   font-size: 1rem;
   font-weight: bold;
 }
-  
-  h1 {
-    margin-bottom: 2rem;
-    color: #222;
-  }
-  
-  .trip-info {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 360px;
-  }
-  
-  .label {
-    font-weight: bold;
-    color: #555;
-  }
-  
-  p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 0.5rem;
-  }
-  </style>
-  
+
+h1 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.passengers-label {
+  margin-top: 20px;
+  font-size: 1.7rem;
+  color: #222;
+  text-align: left;
+  ;
+}
+
+.right-aligned {
+  float: right;
+  margin-right: 20px;
+}
+
+.passenger-info p {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.phone {
+  margin-right: 20px; 
+}
+
+.route {
+  text-align: right;
+  flex: 1; 
+}
+
+.passenger-info {
+  background-color: #f0f0f0; 
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc; 
+}
+
+.label {
+  font-weight: bold;
+  color: #353535;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.passenger-count {
+  text-align: right;
+  font-size: 1.1rem;
+  margin: 20px 0;
+  color: #333;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.modify-button, .delete-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modify-button {
+  background-color: #4CAF50;
+}
+
+.modify-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+</style>

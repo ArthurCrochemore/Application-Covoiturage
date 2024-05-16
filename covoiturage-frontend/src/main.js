@@ -8,8 +8,10 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import PageCreationTrajet from './components/PageCreationTrajet.vue'
 import PageDeRecherche from './components/PageDeRecherche.vue'
 import PageDetailTrajetConducteur from './components/PageDetailTrajetConducteur.vue'
+import PageDetailTrajetPassager from './components/PageDetailTrajetPassager.vue'
 import PageMessage from './components/PageMessage.vue'
 import PageModificationProfil from './components/PageModificationProfil.vue'
+import PageModificationTrajet from './components/PageModificationTrajet.vue'
 import PageProfil from './components/PageProfil.vue'
 import PageRapporterUnBug from './components/PageRapporterUnBug.vue'
 import PageResultatsRecherche from './components/PageResultatsRecherche.vue'
@@ -31,7 +33,8 @@ const routes = [
   { path: '/profil', component: PageProfil },
   { path: '/message', component: PageMessage },
   { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur },
-
+  { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
+  { path: '/modification-trajet', component: PageModificationTrajet} ,
   { path: '/modification-profil', component: PageModificationProfil,
 
   props: route => ({
