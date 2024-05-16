@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Jour;
+use App\Models\Jours;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class JourFactory extends Factory
+class JoursFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Jour::class;
+    protected $model = Jours::class;
 
     /**
      * Define the model's default state.
