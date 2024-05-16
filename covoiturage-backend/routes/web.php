@@ -16,7 +16,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return inertia::render('Test');
+    return inertia::render('App');
 });
 
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
