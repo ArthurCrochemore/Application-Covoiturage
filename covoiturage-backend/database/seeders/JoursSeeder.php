@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Trajet;
+use App\Models\Jours;
 
-class TrajetSeeder extends Seeder
+class JoursSeeder extends Seeder
 {
     public function run(): void
     {
-        Trajet::factory()->count(50)->create();
+        Jours::factory()->count(10)->create();
     }
 }

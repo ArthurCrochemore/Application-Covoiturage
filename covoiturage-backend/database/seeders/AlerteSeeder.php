@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Trajet;
+use App\Models\Alerte;
 
-class TrajetSeeder extends Seeder
+class AlerteSeeder extends Seeder
 {
     public function run(): void
     {
-        Trajet::factory()->count(50)->create();
+        Alerte::factory()->count(20)->create();
     }
 }
