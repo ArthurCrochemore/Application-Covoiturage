@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * @method static create(array $validatedData)
+ * @method static find($id)
+ */
 class Trajet extends Model
 {
     use HasFactory;

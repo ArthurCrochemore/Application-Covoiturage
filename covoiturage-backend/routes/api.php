@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\TrajetController;
+use App\Http\Controllers\AdresseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,11 @@ Route::put('/trajets/{id}', [TrajetController::class, 'updateTrajet']);
 
 // Route pour la création d'un trajet
 Route::post('/trajets', [TrajetController::class, 'createTrajet']);
+
+// Route pour recuperer tous les adresses Base Aerienne
+Route::get('/adresses/base-aerienne', [AdresseController::class, 'GetAllBaseAerienne']);
+
+//  Route pour recuperer tous les adresses Domicile
+Route::get('/adresses/domicile', [AdresseController::class, 'GetAllDomicile']);
+
 
