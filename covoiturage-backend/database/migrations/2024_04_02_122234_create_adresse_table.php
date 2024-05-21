@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('Intitule', 50);
             $table->string('Ville', 50);
             $table->boolean('Est_Base_Aerienne');
-            $table->timestamps();
+
         });
     }
 

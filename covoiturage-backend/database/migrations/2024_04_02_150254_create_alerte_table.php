@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('Statut');
             $table->boolean('Trajet_Regulier');
             $table->boolean('Domicile_Base');
-            $table->date('DateAlerteTrajet');
+            $table->date('Date_Alerte_Trajet');
             $table->unsignedBigInteger('Id_Utilisateur');
             $table->unsignedBigInteger('Id_Jours');
             $table->unsignedBigInteger('Id_Domicile');

@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use App\Models\Utilisateur;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ConnexionTest extends TestCase
 {
-
+    use DatabaseTransactions;
 
     public function test_connexion_reussie()
     {

@@ -2,35 +2,35 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Utilisateur;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Utilisateur>
- */
 class UtilisateurFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * Le nom du modèle associé à cette factory.
      *
-     * @return array<string, mixed>
+     * @var string
      */
-    public function definition(): array
+    protected $model = Utilisateur::class;
+
+    /**
+     * Définir l'état par défaut du modèle.
+     *
+     * @return array
+     */
+    public function definition()
     {
-        
         return [
-            'nid' => $this->faker->numerify('####'),
-            'nom' => $this->faker->lastName,
-            'prenom' => $this->faker->firstName,
-            'unite' => $this->faker->randomElement(['Ventes', 'Marketing', 'Finance', 'Ressources Humaines']),
-            'numeroposte' => $this->faker->numerify('####'),
-            'adressepostale' => $this->faker->address,
-            'tel' => $this->faker->phoneNumber,
-            'mail' => $this->faker->unique()->safeEmail,
-            'coordonnees' => $this->faker->address,
-            'mdp' => bcrypt('password'), 
-            // 'remember_token' => Str::random(10),
+            'NID' => $this->faker->randomNumber(),
+            'Prenom' => $this->faker->firstName,
+            'Nom' => $this->faker->lastName,
+            'Mail' => $this->faker->unique()->safeEmail,
+            'Unite' => $this->faker->word,
+            'Numero_De_Poste' => $this->faker->phoneNumber,
+            'Numero_De_Telephone' => $this->faker->phoneNumber,
+            'Mot_De_Passe' => Hash::make('password')
         ];
     }
 }

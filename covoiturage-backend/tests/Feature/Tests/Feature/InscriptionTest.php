@@ -11,7 +11,8 @@ class InscriptionTest extends TestCase
 
     public function test_creation_utilisateur()
     {
-        $response = $this->post('/utilisateur', [
+        $response = $this->withHeaders(['X-CSRF-TOKEN' => csrf_token(),])
+            ->post('/utilisateur', [
             'NID' => '1234567890',
             'Nom' => 'Doe',
             'Prenom' => 'John',

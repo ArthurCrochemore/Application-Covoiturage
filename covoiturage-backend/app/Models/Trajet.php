@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Trajet extends Model
 {
     use HasFactory;
@@ -25,32 +26,34 @@ class Trajet extends Model
         'Id_Conducteur',
         'Id_Domicile',
         'Id_Base',
+        'Nbre_Places',
+        'Domicile_Base',
     ];
 
-    public function utilisateur()
+    public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Conducteur');
     }
-    public function domicile()
+    public function domicile(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Adresse::class, 'Id_Adresse');
+        return $this->belongsTo(Adresse::class, 'Id_Domicile');
     }
-    public function base()
+    public function base(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Adresse::class, 'Id_Adresse');
+        return $this->belongsTo(Adresse::class, 'Id_Base');
     }
 
-    public function jours()
+    public function jours(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Jours::class, 'Id_Jours');
     }
 
-    public function reservations()
+    public function reservations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reservation::class, 'Id_Trajet');
     }
 
-    public function alertes()
+    public function alertes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Alerte::class, 'Id_Trajet');
     }

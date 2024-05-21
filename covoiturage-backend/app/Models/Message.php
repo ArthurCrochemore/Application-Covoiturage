@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $table = 'message';
+    use HasFactory;
+    protected $table = 'Message';
 
     protected $primaryKey = 'Id_Message';
 
@@ -17,20 +18,20 @@ class Message extends Model
 
     protected $fillable = [
         'Message',
-        'DateMessage',
+        'Date_Message',
         'Lu',
         'Id_Expediteur',
         'Id_Recepteur',
     ];
 
 
-    public function expediteur()
+    public function expediteur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
     }
 
 
-    public function recepteur()
+    public function recepteur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur_1');
     }

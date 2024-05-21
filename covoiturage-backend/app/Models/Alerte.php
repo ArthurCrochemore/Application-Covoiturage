@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alerte extends Model
 {
+    use HasFactory;
     protected $table = 'Alerte';
 
     protected $primaryKey = 'Id_Alerte';
@@ -17,24 +18,41 @@ class Alerte extends Model
 
     protected $fillable = [
         'Statut',
+        'Trajet_Regulier',
+        'Domicile_Base',
+        'Date_Alerte_Trajet',
         'Id_Trajet',
         'Id_Utilisateur',
-        'Id_Jours'
+        'Id_Jours',
+        'Id_Domicile',
+        'id_Base'
     ];
 
-    public function trajet()
+    public function trajet(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Trajet::class, 'Id_Trajet');
     }
 
 
-    public function utilisateur()
+    public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
     }
-    public function jours()
+    public function jours(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Jours::class, 'Id_Jours');
     }
+
+    public function domicile(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Adresse::class, 'Id_Domicile');
+    }
+
+    public function base(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Adresse::class, 'Id_Base');
+    }
+
+
 
 }

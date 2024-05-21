@@ -2,32 +2,47 @@
 
 namespace Database\Factories;
 
+use App\Models\Trajet;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Trajet>
- */
 class TrajetFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Trajet::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-
     public function definition(): array
     {
         return [
-            'pointdepart' => $this->faker->city,
-            'pointarrive' => $this->faker->city,
-            'datedepart' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
-            'nbreplaces' => $this->faker->numberBetween(1, 10),
-            'qtebagages' => $this->faker->numberBetween(0, 5),
-            'description' => $this->faker->sentence,
-            'trajetregulier' => $this->faker->boolean(50),
-            'statut' => $this->faker->randomElement(['en cours', 'terminé', 'annulé']),
-            'id_utilisateur' => \App\Models\Utilisateur::factory()->create()->id,
+            'Date_Depart' => $this->faker->date,
+            'Heure_Depart' => $this->faker->time('H:i'),
+            'Nbre_Places' => $this->faker->numberBetween(1, 10),
+            'Qte_Bagages' => $this->faker->numberBetween(0, 5),
+            'Description' => $this->faker->text(300),
+            'Trajet_Regulier' => $this->faker->boolean,
+            'Statut' => $this->faker->boolean,
+            'Domicile_Base' => $this->faker->boolean,
+            'Id_Domicile' => function () {
+                return \App\Models\Adresse::factory()->create()->Id_Adresse;
+            },
+            'Id_Base' => function () {
+                return \App\Models\Adresse::factory()->create()->Id_Adresse;
+            },
+            'Id_Jours' => function () {
+                return \App\Models\Jours::factory()->create()->Id_Jours;
+            },
+            'Id_Conducteur' => function () {
+                return \App\Models\Utilisateur::factory()->create()->Id_Utilisateur;
+            },
         ];
     }
 }

@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { defineProps } from 'vue'
-import { inject } from 'vue'
+import {ref} from 'vue'
+import {useRouter} from 'vue-router'
+import {defineProps} from 'vue'
+import {inject} from 'vue'
+import axios from 'axios'
 
 const afficherMessageFunc = inject('afficherMessageFunc');
 
@@ -18,22 +19,42 @@ const props = defineProps({
 
 const router = useRouter()
 
+const mailValue = ref(props.mail)
+const uniteValue = ref(props.unite)
+const numPosteValue = ref(props.numPoste)
+const prenomValue = ref(props.prenom)
+const nomFamilleValue = ref(props.nomFamille)
+const adressePostaleValue = ref(props.adressePostale)
+const telephoneValue = ref(props.telephone)
+
 const retour = () => {
   router.push({
     path: '/profil'
-
   });
-  }
+}
 
-  const valider = () => {
-  afficherMessageFunc("La demande de modification a été enregistrée avec succèes", "Succès");
-  retour();
+const valider = async () => {
+  try {
+    await axios.post('/utilisateur/update', {
+      Mail: mailValue.value,
+      Unite: uniteValue.value,
+      Numero_De_Poste: numPosteValue.value,
+      Prenom: prenomValue.value,
+      Nom: nomFamilleValue.value,
+      Adresse_Postale: adressePostaleValue.value,
+      Numero_De_Tel: telephoneValue.value,
+    });
+    afficherMessageFunc("La demande de modification a été enregistrée avec succès", "Succès");
+    retour();
+  } catch (error) {
+    afficherMessageFunc("Erreur lors de la mise à jour du profil", "Erreur");
+  }
 }
 </script>
 
 <template>
   <div class="entete">
-        <div
+    <div
       class="retour"
       style="
         background: url('src/assets/icons/fleche_retour.png');
@@ -43,7 +64,7 @@ const retour = () => {
       "
       @click="retour()"
     ></div>
-        <h1>Modification du Profil</h1>
+    <h1>Modification du Profil</h1>
   </div>
   <div class="bloc-modification-profil">
     <div class="bloc-haut"></div>
@@ -63,7 +84,8 @@ const retour = () => {
       <input type="text" class="label" id="nom-famille-label" placeholder="Nom de Famille" v-model="nomFamilleValue"/>
     </div>
     <div class="bloc-label">
-      <input type="text" class="label" id="adresse-postale-label" placeholder="Adresse Postale" v-model="adressePostaleValue"/>
+      <input type="text" class="label" id="adresse-postale-label" placeholder="Adresse Postale"
+             v-model="adressePostaleValue"/>
     </div>
     <div class="bloc-label">
       <input type="text" class="label" id="telephone-label" placeholder="Téléphone" v-model="telephoneValue"/>
@@ -71,34 +93,15 @@ const retour = () => {
 
     <div class="boutons">
       <div class="valider"
-          @click="valider"><p class="intitule-valider">Valider</p></div>
+           @click="valider"><p class="intitule-valider">Valider</p></div>
     </div>
   </div>
 </template>
 
-<script>
-
-export default {
-    name: 'BlocModificationProfil',
-    data() {
-        return {
-          mailValue: this.mail,
-          uniteValue: this.unite,
-          numPosteValue: this.numPoste,
-          prenomValue: this.prenom,
-          nomFamilleValue: this.nomFamille,
-          adressePostaleValue: this.adressePostale,
-          telephoneValue: this.telephone
-                }
-      }
-
-}
-</script>
-
 <style scoped>
 .entete {
-    width: 100%;
-    height: 100px;
+  width: 100%;
+  height: 100px;
   background-color: white;
   position: fixed;
   top: 0;
@@ -108,18 +111,18 @@ export default {
 }
 
 .retour {
-    width : 60px;
-    height: 60px;
-    top : 20px;
-    left : 20px;
-    position : absolute;
+  width: 60px;
+  height: 60px;
+  top: 20px;
+  left: 20px;
+  position: absolute;
 }
 
 .entete > h1 {
-    width : 100%;
-    color : black;
-    text-align: center;
-    margin : auto;
+  width: 100%;
+  color: black;
+  text-align: center;
+  margin: auto;
 }
 
 .bloc-modification-profil {
@@ -132,7 +135,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: white;
-    border-radius: 40px;
+  border-radius: 40px;
 }
 
 .bloc-haut {
@@ -141,7 +144,7 @@ export default {
 
 .bloc-label {
   display: flex;
-  width : 90%;
+  width: 90%;
   padding-left: 7.5%;
   height: 8%;
 }
@@ -157,7 +160,7 @@ export default {
 .boutons {
   display: flex;
   flex-direction: row;
-  height : 50px;
+  height: 50px;
   width: 80%;
   justify-content: right;
   margin-top: auto;
@@ -170,68 +173,72 @@ export default {
   border-radius: 10px;
 }
 
-p{
-  color : black;
+p {
+  color: black;
   text-align: center;
   font-size: 20px;
 }
 
 @media (max-height: 750px) {
-    .entete {
-        height: 60px;
-    }
-    .retour {
-        background-size: 30px 30px;
+  .entete {
+    height: 60px;
+  }
 
-    }
-    .entete > h1 {
-        font-size: medium;
-        width : 100%;
-        color : black;
-        text-align: center;
-    }
-    .bloc-modification-profil {
-        bottom: 80px;
-        top: 80px;
-    }
+  .retour {
+    background-size: 30px 30px;
+
+  }
+
+  .entete > h1 {
+    font-size: medium;
+    width: 100%;
+    color: black;
+    text-align: center;
+  }
+
+  .bloc-modification-profil {
+    bottom: 80px;
+    top: 80px;
+  }
 }
 
-@media (max-width : 1300px) {
-    .bloc-modification-profil {
-        width: 70%;
-        left: 15%;
-    }
+@media (max-width: 1300px) {
+  .bloc-modification-profil {
+    width: 70%;
+    left: 15%;
+  }
 }
 
-@media (max-width : 900px) {
-    .bloc-modification-profil {
-        width: 80%;
-        left: 10%;
-    }
+@media (max-width: 900px) {
+  .bloc-modification-profil {
+    width: 80%;
+    left: 10%;
+  }
 }
 
-@media (max-width : 800px) {
-    .bloc-modification-profil {
-        width: 85%;
-        left: 7.5%;
-    }
+@media (max-width: 800px) {
+  .bloc-modification-profil {
+    width: 85%;
+    left: 7.5%;
+  }
 }
 
-@media (max-width : 700px) {
-    .bloc-modification-profil {
-        width: 90%;
-        left: 5%;
-    }
-    .entete > h1 {
-        font-size: 20px;
-        margin: auto 0;
-    }
+@media (max-width: 700px) {
+  .bloc-modification-profil {
+    width: 90%;
+    left: 5%;
+  }
+
+  .entete > h1 {
+    font-size: 20px;
+    margin: auto 0;
+  }
 }
 
-@media (max-width : 600px) {
-    .bloc-modification-profil {
-        width: 96%;
-        left: 2%;
-    }
+@media (max-width: 600px) {
+  .bloc-modification-profil {
+    width: 96%;
+    left: 2%;
+  }
 }
 </style>

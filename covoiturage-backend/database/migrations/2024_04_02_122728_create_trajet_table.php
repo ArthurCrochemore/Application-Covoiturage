@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('Qte_Bagages');
             $table->string('Description', 300)->nullable();
             $table->boolean('Trajet_Regulier');
-            $table->integer('Statut');
+            $table->boolean('Statut');
             $table->boolean('Domicile_Base');
             $table->unsignedBigInteger('Id_Domicile');
             $table->unsignedBigInteger('Id_Base');

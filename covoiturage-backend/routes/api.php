@@ -27,6 +27,6 @@ Route::get('/trajets/{id}', [TrajetController::class, 'getTrajet']);
 // Route pour mettre à jour un trajet par son ID
 Route::put('/trajets/{id}', [TrajetController::class, 'updateTrajet']);
 
-// Définir la route pour la création d'un trajet
+// Route pour la création d'un trajet
 Route::post('/trajets', [TrajetController::class, 'createTrajet']);
 
