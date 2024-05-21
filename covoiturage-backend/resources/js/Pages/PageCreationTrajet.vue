@@ -2,18 +2,20 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const dateId = ref(['non-grise', 'grise'])
-const indexBouttonSwitch = ref(0)
-const estGrise = ref(false)
+import {Inertia} from '@inertiajs/inertia'
 
 const router = useRouter()
 
-const trajetRegulier = ref()
-const bagage = ref()
-const nombrePassagers = ref()
-const description = ref()
-const date = ref()
-const heure = ref()
+const trajetRegulier = ref(false)
+const bagage = ref('Beaucoup')
+const nombrePassagers = ref(0)
+const description = ref('')
+const date = ref('')
+const heure = ref('')
+
+const dateId = ref(['non-grise', 'grise'])
+const indexBouttonSwitch = ref(0)
+const estGrise = ref(false)
 
 const changerIdGrise = () => {
     indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
@@ -27,11 +29,29 @@ const inversionDepartArrivee = () => {
     document.getElementById('arrive-label').value = depart;
 }
 
-const suivant = () => {
-    router.push({
-        path: '/creation-suivant'
-    });
-}
+const creerTrajet = () => {
+    // Création d'un objet contenant les données du trajet à envoyer
+    const trajetData = {
+        DateDepart: date.value,
+        HeureDepart: heure.value,
+        NbrePlaces: nombrePassagers.value,
+        QteBagages: bagage.value,
+        Description: description.value,
+        TrajetRegulier: trajetRegulier.value,
+        Statut: 0,
+        DomicileBase: false, 
+        IdDomicile: 1, 
+        IdBase: 1, 
+        IdJours: [0,0,0,0,0,0,0], 
+        IdConducteur: 1,
+    };
+
+    // Envoi de la requête POST à l'URL spécifiée avec les données du trajet
+    Inertia.post('/api/trajets', trajetData)
+    .then(() => router.push('/creation-suivant'))
+    .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
+       
+};
 
 </script>
 
@@ -71,27 +91,27 @@ const suivant = () => {
             </div>
         </div>
         <div v-if="trajetRegulier" class="switch-container" id="switchregulier">
-            <input type="checkbox" id="lundi" class="checkbox-input">
+            <input type="checkbox" id="lundi" class="checkbox-input" value="1">
             <label for="lundi" class="checkbox-label2">Lundi</label>
-            <input type="checkbox" id="mardi" class="checkbox-input">
+            <input type="checkbox" id="mardi" class="checkbox-input" value="1">
             <label for="mardi" class="checkbox-label2">Mardi</label>
-            <input type="checkbox" id="mercredi" class="checkbox-input">
+            <input type="checkbox" id="mercredi" class="checkbox-input" value="1">
             <label for="mercredi" class="checkbox-label2">Mercredi</label>
-            <input type="checkbox" id="jeudi" class="checkbox-input">
+            <input type="checkbox" id="jeudi" class="checkbox-input" value="1">
             <label for="jeudi" class="checkbox-label2">Jeudi</label>
-            <input type="checkbox" id="vendredi" class="checkbox-input">
+            <input type="checkbox" id="vendredi" class="checkbox-input" value="1">
             <label for="vendredi" class="checkbox-label2">Vendredi</label>
-            <input type="checkbox" id="samedi" class="checkbox-input">
+            <input type="checkbox" id="samedi" class="checkbox-input" value="1">
             <label for="samedi" class="checkbox-label2">Samedi</label>
-            <input type="checkbox" id="dimanche" class="checkbox-input">
+            <input type="checkbox" id="dimanche" class="checkbox-input" value="1">
             <label for="dimanche" class="checkbox-label2">Dimanche</label>
         </div>
 
         <div class="bagage">
             <select class="select-bagage" v-model="bagage">
-                <option value="Beaucoup">Beaucoup</option>
-                <option value="Moyen">Moyen</option>
-                <option value="Peu">Peu</option>
+                <option value="1">Beaucoup</option>
+                <option value="2">Moyen</option>
+                <option value="3">Peu</option>
             </select>
             <label class="checkbox-label">Bagages</label>
         </div>
@@ -104,7 +124,7 @@ const suivant = () => {
             <label class="checkbox-label">Description:</label>
             <textarea class="text-area" v-model="description"></textarea>
         </div>
-        <div class="suivant" @click="suivant">
+        <div class="suivant" @click="creerTrajet">
             <p class="intitule-suivant">Suivant</p>
         </div>
     </div>
