@@ -8,6 +8,12 @@ const estGrise = ref(false)
 
 const router = useRouter()
 
+const trajetRegulier = ref()
+const bagage = ref()
+const nombrePassagers = ref()
+const description = ref()
+const date = ref()
+const heure = ref()
 
 const changerIdGrise = () => {
     indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
@@ -53,7 +59,7 @@ const suivant = () => {
                 </div>
                 <p class="intitule-trajet-regulier">Trajet Regulier</p>
             </div>
-            
+
         </div>
 
         <div class="date-et-heure">
@@ -145,7 +151,7 @@ const suivant = () => {
 }
 
 .icone-map {
-    background: url('src/assets/icons/navigation-map-marker.png');
+    background: url('assets/icons/navigation-map-marker.png');
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: center;
@@ -154,7 +160,7 @@ const suivant = () => {
 }
 
 .icone-arrows {
-    background: url('src/assets/icons/fleches-bidirection.png');
+    background: url('assets/icons/fleches-bidirection.png');
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: center;
@@ -261,7 +267,7 @@ input[type="time"] {
 }
 
 .icone-date {
-    background: url('src/assets/icons/recherche-calendrier.png');
+    background: url('assets/icons/recherche-calendrier.png');
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: center;
@@ -272,7 +278,7 @@ input[type="time"] {
 }
 
 .icone-heure {
-    background: url('src/assets/icons/recherche-horloge.png');
+    background: url('assets/icons/recherche-horloge.png');
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: center;

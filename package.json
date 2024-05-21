@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "vue": "^3.4.22",
+    "vue": "^3.4.25",
     "vue-cli-plugin-pwa": "^4.6.0"
   }
 }

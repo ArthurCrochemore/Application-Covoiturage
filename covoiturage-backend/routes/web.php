@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return inertia::render('App');
 });
 
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
