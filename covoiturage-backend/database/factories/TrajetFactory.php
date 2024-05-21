@@ -24,12 +24,12 @@ class TrajetFactory extends Factory
     {
         return [
             'Date_Depart' => $this->faker->date,
-            'Heure_Depart' => $this->faker->time,
+            'Heure_Depart' => $this->faker->time('H:i'),
             'Nbre_Places' => $this->faker->numberBetween(1, 10),
             'Qte_Bagages' => $this->faker->numberBetween(0, 5),
             'Description' => $this->faker->text(300),
             'Trajet_Regulier' => $this->faker->boolean,
-            'Statut' => $this->faker->randomElement(['En cours', 'Terminé', 'Annulé']),
+            'Statut' => $this->faker->boolean,
             'Domicile_Base' => $this->faker->boolean,
             'Id_Domicile' => function () {
                 return \App\Models\Adresse::factory()->create()->Id_Adresse;

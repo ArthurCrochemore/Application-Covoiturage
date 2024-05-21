@@ -25,6 +25,8 @@ class Trajet extends Model
         'Id_Conducteur',
         'Id_Domicile',
         'Id_Base',
+        'Nbre_Places',
+        'Domicile_Base',
     ];
 
     public function utilisateur()
