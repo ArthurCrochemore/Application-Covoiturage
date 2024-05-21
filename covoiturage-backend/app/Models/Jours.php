@@ -22,4 +22,5 @@ class Jours extends Model
         'Samedi',
         'Dimanche',
     ];
+    public $timestamps = false;
 }

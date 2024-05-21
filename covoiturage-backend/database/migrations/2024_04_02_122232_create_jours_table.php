@@ -20,7 +20,6 @@ return new class extends Migration
             $table->boolean('Vendredi');
             $table->boolean('Samedi');
             $table->boolean('Dimanche');
-            $table->timestamps();
         });
     }
 

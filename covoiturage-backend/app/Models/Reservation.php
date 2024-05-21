@@ -35,4 +35,14 @@ class Reservation extends Model
     {
         return $this->belongsTo(Trajet::class, 'Id_Adresse');
     }
+
+    /**
+     * @return bool
+     */
+    public function isTimestamps(): bool
+    {
+        return $this->timestamps;
+    }
+
+
 }

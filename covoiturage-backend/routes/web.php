@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,3 +27,8 @@ Route::post('/utilisateur', [UtilisateurController::class, 'store']);
 Route::get('/accueil', function () {return view('testAuth.accueil');})->name('accueil');
 
 Route::post('/utilisateur', [UtilisateurController::class, 'store'])->name('inscription');
+
+Route::post('/reserver-trajet', [ReservationController::class, 'ReserverTrajet']);
+Route::get('/test-timezone', function () {
+    return now()->toTimeString();
+});

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('Rapport', function (Blueprint $table) {
             $table->id('Id_Rapport');
-
             $table->string('Description');
-            $table->timestamp('Date_Rapport');
+            $table->DateTime('Date_Rapport');
             $table->integer('Statut');
             $table->integer('Id_Utilisateur');
             $table->foreign('Id_Utilisateur')->references('Id_Utilisateur')->on('Utilisateur');
