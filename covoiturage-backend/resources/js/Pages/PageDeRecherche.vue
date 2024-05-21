@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted  } from 'vue'
+import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
@@ -48,7 +49,9 @@ const changerIdGrise = () => {
 
 const resultatsRecherche = () => {
   return [
-    {
+
+  {
+      idTrajet: 1,
       ptDepart: "Paris",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
@@ -58,6 +61,7 @@ const resultatsRecherche = () => {
       uniteConducteur: "67890"
     },
     {
+      idTrajet: 1,
       ptDepart: "St Avertin",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
@@ -67,6 +71,38 @@ const resultatsRecherche = () => {
       uniteConducteur: "9076908769"
     },
     {
+      idTrajet: 1,
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      idTrajet: 1,
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+      idTrajet: 1,
+      ptDepart: "Paris",
+      ptArrive: "Base Aérienne",
+      typeTrajet: "Régulier",
+      heureDepart: "",
+      heureArrive: "10h45",
+      nomConducteur: "John",
+      uniteConducteur: "67890"
+    },
+    {
+
+      idTrajet: 1,
       ptDepart: "Paris",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
@@ -94,6 +130,8 @@ const resultatsRecherche = () => {
       uniteConducteur: "67890"
     },
     {
+
+      idTrajet: 1,
       ptDepart: "Paris",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
@@ -103,33 +141,8 @@ const resultatsRecherche = () => {
       uniteConducteur: "67890"
     },
     {
-      ptDepart: "Paris",
-      ptArrive: "Base Aérienne",
-      typeTrajet: "Régulier",
-      heureDepart: "",
-      heureArrive: "10h45",
-      nomConducteur: "John",
-      uniteConducteur: "67890"
-    },
-    {
-      ptDepart: "Paris",
-      ptArrive: "Base Aérienne",
-      typeTrajet: "Régulier",
-      heureDepart: "",
-      heureArrive: "10h45",
-      nomConducteur: "John",
-      uniteConducteur: "67890"
-    },
-    {
-      ptDepart: "Paris",
-      ptArrive: "Base Aérienne",
-      typeTrajet: "Régulier",
-      heureDepart: "",
-      heureArrive: "10h45",
-      nomConducteur: "John",
-      uniteConducteur: "67890"
-    },
-    {
+
+      idTrajet: 1,
       ptDepart: "Paris",
       ptArrive: "Base Aérienne",
       typeTrajet: "Régulier",
@@ -141,8 +154,19 @@ const resultatsRecherche = () => {
   ];
 }
 
+const fetchTrajets = async () => {
+  try {
+    const response = await axios.get('/api/trajets')
+    resultatsRecherche.value = response.data
+  } catch (error) {
+    console.error('Error fetching trajets:', error)
+  }
+}
+
 const recherche = () => {
   const trajetBaseDomicile = Boolean(booleenTrajetBaseDomicile);
+
+    // TODO : recuperer donnees
 
   router.push({
     path: '/resultat-recherche',
@@ -154,10 +178,14 @@ const recherche = () => {
       booleenTrajetBaseDomicile: trajetBaseDomicile,
       typeTrajet: 'Regulier',
       heure: '10h50',
-      resultats : JSON.stringify(resultatsRecherche())
+      resultats : JSON.stringify(resultatsRecherche())//resultatsRecherche.value)
     }
   });
 }
+
+onMounted(() => {
+  fetchTrajets()
+})
 </script>
 
 <template>

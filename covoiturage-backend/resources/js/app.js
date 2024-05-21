@@ -19,6 +19,11 @@ import PageMessage from './Pages/PageMessage.vue'
 import PageModificationProfil from './Pages/PageModificationProfil.vue'
 import PageRapporterUnBug from './Pages/PageRapporterUnBug.vue'
 
+import PageModificationTrajet from './Pages/PageModificationTrajet.vue'
+import PageDetailTrajetConducteur from './Pages/PageDetailTrajetConducteur.vue'
+import PageDetailTrajetPassager from './Pages/PageDetailTrajetPassager.vue'
+import PageDetailTrajetReservation from './Pages/PageDetailTrajetReservation.vue'
+
 import PageConnexion from './Pages/PageConnexion.vue'
 import PageInscriptionPage1 from './Pages/PageInscriptionPage1.vue'
 import PageInscriptionPage2 from './Pages/PageInscriptionPage2.vue'
@@ -74,7 +79,12 @@ const routes = [
     adressePostale: route.query.adressePostale,
     telephone: route.query.telephone
   }) },
-  { path: '/rapport-bug', component: PageRapporterUnBug }
+  { path: '/rapport-bug', component: PageRapporterUnBug },
+
+  { path: '/modification-trajet', component: PageModificationTrajet },
+  { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur },
+  { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
+  { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation }
 ]
 
 const router = createRouter({

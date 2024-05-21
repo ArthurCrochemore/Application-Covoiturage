@@ -14,7 +14,7 @@ class TrajetController extends Controller
     {
         // Récupérer tous les trajets à partir du modèle Trajet
         $trajets = Trajet::all();
-        
+
         // Retourner les trajets en tant que réponse JSON
         return response()->json($trajets);
     }
@@ -42,7 +42,7 @@ class TrajetController extends Controller
      {
         // Utiliser le modèle Trajet pour trouver le trajet par son ID
     $trajet = Trajet::find($id);
-   
+
     // Vérifier si le trajet a été trouvé
     if ($trajet) {
         // Mettre à jour les attributs du trajet avec les données de la requête
@@ -74,10 +74,10 @@ class TrajetController extends Controller
         if ($request->has('id_utilisateur')) {
             $trajet->id_utilisateur = $request->input('id_utilisateur');
         }
-        
+
         // Enregistrer les modifications dans la base de données
         $trajet->save();
-        
+
         // Retourner une réponse JSON indiquant que le trajet a été mis à jour avec succès
         return response()->json(['message' => 'Trajet mis à jour avec succès'], Response::HTTP_OK);
     } else {
@@ -127,4 +127,4 @@ public function createTrajet(Request $request)
 }
 
 
-} 
+}
