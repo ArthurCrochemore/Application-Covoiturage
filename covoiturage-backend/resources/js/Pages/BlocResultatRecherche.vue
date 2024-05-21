@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
-  id: String,
+  idTrajet : Int16Array,
   ptDepart: String,
   ptArrive: String,
   typeTrajet: String,
@@ -13,13 +13,12 @@ const props = defineProps({
   uniteConducteur: String
 })
 
+const idTrajet = ref(props.idTrajet)
+
 const router = useRouter()
 
 const ouvrir = () => {
-  router.push({
-    path: '/'
-
-  });
+    router.push({path: '/detail-trajet-reservation', params: { id: idTrajet } });
 }
 
 </script>

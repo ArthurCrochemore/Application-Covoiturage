@@ -66,6 +66,7 @@ function alerte() {
       <BlocResultatRecherche
             v-for="(resultat, index) in JSON.parse(resultats)"
             :key="index"
+            :idTrajet="resultat.idTrajet"
             :ptDepart="resultat.ptDepart"
             :ptArrive="resultat.ptArrive"
             :typeTrajet="resultat.typeTrajet"
