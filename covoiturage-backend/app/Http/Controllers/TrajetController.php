@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Trajet;
+use App\Models\Adresse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +36,8 @@ class TrajetController extends Controller
             return response()->json(['message' => 'Trajet non trouvé'], Response::HTTP_NOT_FOUND);
         }
     }
+
+   
 
 
     public function updateTrajet(Request $request, $id)
