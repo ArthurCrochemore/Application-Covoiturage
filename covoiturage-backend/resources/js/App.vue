@@ -22,7 +22,8 @@ provide('afficherMessageFunc', AfficherMessage);
 </script>
 
 <template>
-    <div class="main">
+    <div class="app-container">
+    <div class="background"></div>
   <router-view ></router-view>
   <BarreDeNavigation />
   <Message v-if="showMessage" :message="messageText" :type="messageType" />
@@ -32,6 +33,26 @@ provide('afficherMessageFunc', AfficherMessage);
 
 
 <style scoped>
+.app-container {
+  position: relative;
+}
+
+.app-container > p, .app-container > h1, .app-container > h2, .app-container > h3 {
+    font-size: medium;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+  z-index: -1;
+}
+body {
+    background-color: aquamarine;
+}
 
 header {
   line-height: 1.5;
