@@ -36,6 +36,6 @@ Route::get('/test-timezone', function () {
 // Routes pour la modification du profil utilisateur
 Route::middleware('auth')->group(function () {
     Route::get('/utilisateur/profil', [UtilisateurController::class, 'edit'])->name('utilisateur.edit'); // Page de modification de profil
-    Route::post('/utilisateur/update/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateur.update'); // Soumet les modifications de profil
+    Route::post('/utilisateur/update', [UtilisateurController::class, 'update'])->name('utilisateur.update'); // Soumet les modifications de profil
 });
 
