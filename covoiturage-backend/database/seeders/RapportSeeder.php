@@ -9,6 +9,6 @@ class RapportSeeder extends Seeder
 {
     public function run(): void
     {
-        Rapport::factory()->count(30)->create();
+        Rapport::factory()->count(3)->create();
     }
 }

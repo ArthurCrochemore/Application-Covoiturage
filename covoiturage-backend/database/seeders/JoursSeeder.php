@@ -9,6 +9,6 @@ class JoursSeeder extends Seeder
 {
     public function run(): void
     {
-        Jours::factory()->count(10)->create();
+        Jours::factory()->count(3)->create();
     }
 }

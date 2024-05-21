@@ -9,6 +9,6 @@ class ReservationSeeder extends Seeder
 {
     public function run(): void
     {
-        Reservation::factory()->count(50)->create();
+        Reservation::factory()->count(3)->create();
     }
 }

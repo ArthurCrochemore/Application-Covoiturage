@@ -20,7 +20,7 @@ class TrajetFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'Date_Depart' => $this->faker->date,

@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Validator;
 
 class TrajetController extends Controller
 {
-    public function getAllTrajets()
+    public function getAllTrajets(): \Illuminate\Http\JsonResponse
     {
         // Récupérer tous les trajets à partir du modèle Trajet
         $trajets = Trajet::all();
-        
+
         // Retourner les trajets en tant que réponse JSON
         return response()->json($trajets);
     }
 
 
     // Méthode pour récupérer un trajet par son ID
-    public function getTrajet($id)
+    public function getTrajet($id): \Illuminate\Http\JsonResponse
     {
         // Utiliser le modèle Trajet pour trouver le trajet par son ID
         $trajet = Trajet::find($id);
@@ -38,11 +38,11 @@ class TrajetController extends Controller
 
 
      // Méthode pour mettre à jour un trajet par son ID
-     public function updateTrajet(Request $request, $id)
+     public function updateTrajet(Request $request, $id): \Illuminate\Http\JsonResponse
      {
         // Utiliser le modèle Trajet pour trouver le trajet par son ID
     $trajet = Trajet::find($id);
-   
+
     // Vérifier si le trajet a été trouvé
     if ($trajet) {
         // Mettre à jour les attributs du trajet avec les données de la requête
@@ -74,10 +74,10 @@ class TrajetController extends Controller
         if ($request->has('id_utilisateur')) {
             $trajet->id_utilisateur = $request->input('id_utilisateur');
         }
-        
+
         // Enregistrer les modifications dans la base de données
         $trajet->save();
-        
+
         // Retourner une réponse JSON indiquant que le trajet a été mis à jour avec succès
         return response()->json(['message' => 'Trajet mis à jour avec succès'], Response::HTTP_OK);
     } else {
@@ -89,7 +89,7 @@ class TrajetController extends Controller
     }
 
     // Méthode pour la création d'un trajet
-public function createTrajet(Request $request)
+public function createTrajet(Request $request): \Illuminate\Http\JsonResponse
 {
     // Validation des données
     $validator = Validator::make($request->all(), [
@@ -127,4 +127,4 @@ public function createTrajet(Request $request)
 }
 
 
-} 
+}
