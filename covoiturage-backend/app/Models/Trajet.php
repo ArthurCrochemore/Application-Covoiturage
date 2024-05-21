@@ -53,4 +53,10 @@ class Trajet extends Model
     {
         return $this->hasMany(Alerte::class, 'Id_Trajet');
     }
+
+    public function jours()
+    {
+        return $this->belongsTo(Jours::class, 'Id_Jours');
+    }
+
 }

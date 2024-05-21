@@ -40,7 +40,6 @@ class TrajetController extends Controller
 
    
 
-
     public function updateTrajet(Request $request, $id)
     {
         try {
@@ -56,29 +55,52 @@ class TrajetController extends Controller
                 'Domicile_Base' => 'required|boolean',
                 'Id_Domicile' => 'required|exists:Adresse,Id_Adresse',
                 'Id_Base' => 'required|exists:Adresse,Id_Adresse',
-                'Id_Jours' => 'nullable|exists:Jours,Id_Jours',
+                'Id_Jours' => 'nullable|array|size:7',
+                'Id_Jours.*' => 'required|boolean',
                 'Id_Conducteur' => 'required|exists:Utilisateur,Id_Utilisateur',
             ]);
-
-           
-            $trajet = Trajet::find($id);
+    
             
+            $trajet = Trajet::find($id);
+    
             // Dans le cas où le trajet n'est pas trouvé
             if (!$trajet) {
                 return response()->json(['message' => 'Trajet not found'], 404);
             }
+    
+            // Recuperer l'ID du jour associé au trajet
+            $idJour = $trajet->Id_Jours;
+    
             
-
-            // Mise à jour avec les données validées
+            $jours = Jours::find($idJour);
+    
+            // Mise a jour du jour
+            if ($jours && !is_null($validatedData['Id_Jours'])) {
+                $jours->update([
+                    'Lundi' => $validatedData['Id_Jours'][0],
+                    'Mardi' => $validatedData['Id_Jours'][1],
+                    'Mercredi' => $validatedData['Id_Jours'][2],
+                    'Jeudi' => $validatedData['Id_Jours'][3],
+                    'Vendredi' => $validatedData['Id_Jours'][4],
+                    'Samedi' => $validatedData['Id_Jours'][5],
+                    'Dimanche' => $validatedData['Id_Jours'][6],
+                ]);
+    
+                
+                $validatedData['Id_Jours'] = $jours->Id_Jours;
+            }
+    
+            
             $trajet->update($validatedData);
-
-            
+    
+           
             return response()->json(['message' => 'Trajet updated successfully'], 200);
         } catch (\Exception $e) {
             
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+    
 
 
     public function createTrajet(Request $request)
