@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Trajet;
 use App\Models\Adresse;
+use App\Models\Jours;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +84,7 @@ class TrajetController extends Controller
     public function createTrajet(Request $request)
     {
         try {
-            // Assurer que les données sont valides
+            // Assurer que les donnes sont valide 
             $validatedData = $request->validate([
                 'Date_Depart' => 'required|date',
                 'Heure_Depart' => 'required|date_format:H:i',
@@ -95,21 +96,37 @@ class TrajetController extends Controller
                 'Domicile_Base' => 'required|boolean',
                 'Id_Domicile' => 'required|exists:Adresse,Id_Adresse',
                 'Id_Base' => 'required|exists:Adresse,Id_Adresse',
-                'Id_Jours' => 'nullable|exists:Jours,Id_Jours',
+                'Id_Jours' => 'required|array|size:7',
+                'Id_Jours.*' => 'required|boolean',
                 'Id_Conducteur' => 'required|exists:Utilisateur,Id_Utilisateur',
             ]);
     
-            // Créer un nouveau trajet avec les données validées
+            // Cree un Jour
+            $joursData = [
+                'Lundi' => $validatedData['Id_Jours'][0],
+                'Mardi' => $validatedData['Id_Jours'][1],
+                'Mercredi' => $validatedData['Id_Jours'][2],
+                'Jeudi' => $validatedData['Id_Jours'][3],
+                'Vendredi' => $validatedData['Id_Jours'][4],
+                'Samedi' => $validatedData['Id_Jours'][5],
+                'Dimanche' => $validatedData['Id_Jours'][6],
+            ];
+            $jours = Jours::create($joursData);
+    
+            
+            $validatedData['Id_Jours'] = $jours->Id_Jours;
+    
+            // Creation du trajet
             $trajet = Trajet::create($validatedData);
     
-          
+            
             return response()->json([], 201);
-
         } catch (\Exception $e) {
-            // Capturer et retourner les erreurs
+            
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+    
     
 
 
