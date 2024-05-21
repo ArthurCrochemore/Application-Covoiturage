@@ -37,7 +37,7 @@ class TrajetController extends Controller
         }
     }
 
-   
+
 
 
      // Méthode pour mettre à jour un trajet par son ID
