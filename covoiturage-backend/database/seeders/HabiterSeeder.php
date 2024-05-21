@@ -9,6 +9,6 @@ class HabiterSeeder extends Seeder
 {
     public function run(): void
     {
-        Habiter::factory()->count(50)->create();
+        Habiter::factory()->count(3)->create();
     }
 }

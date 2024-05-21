@@ -14,4 +14,6 @@ class Adresse extends Model
     protected $primaryKey = 'Id_Adresse';
     protected $fillable = ['Intitule', 'Ville', 'Est_Base_Aerienne'];
 
+    public $timestamps = false;
+
 }
