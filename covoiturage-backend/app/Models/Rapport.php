@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rapport extends Model
 {
+    use HasFactory;
     protected $table = 'Rapport';
 
     protected $primaryKey = 'Id_Rapport';
@@ -15,12 +16,12 @@ class Rapport extends Model
 
     protected $fillable = [
         'Description',
-        'DateRapport',
-        'Status',
+        'Date_Rapport',
+        'Statut',
         'Id_Utilisateur',
     ];
 
-    public function utilisateur()
+    public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Utilisateur::class, 'Id_Utilisateur');
     }

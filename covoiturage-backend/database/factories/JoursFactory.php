@@ -5,21 +5,24 @@ namespace Database\Factories;
 use App\Models\Jours;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Jours>
+ */
 class JoursFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
+     * Le nom du modèle associé à cette factory.
      *
      * @var string
      */
     protected $model = Jours::class;
 
     /**
-     * Define the model's default state.
+     * Définir l'état par défaut du modèle.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'Lundi' => $this->faker->boolean,
@@ -28,7 +31,7 @@ class JoursFactory extends Factory
             'Jeudi' => $this->faker->boolean,
             'Vendredi' => $this->faker->boolean,
             'Samedi' => $this->faker->boolean,
-            'Dimanche' => $this->faker->boolean,
+            'Dimanche' => $this->faker->boolean
         ];
     }
 }

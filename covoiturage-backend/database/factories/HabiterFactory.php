@@ -2,20 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Adresse;
+use App\Models\Habiter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Adresse>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Habiter>
  */
-class AdresseFactory extends Factory
+class HabiterFactory extends Factory
 {
     /**
      * Le nom du modèle associé à cette factory.
      *
      * @var string
      */
-    protected $model = Adresse::class;
+    protected $model = Habiter::class;
 
     /**
      * Définir l'état par défaut du modèle.
@@ -25,9 +25,8 @@ class AdresseFactory extends Factory
     public function definition(): array
     {
         return [
-            'Intitule' => $this->faker->streetAddress,
-            'Ville' => $this->faker->city,
-            'Est_Base_Aerienne' => $this->faker->boolean(50) // 50% chance that it is a military base
+            'Id_Utilisateur' => \App\Models\Utilisateur::factory(),
+            'Id_Adresse' => \App\Models\Adresse::factory()
         ];
     }
 }

@@ -12,6 +12,6 @@ class Adresse extends Model
     protected $table = 'Adresse';
 
     protected $primaryKey = 'Id_Adresse';
-    protected $fillable = ['Intitule', 'Ville', 'Est_Base_Aérienne'];
+    protected $fillable = ['Intitule', 'Ville', 'Est_Base_Aerienne'];
 
 }

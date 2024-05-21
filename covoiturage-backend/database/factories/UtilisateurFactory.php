@@ -4,33 +4,33 @@ namespace Database\Factories;
 
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UtilisateurFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
+     * Le nom du modèle associé à cette factory.
      *
      * @var string
      */
     protected $model = Utilisateur::class;
 
     /**
-     * Define the model's default state.
+     * Définir l'état par défaut du modèle.
      *
      * @return array
      */
     public function definition()
     {
         return [
-            'NID' => $this->faker->unique()->randomNumber(8),
-            'Nom' => $this->faker->lastName,
+            'NID' => $this->faker->randomNumber(),
             'Prenom' => $this->faker->firstName,
-            'Unite' => $this->faker->company,
+            'Nom' => $this->faker->lastName,
+            'Mail' => $this->faker->unique()->safeEmail,
+            'Unite' => $this->faker->word,
             'Numero_De_Poste' => $this->faker->phoneNumber,
             'Numero_De_Telephone' => $this->faker->phoneNumber,
-            'Mail' => $this->faker->unique()->safeEmail,
-            'Mot_De_Passe' => bcrypt('password'), 
+            'Mot_De_Passe' => Hash::make('password')
         ];
     }
 }

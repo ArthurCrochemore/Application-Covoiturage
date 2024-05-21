@@ -38,7 +38,7 @@ class TrajetFactory extends Factory
                 return \App\Models\Adresse::factory()->create()->Id_Adresse;
             },
             'Id_Jours' => function () {
-                return \App\Models\Jour::factory()->create()->Id_Jours;
+                return \App\Models\Jours::factory()->create()->Id_Jours;
             },
             'Id_Conducteur' => function () {
                 return \App\Models\Utilisateur::factory()->create()->Id_Utilisateur;

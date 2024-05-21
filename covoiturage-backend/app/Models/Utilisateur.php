@@ -33,37 +33,37 @@ class Utilisateur extends Model implements AuthenticatableContract
     ];
 
 
-    public function messagesEnvoyes()
+    public function messagesEnvoyes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'Id_Utilisateur');
     }
 
-    public function messagesRecus()
+    public function messagesRecus(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, 'Id_Utilisateur');
     }
 
-    public function trajets()
+    public function trajets(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Trajet::class, 'Id_Utilisateur');
+        return $this->hasMany(Trajet::class, 'Id_Conducteur');
     }
 
-    public function rapports()
+    public function rapports(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Rapport::class, 'Id_Utilisateur');
     }
 
-    public function reservations()
+    public function reservations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reservation::class, 'Id_Utilisateur');
     }
 
 
-    public function alertes()
+    public function alertes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Alerte::class, 'Id_Utilisateur');
     }
-    public function habiter()
+    public function habiter(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Habiter::class, 'Id_Utilisateur');
     }
