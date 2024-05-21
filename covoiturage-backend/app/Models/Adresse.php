@@ -9,7 +9,7 @@ class Adresse extends Model
 {
     use HasFactory;
 
-    protected $table = 'adresse';
+    protected $table = 'Adresse';
 
     protected $primaryKey = 'Id_Adresse';
     protected $fillable = ['Intitule', 'Ville', 'Est_Base_Aérienne'];
