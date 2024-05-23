@@ -36,8 +36,8 @@ const retour = () => {
       ],
       basesAeriennes: ["Base aerienne de Tours"],
       villeBases: ["Tours"],
-      ptDepart: props.domicile,
-      ptArrive: props.base
+      ptDepart: props.domicile.value,
+      ptArrive: props.base.value
     }
   });
 }

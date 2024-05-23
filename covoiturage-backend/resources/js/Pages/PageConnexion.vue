@@ -1,23 +1,43 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { inject } from 'vue'
+import axios from 'axios';
 
 const identifiant = ref('')
 const motdepasse = ref('')
 
+const afficherMessageFunc = inject('afficherMessageFunc');
+
 const connexion = () => {
   console.log("Identifiant:", identifiant.value)
   console.log("Mot de passe:", motdepasse.value)
-  router.push({
-    path: '/recherche'
 
-  });
+  axios.post('/login', {
+        Mail: identifiant.value,
+        Mot_De_Passe: motdepasse.value,
+      })
+      .then(response => {
+        // Gérer la réponse si nécessaire
+        console.log(response);
+        // Rediriger l'utilisateur vers une autre page
+        window.location.href = '/app';
+      })
+      .catch(error => {
+        // Gérer les erreurs
+        afficherMessageFunc(error, "Erreur");
+        console.error(error);
+      });
 }
 
 const router = useRouter()
 const inscription = () => {
   router.push({
-    path: '/inscription-page1'
+    path: '/inscription-page1',
+    query: {
+        mail: "",
+        nid: ""
+    }
 
   });
 }
