@@ -17,6 +17,10 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    return inertia::render('App_Connexion');
+});
+
+Route::get('/app', function () {
     return inertia::render('App');
 });
 
