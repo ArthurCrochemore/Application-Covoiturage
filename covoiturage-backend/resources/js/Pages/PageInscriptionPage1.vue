@@ -1,12 +1,19 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { inject } from 'vue'
 
-const mail = ref('')
-const nid = ref('')
+const props = defineProps({
+  mail: String,
+  nid: String
+})
+
+const mail = ref(props.mail)
+const nid = ref(props.nid)
 const motdepasse = ref('')
 const confirmationmotdepasse = ref('')
 
+const afficherMessageFunc = inject('afficherMessageFunc');
 
 const router = useRouter()
 const continuer = () => {
@@ -14,10 +21,29 @@ const continuer = () => {
   console.log("NID:", nid.value)
   console.log("Mot de passe:", motdepasse.value)
   console.log("Mot de passe:", confirmationmotdepasse.value)
-  router.push({
-    path: '/inscription-page2'
 
-  });
+  if ( mail.value != "" && nid.value != "" && motdepasse.value != "") {
+    if (motdepasse.value == confirmationmotdepasse.value) {
+        router.push({
+            path: '/inscription-page2',
+            query: {
+                mail: mail.value,
+                nid: nid.value,
+                mdp: motdepasse.value,
+            }
+
+
+        });
+    } else {
+        // TODO : mot de correspondent pas
+
+        afficherMessageFunc("Les mots de passe ne correspondent pas ", "Erreur");
+    }
+  } else {
+    // TODO : au moins un champs est vide
+
+        afficherMessageFunc("Tout les champs n'ont pas été saisies ", "Erreur");
+  }
 }
 
 const annuler = () => {

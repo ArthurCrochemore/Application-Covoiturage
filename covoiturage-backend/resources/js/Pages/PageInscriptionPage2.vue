@@ -2,6 +2,17 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { inject } from 'vue'
+import axios from 'axios';
+
+const props = defineProps({
+  mail: String,
+  nid: String,
+  mdp: String
+})
+
+const mail = ref(props.mail)
+const nid = ref(props.nid)
+const mdp = ref(props.mdp)
 
 const afficherMessageFunc = inject('afficherMessageFunc');
 
@@ -20,16 +31,38 @@ const continuer = () => {
   console.log("Nom:", nomFamille.value)
   console.log("Adresse:", adressePostale.value)
   console.log("Tel:", telephone.value)
-  afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
-  router.push({
-    path: '/'
 
-  });
+  axios.post('/utilisateur', {
+            NID: nid.value,
+            Nom: nomFamille.value,
+            Prenom: prenom.value,
+            Unite: unite.value,
+            Numero_De_Poste: numPoste.value,
+            Numero_De_Tel: telephone.value,
+            //Mail: mail.value,
+            Mot_De_Passe: mdp.value,
+      })
+      .then(response => {
+        console.log(response);
+        afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
+        router.push({
+            path: '/'
+
+        });
+      })
+      .catch(error => {
+        afficherMessageFunc(error, "Erreur");
+        console.error(error);
+      });
 }
 
 const annuler = () => {
   router.push({
-    path: '/inscription-page1'
+    path: '/inscription-page1',
+    query: {
+        mail: mail.value,
+        nid: nid.value
+    }
 
   });
 }
@@ -55,7 +88,7 @@ const annuler = () => {
       <input type="text" class="label" v-model="adressePostale" placeholder="Adresse Postale" />
     </div>
     <div class="bloc-label">
-      <input type="text" class="label" v-model="telephone" placeholder="Téléhone" />
+      <input type="text" class="label" v-model="telephone" placeholder="Téléphone" />
     </div>
     <div class="boutons">
         <div class="annuler"

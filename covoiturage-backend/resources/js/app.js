@@ -26,8 +26,17 @@ import PageDetailTrajetReservation from './Pages/PageDetailTrajetReservation.vue
 // Définir les routes pour App_Connexion
 const routesConnexion = [
   { path: '/', component: PageConnexion },
-  { path: '/inscription-page1', component: PageInscriptionPage1 },
-  { path: '/inscription-page2', component: PageInscriptionPage2 },
+  { path: '/inscription-page1', component: PageInscriptionPage1,
+  props: route => ({
+    mail:  route.query.mail,
+  nid:  route.query.nid
+}) },
+  { path: '/inscription-page2', component: PageInscriptionPage2,
+  props: route => ({
+    mail:  route.query.mail,
+  nid:  route.query.nid,
+  mdp:  route.query.mdp
+}) },
   { path: '/mot-de-passe-oublie', component: PageMotDePasseOublie },
   { path: '/reinitialisation-mot-de-passe', component: PageReinitialisationMotDePasse },
 ];
