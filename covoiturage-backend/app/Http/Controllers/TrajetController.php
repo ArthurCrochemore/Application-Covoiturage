@@ -14,97 +14,113 @@ use Illuminate\Support\Facades\Validator;
 class TrajetController extends Controller
 {
     public function getAllTrajets()
-{
-    try {
-        // Recuperer tous les trajets avec les relations nécessaires
-        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])->get();
+    {
+        try {
+            // Recuperer tous les trajets avec les relations nécessaires
+            $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])->get();
 
-        
-        $result = $trajets->map(function ($trajet) {
-            
-            $domicile = $trajet->domicile;
-            $base = $trajet->base;
+            $result = $trajets->map(function ($trajet) {
 
-            $ptDepart = null;
-            $ptArrive = null;
+                $domicile = $trajet->domicile;
+                $base = $trajet->base;
 
-            if ($domicile && $base) {
-                // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
-                if ($trajet->Domicile_Base) {
-                    $ptDepart = $domicile->Intitule;
-                    $ptArrive = $base->Intitule;
-                } else {
-                    $ptDepart = $base->Intitule;
-                    $ptArrive = $domicile->Intitule;
+                $ptDepart = null;
+                $ptArrive = null;
+
+                $heureDepart = null;
+                $heureArrive = null;
+
+                $type = null;
+
+                if ($domicile && $base) {
+                    // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                    if ($trajet->Domicile_Base) {
+                        $ptDepart = $domicile->Intitule;
+                        $ptArrive = $base->Intitule;
+
+                        $heureDepart = "";
+                        $heureArrive = $trajet->Heure_Depart;
+                    } else {
+                        $ptDepart = $base->Intitule;
+                        $ptArrive = $domicile->Intitule;
+
+                        $heureDepart = $trajet->Heure_Depart;
+                        $heureArrive = "";
+                    }
                 }
-            }
 
-            
-            $utilisateur = $trajet->utilisateur;
-
-            return [
-                'ptDepart' => $ptDepart,
-                'ptArrive' => $ptArrive,
-                'heureDepart' => $trajet->Heure_Depart,
-                'Date_Depart' => $trajet->Date_Depart,
-                'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
-                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
-            ];
-        });
-
-        return response()->json($result, 200);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
-    }
-}
-
-public function getTrajet($id)
-{
-    try {
-        // Recuperer le trajet 
-        $trajet = Trajet::with(['domicile', 'base', 'utilisateur'])->find($id);
-
-        if ($trajet) {
-            // Recuperer les objets Adresse pour Id_Domicile et Id_Base
-            $domicile = $trajet->domicile;
-            $base = $trajet->base;
-
-            $ptDepart = null;
-            $ptArrive = null;
-
-            if ($domicile && $base) {
-                // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
-                if ($trajet->Domicile_Base) {
-                    $ptDepart = $domicile->Intitule;
-                    $ptArrive = $base->Intitule;
+                if($trajet->Trajet_Regulier) {
+                    $type = "Régulier";
                 } else {
-                    $ptDepart = $base->Intitule;
-                    $ptArrive = $domicile->Intitule;
+                    $type = "Ponctuel";
                 }
-            }
 
-            //Recuperer l'utilisateur
-            $utilisateur = $trajet->utilisateur;
+                $utilisateur = $trajet->utilisateur;
 
-            $result = [
-                'ptDepart' => $ptDepart,
-                'ptArrive' => $ptArrive,
-                'heureDepart' => $trajet->Heure_Depart,
-                'Date_Depart' => $trajet->Date_Depart,
-                'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
-                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null
-            ];
+                return [
+                    'idTrajet' => $trajet->Id_Trajet,
+                    'ptDepart' => $ptDepart,
+                    'ptArrive' => $ptArrive,
+                    'typeTrajet' => $type,
+                    'heureDepart' => $heureDepart,
+                    'heureArrive' => $heureArrive,
+                    'Date_Depart' => $trajet->Date_Depart,
+                    'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
+                    'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
+                ];
+            });
 
             return response()->json($result, 200);
-        } else {
-            return response()->json(['message' => 'Trajet non trouve'], Response::HTTP_NOT_FOUND);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
     }
-}
 
+    public function getTrajet($id)
+    {
+        try {
+            // Recuperer le trajet
+            $trajet = Trajet::with(['domicile', 'base', 'utilisateur'])->find($id);
 
+            if ($trajet) {
+                // Recuperer les objets Adresse pour Id_Domicile et Id_Base
+                $domicile = $trajet->domicile;
+                $base = $trajet->base;
+
+                $ptDepart = null;
+                $ptArrive = null;
+
+                if ($domicile && $base) {
+                    // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                    if ($trajet->Domicile_Base) {
+                        $ptDepart = $domicile->Intitule;
+                        $ptArrive = $base->Intitule;
+                    } else {
+                        $ptDepart = $base->Intitule;
+                        $ptArrive = $domicile->Intitule;
+                    }
+                }
+
+                //Recuperer l'utilisateur
+                $utilisateur = $trajet->utilisateur;
+
+                $result = [
+                    'ptDepart' => $ptDepart,
+                    'ptArrive' => $ptArrive,
+                    'heureDepart' => $trajet->Heure_Depart,
+                    'Date_Depart' => $trajet->Date_Depart,
+                    'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
+                    'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null
+                ];
+
+                return response()->json($result, 200);
+            } else {
+                return response()->json(['message' => 'Trajet non trouve'], Response::HTTP_NOT_FOUND);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
 
     public function updateTrajet(Request $request, $id)
     {
@@ -125,21 +141,21 @@ public function getTrajet($id)
                 'Id_Jours.*' => 'required|boolean',
                 'Id_Conducteur' => 'required|exists:Utilisateur,Id_Utilisateur',
             ]);
-    
-            
+
+
             $trajet = Trajet::find($id);
-    
+
             // Dans le cas où le trajet n'est pas trouvé
             if (!$trajet) {
                 return response()->json(['message' => 'Trajet not found'], 404);
             }
-    
+
             // Recuperer l'ID du jour associé au trajet
             $idJour = $trajet->Id_Jours;
-    
-            
+
+
             $jours = Jours::find($idJour);
-    
+
             // Mise a jour du jour
             if ($jours && !is_null($validatedData['Id_Jours'])) {
                 $jours->update([
@@ -151,28 +167,28 @@ public function getTrajet($id)
                     'Samedi' => $validatedData['Id_Jours'][5],
                     'Dimanche' => $validatedData['Id_Jours'][6],
                 ]);
-    
-                
+
+
                 $validatedData['Id_Jours'] = $jours->Id_Jours;
             }
-    
-            
+
+
             $trajet->update($validatedData);
-    
-           
+
+
             return response()->json(['message' => 'Trajet updated successfully'], 200);
         } catch (\Exception $e) {
-            
+
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
-    
+
 
 
     public function createTrajet(Request $request)
     {
         try {
-            // Assurer que les donnes sont valide 
+            // Assurer que les donnes sont valide
             $validatedData = $request->validate([
                 'Date_Depart' => 'required|date',
                 'Heure_Depart' => 'required|date_format:H:i',
@@ -188,7 +204,7 @@ public function getTrajet($id)
                 'Id_Jours.*' => 'required|boolean',
                 'Id_Conducteur' => 'required|exists:Utilisateur,Id_Utilisateur',
             ]);
-    
+
             // Cree un Jour
             $joursData = [
                 'Lundi' => $validatedData['Id_Jours'][0],
@@ -200,23 +216,18 @@ public function getTrajet($id)
                 'Dimanche' => $validatedData['Id_Jours'][6],
             ];
             $jours = Jours::create($joursData);
-    
-            
+
+
             $validatedData['Id_Jours'] = $jours->Id_Jours;
-    
+
             // Creation du trajet
             $trajet = Trajet::create($validatedData);
-    
-            
+
+
             return response()->json([], 201);
         } catch (\Exception $e) {
-            
+
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
-    
-    
-
-
-
 }

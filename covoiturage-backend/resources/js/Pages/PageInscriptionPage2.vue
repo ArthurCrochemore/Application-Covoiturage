@@ -72,7 +72,7 @@
 </script>
 
 <template>
-  <div class="bloc-connexion">
+  <div class="bloc-principal">
     <h1>Inscription</h1>
     <div class="bloc-label">
       <input type="text" class="label" v-model="unite" placeholder="Unité" />
@@ -102,123 +102,52 @@
 </template>
 
 <style scoped>
-.bloc-connexion {
-  width: 60%;
-  height: auto;
-  position: fixed;
-  top: 150px;
-  bottom: 150px;
-  left: 20%;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 40px;
-}
-
-.bloc-label {
-  display: flex;
-  flex-direction: row;
-  height : 50px;
-  width: 75%;
-  margin-left : 12.5%;
-  justify-content: space-between;
-  margin-bottom : 10px;
-}
-
-input {
-  width : 90%;
-  font-size: medium;
-  border : none;
-  border-bottom: 1px solid #dddddd;
-}
-
-h1 {
-  margin-bottom : 10px;
-}
-
-p, h1 {
-  text-align: center;
-  border-top: 5px;
-  color: black;
-}
-
-.boutons {
-  display: flex;
-  flex-direction: row;
-  height : 50px;
-  width: 80%;
-  margin-left : 10%;
-  margin-top : 20px;
-  justify-content: space-between;
-}
-
-.annuler, .continuer {
-  background-color: #bbbbbb;
-  width: 120px;
-  height: 35px;
-  margin: auto;
-  border-radius: 10px;
-}
-
-.lien-mot-de-passe-oublie {
-  border-top: auto;
-  justify-content: right;
-}
-
-@media (max-height: 750px) {
-    .entete {
-        height: 60px;
+    .bloc-label {
+        display: flex;
+        flex-direction: row;
+        height : 50px;
+        width: 75%;
+        margin-left : 12.5%;
+        justify-content: space-between;
+        margin-bottom : 10px;
     }
-    .retour {
-        background-size: 30px 30px;
 
-    }
-    .entete > h1 {
+    input {
+        width : 90%;
         font-size: medium;
-        width : 100%;
-        color : black;
+        border : none;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    h1 {
+        margin-bottom : 10px;
+    }
+
+    p, h1 {
         text-align: center;
+        border-top: 5px;
+        color: black;
     }
-    .bloc-connexion {
-        bottom: 80px;
-        top: 80px;
-    }
-}
 
-@media (max-width : 1300px) {
-    .bloc-connexion {
-        width: 70%;
-        left: 15%;
+    .boutons {
+        display: flex;
+        margin-left : 10%;
+        margin-top : 20px;
+        justify-content: space-between;
     }
-}
 
-@media (max-width : 900px) {
-    .bloc-connexion {
-        width: 80%;
-        left: 10%;
+    .annuler, .continuer {
+        background-color: #bbbbbb;
+        width: 120px;
+        height: 35px;
+        margin: auto;
+        border-radius: 10px;
     }
-}
 
-@media (max-width : 800px) {
-    .bloc-connexion {
-        width: 85%;
-        left: 7.5%;
+    .lien-mot-de-passe-oublie {
+        border-top: auto;
+        justify-content: right;
     }
-}
-
-@media (max-width : 700px) {
-    .bloc-connexion {
-        width: 90%;
-        left: 5%;
-    }
-}
-
-@media (max-width : 600px) {
-    .bloc-connexion {
-        width: 96%;
-        left: 2%;
-    }
-}
 </style>
 
 

@@ -55,114 +55,9 @@
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
-    // Données pour tester le front: TODO : supprimer
-    const resultatsRecherche = () => {
-    return [
-    {
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-        idTrajet: 1,
-        ptDepart: "St Avertin",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h50",
-        nomConducteur: "Marie",
-        uniteConducteur: "9076908769"
-        },
-        {
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        },
-        {
-
-        idTrajet: 1,
-        ptDepart: "Paris",
-        ptArrive: "Base Aérienne",
-        typeTrajet: "Régulier",
-        heureDepart: "",
-        heureArrive: "10h45",
-        nomConducteur: "John",
-        uniteConducteur: "67890"
-        }
-    ];
-    }
-
-    // TODO : Finir pour l'integration du back dans la recherche
+    /**
+     * Récupère tout les trajets de la base de données
+     */
     const fetchTrajets = async () => {
         try {
             const response = await axios.get('/api/trajets')
@@ -171,10 +66,12 @@
             console.error('Error fetching trajets:', error)
         }
     }
+
+    /**
+     * Charge tout les trajets dans le résultats de recherche
+     */
     const recherche = () => {
         const trajetBaseDomicile = Boolean(booleenTrajetBaseDomicile);
-
-            // TODO : recuperer donnees
 
         router.push({
             path: '/resultat-recherche',
@@ -186,10 +83,12 @@
             booleenTrajetBaseDomicile: trajetBaseDomicile,
             typeTrajet: 'Regulier',
             heure: '10h50',
-            resultats : JSON.stringify(resultatsRecherche())//resultatsRecherche.value)
+            resultats : JSON.stringify(resultatsRecherche.value)
             }
         });
     }
+
+    // TODO : supprimer pour ne récupérer les données que lors de la recherche et pas avant
     onMounted(() => {
         fetchTrajets()
     })

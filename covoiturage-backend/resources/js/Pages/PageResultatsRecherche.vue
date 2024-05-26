@@ -76,7 +76,7 @@
         <h1> {{ depart }}  - {{ arrive }}</h1>
         <h1>{{ typeTrajet }} - {{ directionTrajet }} {{ heure }}</h1>
     </div>
-    <div class="bloc-resultats-recherche">
+    <div class="bloc-principal">
       <BlocResultatRecherche
             v-for="(resultat, index) in JSON.parse(resultats)"
             :key="index"
@@ -96,17 +96,12 @@
 
 <style scoped>
 
-.bloc-resultats-recherche {
-  width: 60%;
-  height: auto;
-  position: fixed;
-  top: 100px;
-  bottom: 100px;
-  padding : 10px 0;
-  left: 20%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+.bloc-principal {
+    background-color: grey;
+    top: 100px;
+    bottom: 100px;
+    padding : 10px 0;
+    overflow-y: auto;
 }
 
 .bloc-resultat {
@@ -131,47 +126,5 @@
     text-align: center;
     color : white;
     margin : auto;
-}
-
-@media (max-height: 750px) {
-    .bloc-resultats-recherche {
-        bottom: 80px;
-        top: 80px;
-    }
-}
-
-@media (max-width : 1300px) {
-    .bloc-resultats-recherche {
-        width: 70%;
-        left: 15%;
-    }
-}
-
-@media (max-width : 900px) {
-    .bloc-resultats-recherche {
-        width: 80%;
-        left: 10%;
-    }
-}
-
-@media (max-width : 800px) {
-    .bloc-resultats-recherche {
-        width: 85%;
-        left: 7.5%;
-    }
-}
-
-@media (max-width : 700px) {
-    .bloc-resultats-recherche {
-        width: 90%;
-        left: 5%;
-    }
-}
-
-@media (max-width : 600px) {
-    .bloc-resultats-recherche {
-        width: 96%;
-        left: 2%;
-    }
 }
 </style>
