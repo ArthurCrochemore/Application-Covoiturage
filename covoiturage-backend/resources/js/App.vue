@@ -41,13 +41,7 @@
 
 </template>
 
-
 <style scoped>
-    /* Police pour tout les textes de l'interface */
-    * {
-    font-family: Marianne, sans-serif;
-    }
-
     .app-container {
     position: relative;
     }

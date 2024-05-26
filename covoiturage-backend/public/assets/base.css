@@ -84,3 +84,114 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+/* Pour les fichiers .vue*/
+* {
+    font-family: Marianne, sans-serif;
+}
+
+.bloc-principal {
+    width: 60%;
+    height: auto;
+    position: fixed;
+    top: 150px;
+    bottom: 150px;
+    left: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 40px;
+}
+
+.entete {
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.retour {
+    width : 60px;
+    height: 60px;
+    top : 20px;
+    left : 20px;
+    position : absolute;
+}
+
+.entete > h1 {
+    width : 100%;
+    color : black;
+    text-align: center;
+    margin : auto;
+}
+
+.boutons, .bouton-rapport-bug {
+    flex-direction: row;
+    height : 50px;
+    width: 80%;
+}
+
+@media (max-height: 750px) {
+    .entete {
+        height: 60px;
+    }
+    .retour {
+        background-size: 30px 30px;
+
+    }
+    .entete > h1 {
+        font-size: medium;
+        width : 100%;
+        color : black;
+        text-align: center;
+    }
+    .bloc-principal {
+        bottom: 80px;
+        top: 80px;
+    }
+}
+
+@media (max-width : 1300px) {
+    .bloc-principal {
+        width: 70%;
+        left: 15%;
+    }
+}
+
+@media (max-width : 900px) {
+    .bloc-principal {
+        width: 80%;
+        left: 10%;
+    }
+}
+
+@media (max-width : 800px) {
+    .bloc-principal {
+        width: 85%;
+        left: 7.5%;
+    }
+}
+
+@media (max-width : 700px) {
+    .bloc-principal {
+        width: 90%;
+        left: 5%;
+    }
+
+    .entete > h1 {
+        font-size: 20px;
+        margin: auto 0;
+    }
+}
+
+@media (max-width : 600px) {
+    .bloc-principal {
+        width: 96%;
+        left: 2%;
+    }
+}

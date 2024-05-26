@@ -95,30 +95,6 @@
 </template>
 
 <style scoped>
-.entete {
-    width: 100%;
-    height: 100px;
-  background-color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.retour {
-    width : 60px;
-    height: 60px;
-    top : 20px;
-    left : 20px;
-    position : absolute;
-}
-
-.entete > h1 {
-    width : 100%;
-    color : black;
-    text-align: center;
-}
 
 .bloc-resultats-recherche {
   width: 60%;
@@ -158,19 +134,6 @@
 }
 
 @media (max-height: 750px) {
-    .entete {
-        height: 60px;
-    }
-    .retour {
-        background-size: 30px 30px;
-
-    }
-    .entete > h1 {
-        font-size: medium;
-        width : 100%;
-        color : black;
-        text-align: center;
-    }
     .bloc-resultats-recherche {
         bottom: 80px;
         top: 80px;
@@ -202,10 +165,6 @@
     .bloc-resultats-recherche {
         width: 90%;
         left: 5%;
-    }
-    .entete > h1 {
-        font-size: 20px;
-        margin: auto 0;
     }
 }
 
