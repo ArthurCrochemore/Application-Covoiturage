@@ -196,7 +196,7 @@
 </script>
 
 <template>
-  <div class="bloc-de-recherche">
+  <div class="bloc-principal">
     <div class="type-de-trajet" @click="basculerTypeDeTrajet">
       <h1 class="intitule-type-de-trajet">{{ typesDeTrajet[booleenTrajetBaseDomicile] }}</h1>
     </div>
@@ -250,74 +250,62 @@
     </script>
 
     <style scoped>
-    .bloc-de-recherche {
-    width: 60%;
-    height: auto;
-    position: fixed;
-    top: 150px;
-    bottom: 150px;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-        border-radius: 40px;
-    }
 
     .type-de-trajet {
-    background-color: #dddddd;
-    width: 90%;
-    height: 80px;
-    margin: auto 5%;
-    border-radius: 30px;
+        background-color: #dddddd;
+        width: 90%;
+        height: 80px;
+        margin: auto 5%;
+        border-radius: 30px;
     }
 
     .intitule-type-de-trajet {
-    color: black;
-    text-align: center;
-    font-size: 30px;
-    margin-top: 12px;
+        color: black;
+        text-align: center;
+        font-size: 30px;
+        margin-top: 12px;
     }
 
     .bloc-label-depart-arrive {
-    display: flex;
-    flex-direction: row;
-    height : 50px;
-    width: 75%;
-    margin-left : 12.5%;
-    justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        height : 50px;
+        width: 75%;
+        margin-left : 12.5%;
+        justify-content: space-between;
     }
 
     .icone-map {
-    background: url('assets/icons/navigation-map-marker.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
+        background: url('assets/icons/navigation-map-marker.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
     }
 
     .label {
-    border: none;
-    border-bottom: 1px solid #dddddd;
-    height: 50px;
-    width: 100%;
+        border: none;
+        border-bottom: 1px solid #dddddd;
+        height: 50px;
+        width: 100%;
     }
 
     .date-et-heure {
-    display: flex;
-    flex-direction: row;
-    width: 65%;
-    margin-top : 30px;
-    margin-left: 17.5%;
-    height: 50px;
+        display: flex;
+        flex-direction: row;
+        width: 65%;
+        margin-top : 30px;
+        margin-left: 17.5%;
+        height: 50px;
 
-    justify-content: space-between;
+        justify-content: space-between;
     }
 
     .bloc-date,
     .bloc-heure {
-    display: flex;
-    flex-direction: row;
+        display: flex;
+        flex-direction: row;
     }
 
     input[type="date"],
@@ -442,60 +430,7 @@
     height: 100px;
     }
 
-    @media (max-height: 750px) {
-        .entete {
-            height: 60px;
-        }
-        .retour {
-            background-size: 30px 30px;
 
-        }
-        .entete > h1 {
-            font-size: medium;
-            width : 100%;
-            color : black;
-            text-align: center;
-        }
-        .bloc-de-recherche {
-            bottom: 80px;
-            top: 80px;
-        }
-    }
-
-    @media (max-width : 1300px) {
-        .bloc-de-recherche {
-            width: 70%;
-            left: 15%;
-        }
-    }
-
-    @media (max-width : 900px) {
-        .bloc-de-recherche {
-            width: 80%;
-            left: 10%;
-        }
-    }
-
-    @media (max-width : 800px) {
-        .bloc-de-recherche {
-            width: 85%;
-            left: 7.5%;
-        }
-    }
-
-    @media (max-width : 700px) {
-        .bloc-de-recherche {
-            width: 90%;
-            left: 5%;
-        }
-    }
-
-    @media (max-width : 600px) {
-        .bloc-de-recherche {
-            width: 96%;
-            left: 2%;
-        }
-    }
 </style>
 
 
