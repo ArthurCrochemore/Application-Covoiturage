@@ -37,12 +37,14 @@ class Trajet extends Model
     }
     public function domicile()
     {
-        return $this->belongsTo(Adresse::class, 'Id_Adresse');
+        return $this->belongsTo(Adresse::class, 'Id_Domicile');
     }
+    
     public function base()
     {
-        return $this->belongsTo(Adresse::class, 'Id_Adresse');
+        return $this->belongsTo(Adresse::class, 'Id_Base');
     }
+    
 
     public function reservations()
     {
