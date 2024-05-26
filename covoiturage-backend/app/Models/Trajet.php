@@ -32,6 +32,8 @@ class Trajet extends Model
         'Id_Base',
         'Nbre_Places',
         'Domicile_Base',
+        'Id_Jours',
+        'Id_Conducteur'
     ];
 
     public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -42,10 +44,12 @@ class Trajet extends Model
     {
         return $this->belongsTo(Adresse::class, 'Id_Domicile');
     }
-    public function base(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    
+    public function base()
     {
         return $this->belongsTo(Adresse::class, 'Id_Base');
     }
+    
 
     public function jours(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -61,4 +65,10 @@ class Trajet extends Model
     {
         return $this->hasMany(Alerte::class, 'Id_Trajet');
     }
+
+    public function jours()
+    {
+        return $this->belongsTo(Jours::class, 'Id_Jours');
+    }
+
 }
