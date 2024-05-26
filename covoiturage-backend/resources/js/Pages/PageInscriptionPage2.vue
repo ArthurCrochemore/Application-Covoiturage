@@ -38,8 +38,8 @@ const continuer = () => {
             Prenom: prenom.value,
             Unite: unite.value,
             Numero_De_Poste: numPoste.value,
-            Numero_De_Tel: telephone.value,
-            //Mail: mail.value,
+            Numero_De_Telephone: telephone.value,
+            Mail: mail.value,
             Mot_De_Passe: mdp.value,
       })
       .then(response => {
