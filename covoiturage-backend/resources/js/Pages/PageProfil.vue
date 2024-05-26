@@ -1,6 +1,10 @@
 <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import { inject } from 'vue'
+  import axios from 'axios';
+
+    const afficherMessageFunc = inject('afficherMessageFunc');
 
   const prenom = ref('Jhon')
   const nom = ref('Doe')
@@ -27,6 +31,17 @@
 }
 
 const deconnexion = () => {
+    axios.post('/logout', {
+      })
+      .then(response => {
+        console.log(response);
+        afficherMessageFunc("Déconnexion réussie", "Succès");
+        window.location.href = '/';
+      })
+      .catch(error => {
+        afficherMessageFunc(error.message, "Erreur");
+        console.error(error.message);
+      });
 }
 
 const rapportBug = () => {
@@ -100,6 +115,7 @@ const rapportBug = () => {
     }
 
     h3 {
+        font-size: 20px;
         margin-top: 5px;
         color: black;
     }
