@@ -26,6 +26,8 @@ Route::get('/app', function () {
 
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
 
+Route::post('/logout', [UtilisateurController::class, 'logout']);
+
 Route::post('/utilisateur', [UtilisateurController::class, 'store']);
 
 Route::get('/accueil', function () {return view('testAuth.accueil');})->name('accueil');
