@@ -58,21 +58,52 @@ class TrajetController extends Controller
     }
 }
 
-    
-    public function getTrajet($id)
-    {
-     
-        $trajet = Trajet::find($id);
+public function getTrajet($id)
+{
+    try {
+        // Recuperer le trajet 
+        $trajet = Trajet::with(['domicile', 'base', 'utilisateur'])->find($id);
 
-       
         if ($trajet) {
-            
-            return response()->json($trajet);
+            // Recuperer les objets Adresse pour Id_Domicile et Id_Base
+            $domicile = $trajet->domicile;
+            $base = $trajet->base;
+
+            $ptDepart = null;
+            $ptArrive = null;
+
+            if ($domicile && $base) {
+                // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                if ($trajet->Domicile_Base) {
+                    $ptDepart = $domicile->Intitule;
+                    $ptArrive = $base->Intitule;
+                } else {
+                    $ptDepart = $base->Intitule;
+                    $ptArrive = $domicile->Intitule;
+                }
+            }
+
+            //Recuperer l'utilisateur
+            $utilisateur = $trajet->utilisateur;
+
+            $result = [
+                'ptDepart' => $ptDepart,
+                'ptArrive' => $ptArrive,
+                'heureDepart' => $trajet->Heure_Depart,
+                'Date_Depart' => $trajet->Date_Depart,
+                'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
+                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null
+            ];
+
+            return response()->json($result, 200);
         } else {
-           
-            return response()->json(['message' => 'Trajet non trouvé'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Trajet non trouve'], Response::HTTP_NOT_FOUND);
         }
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
     }
+}
+
 
    
 
