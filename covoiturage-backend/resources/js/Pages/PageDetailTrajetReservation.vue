@@ -59,7 +59,24 @@ import { useRoute, useRouter } from 'vue-router';
   }
 
   function reserver() {
-    // Slay mais pas encore
+    axios.post('/reserver-trajet', {
+        Id_Passager: 1, // TODO : remplir id
+        Id_Trajet: 1,
+        Id_Adresse: 1
+      })
+      .then(response => {
+        console.log(response);
+        afficherMessageFunc("La demande de réservation a été envoyée", "Succès");
+        router.push({
+            path: '/vos-trajets'
+        });
+      })
+      .catch(error => {
+        afficherMessageFunc(error, "Erreur");
+        console.error(error);
+      });
+
+
   }
 
   </script>
