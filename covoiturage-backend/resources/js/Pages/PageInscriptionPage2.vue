@@ -1,39 +1,74 @@
+<!-- Représente l'affichage de la seconde page d'inscription  -->
+
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { inject } from 'vue'
+    import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { inject } from 'vue'
+    import axios from 'axios';
 
-const afficherMessageFunc = inject('afficherMessageFunc');
+    const props = defineProps({
+    mail: String,
+    nid: String,
+    mdp: String
+    })
 
-const unite = ref('')
-const numPoste = ref('')
-const prenom = ref('')
-const nomFamille = ref('')
-const adressePostale = ref('')
-const telephone = ref('')
+    /* Constante pour les données saisies */
+    const mail = ref(props.mail)
+    const nid = ref(props.nid)
+    const mdp = ref(props.mdp)
 
-const router = useRouter()
-const continuer = () => {
-  console.log("Unite:", unite.value)
-  console.log("Num Poste:", numPoste.value)
-  console.log("Prenom:", prenom.value)
-  console.log("Nom:", nomFamille.value)
-  console.log("Adresse:", adressePostale.value)
-  console.log("Tel:", telephone.value)
-  afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
-  router.push({
-    path: '/'
+    const unite = ref('')
+    const numPoste = ref('')
+    const prenom = ref('')
+    const nomFamille = ref('')
+    const adressePostale = ref('')
+    const telephone = ref('')
 
-  });
-}
+    const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
-const annuler = () => {
-  router.push({
-    path: '/inscription-page1'
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
-  });
-}
+    /**
+     * Inscription à partir des données saisies
+     */
+    const continuer = () => {
+        axios.post('/utilisateur', {
+                NID: nid.value,
+                Nom: nomFamille.value,
+                Prenom: prenom.value,
+                Unite: unite.value,
+                Numero_De_Poste: numPoste.value,
+                Numero_De_Telephone: telephone.value,
+                Mail: mail.value,
+                Mot_De_Passe: mdp.value,
+        })
+        .then(response => {
+            console.log(response);
+            afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
+            router.push({
+                path: '/'
 
+            });
+        })
+        .catch(error => {
+            afficherMessageFunc(error, "Erreur");
+            console.error(error);
+        });
+    }
+
+    /**
+     * Ramène vers la première page (y affiche les données mail et nid qui avaient été validées)
+     */
+    const annuler = () => {
+        router.push({
+            path: '/inscription-page1',
+            query: {
+                mail: mail.value,
+                nid: nid.value
+            }
+
+        });
+    }
 </script>
 
 <template>
@@ -55,7 +90,7 @@ const annuler = () => {
       <input type="text" class="label" v-model="adressePostale" placeholder="Adresse Postale" />
     </div>
     <div class="bloc-label">
-      <input type="text" class="label" v-model="telephone" placeholder="Téléhone" />
+      <input type="text" class="label" v-model="telephone" placeholder="Téléphone" />
     </div>
     <div class="boutons">
         <div class="annuler"

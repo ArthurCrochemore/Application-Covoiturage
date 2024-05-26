@@ -1,23 +1,34 @@
+<!-- Représente l'interface de demande de réinitialisation de mot de passe  -->
+
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+    import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
 
-const mail = ref('')
-const nid = ref('')
+    // Constantes pour la confirmation de l'identité de la personne souhaitant réinitialisation de son mot de passe
+    const mail = ref('')
+    const nid = ref('')
 
-const valider = () => {
-  console.log("Mail:", mail.value)
-  console.log("NID:", nid.value)
-}
+    /**
+     * Appelle le controller pour la demande de modification de mot de passe
+     */
+    const valider = () => {
+        console.log("Mail:", mail.value)
+        console.log("NID:", nid.value)
 
-const router = useRouter()
-const annuler = () => {
-  router.push({
-    path: '/'
+        // TODO :
+    }
 
-  });
-}
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
+    /**
+     * Ramène vers l'interface de connexion
+     */
+    const annuler = () => {
+        router.push({
+            path: '/'
+
+        });
+    }
 </script>
 
 <template>

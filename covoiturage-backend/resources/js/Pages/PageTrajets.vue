@@ -18,7 +18,7 @@ const proposedTrips = ref([
 
 ])
 
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
 
 function goToConductorDetails(tripId) {
     router.push({path: '/detail-trajet-conducteur', params: { id: tripId } });
@@ -36,7 +36,7 @@ function goToProposedDetails(tripId) {
 </script>
 
 <template>
-    <div class="bloc-vos-trajets">
+    <div class="bloc-principal">
       <section>
         <h2>Trajets Passagers</h2>
         <div v-for="trip in passengerTrips" :key="trip.id" class="trip-item" @click="goToPassengerDetails(trip.id)">
@@ -71,66 +71,56 @@ function goToProposedDetails(tripId) {
 </template>
 
 <style scoped>
-.bloc-vos-trajets {
-  width: 60%;
-  height: auto;
-  position: fixed;
-  top: 150px;
-  bottom: 150px;
-  left: 20%;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 40px;
-  padding: 20px;
-  overflow-y: auto; 
-  color: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    .bloc-principal {
+        padding: 20px;
+        overflow-y: auto;
+        color: black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-section {
-  margin-bottom: 20px;
-}
+    section {
+        margin-bottom: 20px;
+    }
 
-.trip-item {
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    .trip-item {
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-.trip-item:hover {
-  background-color: #e2e2e2;
-}
+    .trip-item:hover {
+        background-color: #e2e2e2;
+    }
 
-.trip-date-time {
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+    .trip-date-time {
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-.trip-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .trip-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.trip-route {
-  flex-grow: 1; /* To make it take up remaining space */
-}
+    .trip-route {
+        flex-grow: 1; /* To make it take up remaining space */
+    }
 
-.trip-person, .trip-status {
-  font-size: 0.9em;
-  color: #000000;
-  margin-left: 10px; /* Adjust spacing */
-}
+    .trip-person, .trip-status {
+        font-size: 0.9em;
+        color: #000000;
+        margin-left: 10px; /* Adjust spacing */
+    }
 
-.trip-status {
-  color: green;  /* Ensures visibility of passenger status */
-  font-weight: bold;
-}
+    .trip-status {
+        color: green;  /* Ensures visibility of passenger status */
+        font-weight: bold;
+    }
 </style>

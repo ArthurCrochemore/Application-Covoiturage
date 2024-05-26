@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 
 import {Inertia} from '@inertiajs/inertia'
 
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
 
 const trajetRegulier = ref(false)
 const bagage = ref('Beaucoup')

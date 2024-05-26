@@ -2,7 +2,6 @@
 
 <script setup>
     import { ref, provide } from 'vue'
-    import BarreDeNavigation from './Pages/BarreDeNavigation.vue'
     import Message from './Pages/Message.vue' // Composant pour les messages généraux
 
     /**
@@ -12,13 +11,13 @@
      * @param type , intitulé du message
      */
     const AfficherMessage = (message, type) => {
-    showMessage.value = true;
-    messageText.value = message;
-    messageType.value = type;
+        showMessage.value = true;
+        messageText.value = message;
+        messageType.value = type;
 
-    setTimeout(() => {
-        showMessage.value = false;
-    }, 3000);
+        setTimeout(() => {
+            showMessage.value = false;
+        }, 3000);
     }
 
     // Constantes du Message.vue
@@ -30,18 +29,23 @@
 </script>
 
 <template>
-    <div class="app-container">
-        <div class="background"></div>
+  <div class="app-container">
+    <div class="background"></div>
 
-        <router-view ></router-view><!-- C'est ici que les différents .vue sont chargés -->
+    <router-view ></router-view> <!-- C'est ici que les différents .vue sont chargés -->
 
-        <BarreDeNavigation />
-        <Message v-if="showMessage" :message="messageText" :type="messageType" />
-    </div>
+    <Message v-if="showMessage" :message="messageText" :type="messageType" />
+</div>
 
 </template>
 
+
 <style scoped>
+    /* Police pour tout les textes de l'interface */
+    * {
+    font-family: Marianne, sans-serif;
+    }
+
     .app-container {
     position: relative;
     }

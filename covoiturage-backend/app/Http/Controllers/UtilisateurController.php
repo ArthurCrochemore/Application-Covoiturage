@@ -20,30 +20,30 @@ class UtilisateurController extends Controller
             return redirect()->intended('/accueil'); //à définir pour l'url
         }
 
-        return redirect('/login')->withInput($request->only('Mail'))->withErrors([
-            'Mot_De_Passe' => 'Email ou mot de passe incorrect.',
-        ]);
+        return response()->json(['errors' => ['Mot_De_Passe' => 'Email ou mot de passe incorrect.']], 422);
     }
 
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $validatedData = $request->validate([
-            'NID' => 'required|string|max:10',
+            'NID' => 'required|integer',
             'Nom' => 'required|string|max:50',
             'Prenom' => 'required|string|max:50',
             'Unite' => 'nullable|string|max:50',
             'Numero_De_Poste' => 'nullable|string|max:10',
-            'Numero_De_Tel' => 'nullable|string|max:50',
-            'Mail' => 'required|email|unique:utilisateur|max:50',
+            'Numero_De_Telephone' => 'nullable|string|max:50',
+            'Mail' => 'required|email|unique:Utilisateur|max:50',
             'Mot_De_Passe' => 'required|string|min:6|max:50',
         ]);
 
         $validatedData['Mot_De_Passe'] = Hash::make($validatedData['Mot_De_Passe']);
 
-        $Utilisateur = Utilisateur::create($validatedData);
-
-        //Redirection à définir
-        return redirect('/login')->with('success', 'Utilisateur créé avec succès!');
+        try {
+            $utilisateur = Utilisateur::create($validatedData);
+            return redirect('/login')->with('success', 'Utilisateur créé avec succès!');
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
     public function logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
