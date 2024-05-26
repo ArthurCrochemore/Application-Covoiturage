@@ -33,9 +33,7 @@
     <div class="app-container">
         <div class="background"></div>
 
-        <router-view >
-            <!-- C'est ici que les différents .vue sont chargés -->
-        </router-view>
+        <router-view ></router-view><!-- C'est ici que les différents .vue sont chargés -->
 
         <BarreDeNavigation />
         <Message v-if="showMessage" :message="messageText" :type="messageType" />
