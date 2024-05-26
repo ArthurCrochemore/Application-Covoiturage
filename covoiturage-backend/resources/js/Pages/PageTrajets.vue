@@ -18,7 +18,7 @@ const proposedTrips = ref([
 
 ])
 
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
 
 function goToConductorDetails(tripId) {
     router.push({path: '/detail-trajet-conducteur', params: { id: tripId } });

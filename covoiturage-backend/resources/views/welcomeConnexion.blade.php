@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- Fichier chargeant l'interface de login App_Connexion.vue -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

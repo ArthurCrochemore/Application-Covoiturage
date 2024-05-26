@@ -6,7 +6,7 @@ const dateId = ref(['non-grise', 'grise'])
 const indexBouttonSwitch = ref(0)
 const estGrise = ref(false)
 
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
 
 const trajetRegulier = ref()
 const bagage = ref()

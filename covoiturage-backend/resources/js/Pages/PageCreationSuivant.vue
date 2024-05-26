@@ -7,7 +7,8 @@ const showAddCityDialog = ref(false)
 const newCity = ref('')
 const villesAjoutees = ref([])
 
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
+
 const retour = () => {
   router.push({
     path: '/creation-trajet'

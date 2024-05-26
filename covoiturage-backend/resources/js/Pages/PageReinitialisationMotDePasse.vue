@@ -1,19 +1,20 @@
+<!-- Page pour la réinitialisation du mot de passe  -->
+<!-- TODO : A integrer correctement (lien depuis mail) -->
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+    import { ref } from 'vue'
 
+    const motdepasse = ref('')
+    const confirmationmotdepasse = ref('')
 
-const motdepasse = ref('')
-const confirmationmotdepasse = ref('')
+    const valider = () => {
+        console.log("Mot de passe:", motdepasse.value)
+        console.log("Mot de passe:", confirmationmotdepasse.value)
 
-const valider = () => {
-  console.log("Mot de passe:", motdepasse.value)
-  console.log("Mot de passe:", confirmationmotdepasse.value)
-}
+        // TODO : effectuer la modification du mot de passe
+    }
 
-const annuler = () => {
-}
-
+    const annuler = () => {
+    }
 </script>
 
 <template>

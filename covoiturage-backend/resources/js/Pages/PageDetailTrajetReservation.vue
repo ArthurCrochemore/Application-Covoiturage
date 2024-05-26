@@ -30,7 +30,7 @@ import { useRoute, useRouter } from 'vue-router';
 
   const trip = ref({});
   const route = useRoute();
-  const router = useRouter();
+  const router = useRouter(); // Récupération du router vue-router pour la navigation
 
   onMounted(() => {
     fetchTripDetails();

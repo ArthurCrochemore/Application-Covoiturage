@@ -1,3 +1,5 @@
+// Définition des routes du vue-router de App.vue
+
 import { createRouter, createWebHistory } from 'vue-router';
 
 import PageDeRecherche from './Pages/PageDeRecherche.vue';

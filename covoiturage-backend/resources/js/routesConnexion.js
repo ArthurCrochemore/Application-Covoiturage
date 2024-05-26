@@ -1,3 +1,5 @@
+// Définition des routes du vue-router de App_Connexion.vue
+
 import { createRouter, createWebHistory } from 'vue-router';
 
 import PageConnexion from './Pages/PageConnexion.vue';
