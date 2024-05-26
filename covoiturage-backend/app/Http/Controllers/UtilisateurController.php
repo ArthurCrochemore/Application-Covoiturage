@@ -40,7 +40,7 @@ class UtilisateurController extends Controller
 
         try {
             $utilisateur = Utilisateur::create($validatedData);
-            return redirect('/login')->with('success', 'Utilisateur créé avec succès!');
+            return redirect('/accueil')->with('success', 'Utilisateur créé avec succès!');
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
