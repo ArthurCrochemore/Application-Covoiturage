@@ -40,7 +40,7 @@ const deconnexion = () => {
       })
       .catch(error => {
         afficherMessageFunc(error.message, "Erreur");
-        console.error(error.message);
+        console.error(error);
       });
 }
 

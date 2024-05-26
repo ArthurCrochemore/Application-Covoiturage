@@ -18,15 +18,17 @@ const connexion = () => {
         Mot_De_Passe: motdepasse.value,
       })
       .then(response => {
-        // Gérer la réponse si nécessaire
         console.log(response);
-        // Rediriger l'utilisateur vers une autre page
+        // On améne l'utilisateur sur l'application
         window.location.href = '/app';
       })
       .catch(error => {
-        // Gérer les erreurs
-        afficherMessageFunc(error, "Erreur");
-        console.error(error);
+        // Erreur 422 = mauvais logins
+        if (error.response.status === 422) {
+          afficherMessageFunc("Email ou mot de passe incorrect.", "Erreur");
+        } else {
+          afficherMessageFunc("Une erreur s'est produite lors de la tentative de connexion.", "Erreur");
+        }
       });
 }
 

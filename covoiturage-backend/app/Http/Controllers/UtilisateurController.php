@@ -20,9 +20,7 @@ class UtilisateurController extends Controller
             return redirect()->intended('/accueil'); //à définir pour l'url
         }
 
-        return redirect('/login')->withInput($request->only('Mail'))->withErrors([
-            'Mot_De_Passe' => 'Email ou mot de passe incorrect.',
-        ]);
+        return response()->json(['errors' => ['Mot_De_Passe' => 'Email ou mot de passe incorrect.']], 422);
     }
 
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
