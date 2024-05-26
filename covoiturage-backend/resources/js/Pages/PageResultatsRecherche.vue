@@ -1,50 +1,64 @@
+<!-- Représente l'affichage de un trajet pour un résultat de la recherche de trajets  -->
+
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import BlocResultatRecherche from './BlocResultatRecherche.vue'
+    import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
+    import BlocResultatRecherche from './BlocResultatRecherche.vue'
 
-const props = defineProps({
-  domicile: String,
-  villeDomicile: String,
-  base: String,
-  villeBase: String,
-  booleenTrajetBaseDomicile: Boolean,
-  typeTrajet: String,
-  heure: String,
-  resultats: Array
-})
+    const props = defineProps({
+        domicile: String,
+        villeDomicile: String,
+        base: String,
+        villeBase: String,
+        booleenTrajetBaseDomicile: Boolean,
+        typeTrajet: String,
+        heure: String,
+        resultats: Array // listes de tout les résultats de la recherche
+    })
 
-const depart = ref(props.villeDomicile)
-const arrive = ref(props.base)
+    /* Constantes pour l'affichage des paramètres de la recherche */
+    const depart = ref(props.villeDomicile)
+    const arrive = ref(props.base)
 
-var directionTrajet = ref("Départ")
-if(props.booleenTrajetBaseDomicile) {
-  directionTrajet = ref("Arrivé")
-}
-
-const router = useRouter()
-const retour = () => {
-  router.push({
-    path: '/recherche',
-  query: {
-      domiciles: ["Rue de l'Allouette, Paris",
-      "Rue de la Fortilière, St Avertin",
-      "Rue Auguste Chevalier, Tours"],
-      villeDomiciles : ["Paris",
-        "St Avertin",
-        "Tours"
-      ],
-      basesAeriennes: ["Base aerienne de Tours"],
-      villeBases: ["Tours"],
-      ptDepart: props.domicile.value,
-      ptArrive: props.base.value
+    var directionTrajet = ref("Départ")
+    if(props.booleenTrajetBaseDomicile) {
+        directionTrajet = ref("Arrivé")
     }
-  });
-}
 
-function alerte() {
-    window.open('https://javascript.info');
-}
+    const router = useRouter() // Récupération du router vue-router pour la navigation
+
+    /**
+     * Ramène sur l'interface de recherche
+     */
+    const retour = () => {
+        router.push({
+            path: '/recherche',
+        query: {
+            // TODO : ne plus utiliser de props
+
+            domiciles: ["Rue de l'Allouette, Paris",
+            "Rue de la Fortilière, St Avertin",
+            "Rue Auguste Chevalier, Tours"],
+            villeDomiciles : ["Paris",
+                "St Avertin",
+                "Tours"
+            ],
+            basesAeriennes: ["Base aerienne de Tours"],
+            villeBases: ["Tours"],
+            ptDepart: props.domicile.value,
+            ptArrive: props.base.value
+            }
+        });
+    }
+
+    /**
+     * Création d'une alerte lorsqu'un trajet correspondant est publié
+     */
+    function alerte() {
+        window.open('https://javascript.info');
+
+        // TODO :
+    }
 </script>
 
 <template>

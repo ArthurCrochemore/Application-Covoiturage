@@ -1,57 +1,64 @@
+<!-- Représente l'affichage de la première page d'inscription  -->
+
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { inject } from 'vue'
+    import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { inject } from 'vue'
 
-const props = defineProps({
-  mail: String,
-  nid: String
-})
+    const props = defineProps({
+        mail: String,
+        nid: String
+    })
 
-const mail = ref(props.mail)
-const nid = ref(props.nid)
-const motdepasse = ref('')
-const confirmationmotdepasse = ref('')
+    /* Constante pour les données saisies */
+    const mail = ref(props.mail)
+    const nid = ref(props.nid)
+    const motdepasse = ref('')
+    const confirmationmotdepasse = ref('')
 
-const afficherMessageFunc = inject('afficherMessageFunc');
+    const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
-const router = useRouter()
-const continuer = () => {
-  console.log("Mail:", mail.value)
-  console.log("NID:", nid.value)
-  console.log("Mot de passe:", motdepasse.value)
-  console.log("Mot de passe:", confirmationmotdepasse.value)
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
-  if ( mail.value != "" && nid.value != "" && motdepasse.value != "") {
-    if (motdepasse.value == confirmationmotdepasse.value) {
-        router.push({
-            path: '/inscription-page2',
-            query: {
-                mail: mail.value,
-                nid: nid.value,
-                mdp: motdepasse.value,
-            }
+    const continuer = () => {
+    console.log("Mail:", mail.value)
+    console.log("NID:", nid.value)
+    console.log("Mot de passe:", motdepasse.value)
+    console.log("Mot de passe:", confirmationmotdepasse.value)
+
+    if ( mail.value != "" && nid.value != "" && motdepasse.value != "") {
+        if (motdepasse.value == confirmationmotdepasse.value) {
+            router.push({
+                path: '/inscription-page2',
+                query: {
+                    mail: mail.value,
+                    nid: nid.value,
+                    mdp: motdepasse.value,
+                }
 
 
-        });
+            });
+        } else {
+            // TODO : interraction graphique quand les mots de passe ne correspondent pas
+
+            afficherMessageFunc("Les mots de passe ne correspondent pas ", "Erreur");
+        }
     } else {
-        // TODO : mot de correspondent pas
-
-        afficherMessageFunc("Les mots de passe ne correspondent pas ", "Erreur");
-    }
-  } else {
-    // TODO : au moins un champs est vide
+        // TODO : interraction graphique quand au moins un champs est vide
 
         afficherMessageFunc("Tout les champs n'ont pas été saisies ", "Erreur");
-  }
-}
+    }
+    }
 
-const annuler = () => {
-  router.push({
-    path: '/'
+    /**
+     * Ramène vers l'interface de connexion (Annulation de l'inscription)
+     */
+    const annuler = () => {
+        router.push({
+            path: '/'
 
-  });
-}
+        });
+    }
 </script>
 
 <template>
@@ -83,140 +90,140 @@ const annuler = () => {
 </template>
 
 <style scoped>
-.bloc-connexion {
-  width: 60%;
-  height: auto;
-  position: fixed;
-  top: 150px;
-  bottom: 150px;
-  left: 20%;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 40px;
-}
-
-.bloc-label {
-  display: flex;
-  flex-direction: row;
-  height : 50px;
-  width: 75%;
-  margin-left : 12.5%;
-  justify-content: space-between;
-  margin-bottom : 10px;
-}
-
-input {
-  width : 90%;
-  font-size: medium;
-  border : none;
-  border-bottom: 1px solid #dddddd;
-}
-
-#icone {
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 50px;
-  height: 50px;
-}
-
-.icone-mail {
-  background: url('assets/icons/connexion-arobase.png');
-
-}
-
-.icone-cadenas {
-  background: url('assets/icons/connexion-cadenas.png');
-}
-
-h1 {
-  margin-bottom : 40px;
-}
-
-p, h1 {
-  text-align: center;
-  border-top: 5px;
-  color: black;
-}
-
-.boutons {
-  display: flex;
-  flex-direction: row;
-  height : 50px;
-  width: 80%;
-  margin-left : 10%;
-  margin-top : 20px;
-  justify-content: space-between;
-}
-
-.annuler, .continuer {
-  background-color: #bbbbbb;
-  width: 120px;
-  height: 35px;
-  margin: auto;
-  border-radius: 10px;
-}
-
-.lien-mot-de-passe-oublie {
-  border-top: auto;
-  justify-content: right;
-}
-
-@media (max-height: 750px) {
-    .entete {
-        height: 60px;
-    }
-    .retour {
-        background-size: 30px 30px;
-
-    }
-    .entete > h1 {
-        font-size: medium;
-        width : 100%;
-        color : black;
-        text-align: center;
-    }
     .bloc-connexion {
-        bottom: 80px;
-        top: 80px;
+    width: 60%;
+    height: auto;
+    position: fixed;
+    top: 150px;
+    bottom: 150px;
+    left: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 40px;
     }
-}
 
-@media (max-width : 1300px) {
-    .bloc-connexion {
-        width: 70%;
-        left: 15%;
+    .bloc-label {
+    display: flex;
+    flex-direction: row;
+    height : 50px;
+    width: 75%;
+    margin-left : 12.5%;
+    justify-content: space-between;
+    margin-bottom : 10px;
     }
-}
 
-@media (max-width : 900px) {
-    .bloc-connexion {
-        width: 80%;
-        left: 10%;
+    input {
+    width : 90%;
+    font-size: medium;
+    border : none;
+    border-bottom: 1px solid #dddddd;
     }
-}
 
-@media (max-width : 800px) {
-    .bloc-connexion {
-        width: 85%;
-        left: 7.5%;
+    #icone {
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
     }
-}
 
-@media (max-width : 700px) {
-    .bloc-connexion {
-        width: 90%;
-        left: 5%;
-    }
-}
+    .icone-mail {
+    background: url('assets/icons/connexion-arobase.png');
 
-@media (max-width : 600px) {
-    .bloc-connexion {
-        width: 96%;
-        left: 2%;
     }
-}
+
+    .icone-cadenas {
+    background: url('assets/icons/connexion-cadenas.png');
+    }
+
+    h1 {
+    margin-bottom : 40px;
+    }
+
+    p, h1 {
+    text-align: center;
+    border-top: 5px;
+    color: black;
+    }
+
+    .boutons {
+    display: flex;
+    flex-direction: row;
+    height : 50px;
+    width: 80%;
+    margin-left : 10%;
+    margin-top : 20px;
+    justify-content: space-between;
+    }
+
+    .annuler, .continuer {
+    background-color: #bbbbbb;
+    width: 120px;
+    height: 35px;
+    margin: auto;
+    border-radius: 10px;
+    }
+
+    .lien-mot-de-passe-oublie {
+    border-top: auto;
+    justify-content: right;
+    }
+
+    @media (max-height: 750px) {
+        .entete {
+            height: 60px;
+        }
+        .retour {
+            background-size: 30px 30px;
+
+        }
+        .entete > h1 {
+            font-size: medium;
+            width : 100%;
+            color : black;
+            text-align: center;
+        }
+        .bloc-connexion {
+            bottom: 80px;
+            top: 80px;
+        }
+    }
+
+    @media (max-width : 1300px) {
+        .bloc-connexion {
+            width: 70%;
+            left: 15%;
+        }
+    }
+
+    @media (max-width : 900px) {
+        .bloc-connexion {
+            width: 80%;
+            left: 10%;
+        }
+    }
+
+    @media (max-width : 800px) {
+        .bloc-connexion {
+            width: 85%;
+            left: 7.5%;
+        }
+    }
+
+    @media (max-width : 700px) {
+        .bloc-connexion {
+            width: 90%;
+            left: 5%;
+        }
+    }
+
+    @media (max-width : 600px) {
+        .bloc-connexion {
+            width: 96%;
+            left: 2%;
+        }
+    }
 </style>
 
 

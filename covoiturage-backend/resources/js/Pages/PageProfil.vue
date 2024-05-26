@@ -1,11 +1,14 @@
+<!-- Représente l'interface Profil  -->
+
 <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { inject } from 'vue'
   import axios from 'axios';
 
-    const afficherMessageFunc = inject('afficherMessageFunc');
+  const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App.vue
 
+  /* Constantes pour l'affichage des données du profil, TODO : charger depuis la bdd */
   const prenom = ref('Jhon')
   const nom = ref('Doe')
   const unite = ref('Unite')
@@ -13,42 +16,53 @@
   const mail = ref('jhon@mail.com')
   const telephone = ref('+33 7 78 67 78 67')
 
-  const router = useRouter()
+  const router = useRouter() // Récupération du router vue-router pour la navigation
 
+  /**
+   * Amène l'interface de modification des données du profil
+   */
   const modifier = () => {
     router.push({
-    path: '/modification-profil',
-    query: {
-      mail: "jhon@mail.com",
-      unite: "Unite",
-      numPoste: "14243",
-      prenom: "Jhon",
-      nomFamille: "Doe",
-      adressePostale: "8 Rue Auguste Chevalier, Tours",
-      telephone: "+33 7 78 67 78 67"
-    }
-  });
-}
+        path: '/modification-profil',
+        query: {
+        mail: "jhon@mail.com",
+        unite: "Unite",
+        numPoste: "14243",
+        prenom: "Jhon",
+        nomFamille: "Doe",
+        adressePostale: "8 Rue Auguste Chevalier, Tours",
+        telephone: "+33 7 78 67 78 67"
+        }
+    });
+  }
 
-const deconnexion = () => {
+  /**
+   * Déconnecte l'utilisateur actuel
+   */
+  const deconnexion = () => {
     axios.post('/logout', {
       })
       .then(response => {
+        // Déconnexion réussie
         console.log(response);
         afficherMessageFunc("Déconnexion réussie", "Succès");
         window.location.href = '/';
       })
+        // Erreur lors de la déconnexion
       .catch(error => {
         afficherMessageFunc(error.message, "Erreur");
         console.error(error);
       });
-}
+  }
 
-const rapportBug = () => {
-    router.push({
-    path: '/rapport-bug'
-  });
-}
+  /**
+   * Ouvre l'interface de rapport de bug
+   */
+  const rapportBug = () => {
+        router.push({
+        path: '/rapport-bug'
+    });
+  }
 
 </script>
 
@@ -126,121 +140,121 @@ const rapportBug = () => {
       height: 40%;
     }
 
-.informations-adresse, .informations-mail, .informations-telephone {
+    .informations-adresse, .informations-mail, .informations-telephone {
 
+        display: flex;
+        flex-direction: row;
+        height : 50px;
+        width: 350px;
+        margin-left : 12.5%;
+        justify-content: flex-start;
+        }
+
+    .icone-adresse {
+    background: url('assets/icons/navigation-map-marker.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 5%;
+    }
+
+    .icone-mail {
+    background: url('assets/icons/profil-mail.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 5%;
+    }
+
+    .icone-telephone {
+    background: url('assets/icons/profil-telephone.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 5%;
+    }
+
+    .boutons, .bouton-rapport-bug {
     display: flex;
     flex-direction: row;
     height : 50px;
-    width: 350px;
-    margin-left : 12.5%;
-    justify-content: flex-start;
+    width: 80%;
+    margin-left : 10%;
+    justify-content: space-between;
     }
 
-  .icone-adresse {
-  background: url('assets/icons/navigation-map-marker.png');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 50px;
-  height: 50px;
-  margin-left: 5%;
-}
-
-.icone-mail {
-  background: url('assets/icons/profil-mail.png');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 50px;
-  height: 50px;
-  margin-left: 5%;
-}
-
-.icone-telephone {
-  background: url('assets/icons/profil-telephone.png');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 50px;
-  height: 50px;
-  margin-left: 5%;
-}
-
-.boutons, .bouton-rapport-bug {
-  display: flex;
-  flex-direction: row;
-  height : 50px;
-  width: 80%;
-  margin-left : 10%;
-  justify-content: space-between;
-}
-
-.modifier, .deconnexion, .rapport-bug {
-  background-color: #bbbbbb;
-  width: 120px;
-  height: 35px;
-  margin: auto;
-  border-radius: 10px;
-}
-
-.deconnexion {
-  background-color: #e33333;
-}
-
-.bouton-rapport-bug {
-  border-top: auto;
-  justify-content: right;
-}
-
-.rapport-bug {
-  width : 300px;
-}
-
-p{
-  color : black;
-  text-align: center;
-  font-size: 20px;
-}
-
-@media (max-height: 750px) {
-    .bloc-profil {
-        bottom: 80px;
-        top: 80px;
+    .modifier, .deconnexion, .rapport-bug {
+    background-color: #bbbbbb;
+    width: 120px;
+    height: 35px;
+    margin: auto;
+    border-radius: 10px;
     }
-}
 
-@media (max-width : 1300px) {
-    .blocprofil {
-        width: 70%;
-        left: 15%;
+    .deconnexion {
+    background-color: #e33333;
     }
-}
 
-@media (max-width : 900px) {
-    .bloc-profil {
-        width: 80%;
-        left: 10%;
+    .bouton-rapport-bug {
+    border-top: auto;
+    justify-content: right;
     }
-}
 
-@media (max-width : 800px) {
-    .bloc-profil {
-        width: 85%;
-        left: 7.5%;
+    .rapport-bug {
+    width : 300px;
     }
-}
 
-@media (max-width : 700px) {
-    .bloc-profil {
-        width: 90%;
-        left: 5%;
+    p{
+    color : black;
+    text-align: center;
+    font-size: 20px;
     }
-}
 
-@media (max-width : 600px) {
-    .bloc-profil {
-        width: 96%;
-        left: 2%;
+    @media (max-height: 750px) {
+        .bloc-profil {
+            bottom: 80px;
+            top: 80px;
+        }
     }
-}
+
+    @media (max-width : 1300px) {
+        .blocprofil {
+            width: 70%;
+            left: 15%;
+        }
+    }
+
+    @media (max-width : 900px) {
+        .bloc-profil {
+            width: 80%;
+            left: 10%;
+        }
+    }
+
+    @media (max-width : 800px) {
+        .bloc-profil {
+            width: 85%;
+            left: 7.5%;
+        }
+    }
+
+    @media (max-width : 700px) {
+        .bloc-profil {
+            width: 90%;
+            left: 5%;
+        }
+    }
+
+    @media (max-width : 600px) {
+        .bloc-profil {
+            width: 96%;
+            left: 2%;
+        }
+    }
 </style>

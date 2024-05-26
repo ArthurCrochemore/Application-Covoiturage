@@ -1,26 +1,30 @@
+<!-- Représente l'affichage de un trajet pour un résultat de la recherche de trajets  -->
+
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+    import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
 
-const props = defineProps({
-  idTrajet : Int16Array,
-  ptDepart: String,
-  ptArrive: String,
-  typeTrajet: String,
-  heureDepart: String,
-  heureArrive: String,
-  nomConducteur: String,
-  uniteConducteur: String
-})
+    const props = defineProps({
+        idTrajet : Int16Array,
+        ptDepart: String,
+        ptArrive: String,
+        typeTrajet: String,
+        heureDepart: String,
+        heureArrive: String,
+        nomConducteur: String,
+        uniteConducteur: String
+    })
 
-const idTrajet = ref(props.idTrajet)
+    const idTrajet = ref(props.idTrajet) // On stocke le props de l'id du trajet dans une constante pour puvoir l'utiliser dans la réservation
 
-const router = useRouter()
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
-const ouvrir = () => {
-    router.push({path: '/detail-trajet-reservation', params: { id: idTrajet } });
-}
-
+    /**
+     * Charge l'affichage détaillé du trajet, où la réservation est possible
+     */
+    const ouvrir = () => {
+        router.push({path: '/detail-trajet-reservation', params: { id: idTrajet } });
+    }
 </script>
 
 <template>
@@ -39,37 +43,36 @@ const ouvrir = () => {
 </template>
 
 <style scoped>
-.bloc-resultat {
-  display: flex;
-  flex-direction: row;
-  border-radius: 20px;
-  background-color: white;
-  box-shadow: #eeeeee;
-}
-.bloc-heure {
-  width : 20%;
-  border-right: 1px solid black;
-}
-.bloc-depart-arrive {
-  width : 45%;
-}
-.bloc-conducteur {
-  width : 35%;
-}
-.bloc-conducteur, .bloc-depart-arrive, .bloc-heure {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 13px;
-}
-p {
-  color : black;
-  text-align: center;
-  font-size: medium;
-}
+    .bloc-resultat {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: #eeeeee;
+    }
+    .bloc-heure {
+    width : 20%;
+    border-right: 1px solid black;
+    }
+    .bloc-depart-arrive {
+    width : 45%;
+    }
+    .bloc-conducteur {
+    width : 35%;
+    }
+    .bloc-conducteur, .bloc-depart-arrive, .bloc-heure {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 13px;
+    }
+    p {
+    color : black;
+    text-align: center;
+    font-size: medium;
+    }
 
-.bloc-resultat:hover {
-  background-color: #eeeeee;
-}
-
+    .bloc-resultat:hover {
+    background-color: #eeeeee;
+    }
 </style>

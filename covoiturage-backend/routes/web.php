@@ -17,11 +17,19 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return inertia::render('App_Connexion');
+    if (auth()->check()) {
+        return redirect('/app');
+    } else {
+        return view('welcomeConnexion');
+    }
 });
 
 Route::get('/app', function () {
-    return inertia::render('App');
+    if (auth()->check()) {
+        return view('welcomeApp');
+    } else {
+        return redirect('/');
+    }
 });
 
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');

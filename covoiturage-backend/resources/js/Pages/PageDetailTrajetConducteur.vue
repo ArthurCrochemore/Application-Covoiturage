@@ -31,7 +31,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 const trip = ref({});
 const route = useRoute();
-const router = useRouter();
+const router = useRouter(); // Récupération du router vue-router pour la navigation
 
 onMounted(() => {
   fetchTripDetails();
@@ -39,12 +39,12 @@ onMounted(() => {
 
 function fetchTripDetails() {
   const tripId = route.params.id;
-  trip.value = { 
-    id: tripId, 
-    date: '2024-01-16', 
-    timeDeparture: '08:00', 
-    from: 'Paris', 
-    timeArrival: '10:25', 
+  trip.value = {
+    id: tripId,
+    date: '2024-01-16',
+    timeDeparture: '08:00',
+    from: 'Paris',
+    timeArrival: '10:25',
     to: 'Lyon',
     passengers: [
       { id: 1, firstName: 'Arthur', lastName: 'Crochemore', phone: '0123456789', from: 'Paris', to: 'Lyon' },
@@ -82,7 +82,7 @@ function deleteTrip() {
   background-color: white;
   border-radius: 40px;
   padding: 20px;
-  overflow-y: auto; 
+  overflow-y: auto;
   color: black;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -129,20 +129,20 @@ h1 {
 }
 
 .phone {
-  margin-right: 20px; 
+  margin-right: 20px;
 }
 
 .route {
   text-align: right;
-  flex: 1; 
+  flex: 1;
 }
 
 .passenger-info {
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
   padding: 15px;
   border-radius: 8px;
   margin-top: 10px;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
 }
 
 .label {

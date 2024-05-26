@@ -22,8 +22,6 @@ class ReservationController extends Controller
 
             $Reservation = Reservation::create($ValidatedData);
 
-            return redirect('/accueil')->with('success', 'Utilisateur créé avec succès!');
+            return redirect('/accueil')->with('success', 'Réservation créé avec succès!');
         }
-
-
 }

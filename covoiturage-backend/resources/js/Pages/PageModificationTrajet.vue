@@ -1,3 +1,5 @@
+<!-- Représente l'interface pour la modifications d'un trajet -->
+
 <template>
     <div class="creation">
         <h1>Modifier votre trajet</h1>

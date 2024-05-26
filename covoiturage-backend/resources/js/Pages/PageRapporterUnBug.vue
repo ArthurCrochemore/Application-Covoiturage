@@ -12,7 +12,7 @@ const props = defineProps({
   adressePostale: String,
   telephone: String
 })
-const router = useRouter()
+const router = useRouter() // Récupération du router vue-router pour la navigation
 
 const retour = () => {
   router.push({

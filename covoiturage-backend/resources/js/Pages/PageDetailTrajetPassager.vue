@@ -23,28 +23,28 @@
       </div>
     </div>
   </template>
-  
-  
+
+
   <script setup>
   import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-  
+
   const trip = ref({});
   const route = useRoute();
-  const router = useRouter();
-  
+  const router = useRouter(); // Récupération du router vue-router pour la navigation
+
   onMounted(() => {
     fetchTripDetails();
   });
-  
+
   function fetchTripDetails() {
     const tripId = route.params.id;
-    trip.value = { 
-      id: tripId, 
-      date: '2024-01-16', 
-      timeDeparture: '08:00', 
-      from: 'Paris', 
-      timeArrival: '10:25', 
+    trip.value = {
+      id: tripId,
+      date: '2024-01-16',
+      timeDeparture: '08:00',
+      from: 'Paris',
+      timeArrival: '10:25',
       to: 'Lyon',
       passengers: [
         { id: 1, firstName: 'Arthur', lastName: 'Crochemore', phone: '0123456789', from: 'Paris', to: 'Lyon' },
@@ -54,21 +54,21 @@ import { useRoute, useRouter } from 'vue-router';
       nbMaxPassagers: 5
     };
   }
-  
+
   function goBack() {
     router.back();
   }
-  
+
   function modifyTrip() {
     // Pas encore
   }
-  
+
   function deleteTrip() {
     // Slay mais pas encore
   }
-  
+
   </script>
-  
+
   <style scoped>
   .trip-details {
     width: 60%;
@@ -82,11 +82,11 @@ import { useRoute, useRouter } from 'vue-router';
     background-color: white;
     border-radius: 40px;
     padding: 20px;
-    overflow-y: auto; 
+    overflow-y: auto;
     color: black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .back-button {
     align-self: flex-start;
     margin-bottom: 1rem;
@@ -97,12 +97,12 @@ import { useRoute, useRouter } from 'vue-router';
     font-size: 1rem;
     font-weight: bold;
   }
-  
+
   h1 {
     margin-bottom: 20px;
     color: #222;
   }
-  
+
   .passengers-label {
     margin-top: 20px;
     font-size: 1.7rem;
@@ -110,64 +110,64 @@ import { useRoute, useRouter } from 'vue-router';
     text-align: left;
     ;
   }
-  
+
   .right-aligned {
     float: right;
     margin-right: 20px;
   }
-  
+
   .passenger-info p {
     clear: both;
     padding-bottom: 10px;
   }
-  
+
   .contact-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1rem;
   }
-  
+
   .phone {
-    margin-right: 20px; 
+    margin-right: 20px;
   }
-  
+
   .route {
     text-align: right;
-    flex: 1; 
+    flex: 1;
   }
-  
+
   .passenger-info {
-    background-color: #f0f0f0; 
+    background-color: #f0f0f0;
     padding: 15px;
     border-radius: 8px;
     margin-top: 10px;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
   }
-  
+
   .label {
     font-weight: bold;
     color: #353535;
   }
-  
+
   p {
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 0.5rem;
   }
-  
+
   .passenger-count {
     text-align: right;
     font-size: 1.1rem;
     margin: 20px 0;
     color: #333;
   }
-  
+
   .action-buttons {
     margin-top: 20px;
     text-align: center;
   }
-  
+
   .modify-button, .delete-button {
     padding: 10px 20px;
     margin: 0 10px;
@@ -178,22 +178,21 @@ import { useRoute, useRouter } from 'vue-router';
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  
+
   .modify-button {
     background-color: #4CAF50;
   }
-  
+
   .modify-button:hover {
     background-color: #45a049;
   }
-  
+
   .delete-button {
     background-color: #f44336;
   }
-  
+
   .delete-button:hover {
     background-color: #da190b;
   }
-  
+
   </style>
-  
