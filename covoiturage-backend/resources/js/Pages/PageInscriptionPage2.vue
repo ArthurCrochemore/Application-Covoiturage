@@ -26,7 +26,7 @@
 
     const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
-    const router = useRouter() // Récupération du router vue-router pour la navigation
+    const routerV = useRouter() // Récupération du router vue-router pour la navigation
 
     /**
      * Inscription à partir des données saisies
@@ -45,7 +45,7 @@
         .then(response => {
             console.log(response);
             afficherMessageFunc("La demande d'inscription a été enregistrée avec succèes", "Succès");
-            router.push({
+            routerV.push({
                 path: '/'
 
             });
@@ -60,7 +60,7 @@
      * Ramène vers la première page (y affiche les données mail et nid qui avaient été validées)
      */
     const annuler = () => {
-        router.push({
+        routerV.push({
             path: '/inscription-page1',
             query: {
                 mail: mail.value,
