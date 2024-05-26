@@ -17,12 +17,12 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return inertia::render('App_Connexion');
+    return view('welcomeConnexion');
 });
 
 Route::get('/app', function () {
-    return inertia::render('App');
-});
+    return view('welcomeApp');
+})->middleware('auth');
 
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
 

@@ -31,6 +31,11 @@ provide('afficherMessageFunc', AfficherMessage);
 
 
 <style scoped>
+
+* {
+  font-family: Marianne, sans-serif;
+}
+
 .app-container {
   position: relative;
 }

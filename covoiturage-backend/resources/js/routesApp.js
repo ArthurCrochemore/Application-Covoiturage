@@ -1,3 +1,5 @@
+import { createRouter, createWebHistory } from 'vue-router';
+
 import PageDeRecherche from './Pages/PageDeRecherche.vue';
 import PageResultatsRecherche from './Pages/PageResultatsRecherche.vue';
 import PageTrajets from './Pages/PageTrajets.vue';
@@ -12,8 +14,8 @@ import PageDetailTrajetConducteur from './Pages/PageDetailTrajetConducteur.vue';
 import PageDetailTrajetPassager from './Pages/PageDetailTrajetPassager.vue';
 import PageDetailTrajetReservation from './Pages/PageDetailTrajetReservation.vue';
 
-export const routesApp = [
-    { path: '/', component: PageDeRecherche,
+const routes = [
+    { path: '/app', component: PageDeRecherche,
   props: route => ({
     domiciles: route.query.domiciles,
     villeDomiciles: route.query.villeDomiciles,
@@ -65,3 +67,10 @@ export const routesApp = [
   { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
   { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation }
 ];
+
+const routerApp = createRouter({
+    history: createWebHistory(),
+    routes,
+  });
+
+  export default routerApp;

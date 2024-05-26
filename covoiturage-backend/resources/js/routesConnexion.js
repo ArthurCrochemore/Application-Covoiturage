@@ -1,10 +1,12 @@
+import { createRouter, createWebHistory } from 'vue-router';
+
 import PageConnexion from './Pages/PageConnexion.vue';
 import PageInscriptionPage1 from './Pages/PageInscriptionPage1.vue';
 import PageInscriptionPage2 from './Pages/PageInscriptionPage2.vue';
 import PageMotDePasseOublie from './Pages/PageMotDePasseOublie.vue';
 import PageReinitialisationMotDePasse from './Pages/PageReinitialisationMotDePasse.vue';
 
-export const routesConnexion = [
+const routes = [
   { path: '/', component: PageConnexion },
   { path: '/inscription-page1', component: PageInscriptionPage1,
   props: route => ({
@@ -20,3 +22,10 @@ export const routesConnexion = [
   { path: '/mot-de-passe-oublie', component: PageMotDePasseOublie },
   { path: '/reinitialisation-mot-de-passe', component: PageReinitialisationMotDePasse },
 ];
+
+const routerConnexion = createRouter({
+    history: createWebHistory(),
+    routes,
+  });
+
+export default routerConnexion;
