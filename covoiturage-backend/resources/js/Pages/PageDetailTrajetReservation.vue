@@ -26,7 +26,7 @@
   </template>
 
 
-  <script setup>
+<script setup>
   import { onMounted, ref } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   import axios from 'axios'
@@ -35,8 +35,8 @@
   const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
   const props = defineProps({
-        idTrajet: Int16Array,
-        idDomicile: Int16Array
+        idTrajet: Number,
+        idDomicile: Number
     })
 
 const route = useRoute();

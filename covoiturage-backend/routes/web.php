@@ -32,6 +32,10 @@ Route::get('/app', function () {
     }
 });
 
+Route::get('/admin', function () {
+    return view('welcomeAdmin');
+});
+
 Route::post('/login', [UtilisateurController::class, 'login'])->name('login');
 
 Route::post('/logout', [UtilisateurController::class, 'logout']);

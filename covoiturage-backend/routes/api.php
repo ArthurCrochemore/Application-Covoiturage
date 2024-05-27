@@ -37,4 +37,10 @@ Route::get('/adresses/base-aerienne', [AdresseController::class, 'GetAllBaseAeri
 //  Route pour recuperer tous les adresses Domicile
 Route::get('/adresses/domicile', [AdresseController::class, 'GetAllDomicile']);
 
+// Route pour recuperer une Base Aerienne par son ID
+Route::get('/adresses/base-aerienne/{id}', [AdresseController::class, 'getBase']);
+
+//  Route pour recuperer un Domicile par son ID
+Route::get('/adresses/domicile/{id}', [AdresseController::class, 'getDomicile']);
+
 
