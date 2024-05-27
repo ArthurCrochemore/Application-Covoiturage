@@ -1,7 +1,7 @@
 <!-- Représente l'interface Profil  -->
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { inject } from 'vue'
   import axios from 'axios';
@@ -9,12 +9,28 @@
   const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App.vue
 
   /* Constantes pour l'affichage des données du profil, TODO : charger depuis la bdd */
-  const prenom = ref('Jhon')
-  const nom = ref('Doe')
-  const unite = ref('Unite')
-  const adresse = ref('8 Rue Auguste Chevalier, Tours')
-  const mail = ref('jhon@mail.com')
-  const telephone = ref('+33 7 78 67 78 67')
+
+  const profil = ref({
+  prenom: '',
+  nom: '',
+  unite: '',
+  adresse: '',
+  mail: '',
+  telephone: ''
+})
+
+  const fetchProfil = async () => {
+    try {
+      const response = await axios.get('/profil');
+    const profilData = response.data['']; // Accès aux données du profil à partir de la clé vide
+    profil.value = profilData;
+    
+    } catch (error) {
+      console.error('Erreur lors de la récupération du profil :', error);
+    }
+  }
+
+  onMounted(fetchProfil);
 
   const router = useRouter() // Récupération du router vue-router pour la navigation
 
@@ -25,13 +41,13 @@
     router.push({
         path: '/modification-profil',
         query: {
-        mail: "jhon@mail.com",
-        unite: "Unite",
-        numPoste: "14243",
-        prenom: "Jhon",
-        nomFamille: "Doe",
-        adressePostale: "8 Rue Auguste Chevalier, Tours",
-        telephone: "+33 7 78 67 78 67"
+            prenom: profil.value.Prenom,
+            nomFamille: profil.value.Nom,
+            unite: profil.value.Unite,
+            adressePostale: profil.value.AdressePostale,
+            mail: profil.value.Mail,
+            telephone: profil.value.Numero_De_Telephone,
+            numPoste: profil.value.Numero_De_Poste
         }
     });
   }
@@ -70,24 +86,24 @@
     <div class="bloc-principal">
       <div class="bloc-identite">
         <div class="identite">
-          <h3 class="prenom">{{ prenom }}</h3>
-          <h3 class="nom">{{ nom }}</h3>
-          <h3 class="unite">{{ unite }}</h3>
+          <h3 class="prenom">Prénom : {{ profil.Prenom }}</h3>
+          <h3 class="nom">Nom : {{ profil.Nom }}</h3>
+          <h3 class="unite">Unité : {{ profil.Unite }}</h3>
         </div>
       </div>
         <div class="bloc-informations">
           <div class="informations">
             <div class="informations-adresse">
               <div class="icone-adresse"></div>
-              <h3 class="adresse">{{ adresse }}</h3>
+              <h3 class="adresse">{{ profil.AdressePostale }}</h3>
             </div>
             <div class="informations-mail">
               <div class="icone-mail"></div>
-              <h3 class="mail">{{ mail }}</h3>
+              <h3 class="mail">{{ profil.Mail }}</h3>
             </div>
             <div class="informations-telephone">
               <div class="icone-telephone"></div>
-              <h3 class="telephone">{{ telephone }}</h3>
+              <h3 class="telephone">{{ profil.Numero_De_Telephone }}</h3>
             </div>
           </div>
         </div>
@@ -169,6 +185,7 @@
     .boutons, .bouton-rapport-bug {
         display: flex;
         justify-content: space-between;
+        width: 100%;
     }
 
     .modifier, .deconnexion, .rapport-bug {

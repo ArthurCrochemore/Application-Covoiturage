@@ -2,8 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import {Inertia} from '@inertiajs/inertia'
-
+import axios from 'axios';
 const router = useRouter() // Récupération du router vue-router pour la navigation
 
 const trajetRegulier = ref(false)
@@ -46,12 +45,10 @@ const creerTrajet = () => {
         IdConducteur: 1,
     };
 
-    // Envoi de la requête POST à l'URL spécifiée avec les données du trajet
-    Inertia.post('/api/trajets', trajetData)
+    axios.post('/api/trajets', trajetData)
     .then(() => router.push('/creation-suivant'))
     .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
-       
-};
+}
 
 </script>
 

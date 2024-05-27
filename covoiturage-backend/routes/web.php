@@ -53,3 +53,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/utilisateur/update', [UtilisateurController::class, 'update'])->name('utilisateur.update'); // Soumet les modifications de profil
 });
 
+Route::get('/profil', [UtilisateurController::class, 'getProfil']);

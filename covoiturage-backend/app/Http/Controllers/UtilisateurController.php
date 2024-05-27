@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UtilisateurController extends Controller
 {
+    /**
+     * Méthode pour afficher le formulaire de connexion
+     */
     public function login(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $credentials = $request->only('Mail', 'Mot_De_Passe');
@@ -23,6 +26,10 @@ class UtilisateurController extends Controller
         return response()->json(['errors' => ['Mot_De_Passe' => 'Email ou mot de passe incorrect.']], 422);
     }
 
+
+    /**
+     * Méthode pour enregistrer un nouvel utilisateur
+     */
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         // TODO :  doit prendre en compte l'addresse saisie
@@ -49,6 +56,10 @@ class UtilisateurController extends Controller
         }
     }
 
+
+    /**
+     * Méthode pour déconnecter l'utilisateur
+     */
     public function logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         Auth::logout();
@@ -57,6 +68,9 @@ class UtilisateurController extends Controller
         return redirect('/')->with('success', 'Vous avez été déconnecté avec succès.');
     }
 
+    /**
+     * Méthode pour mettre à jour le profil de l'utilisateur
+     */
     public function update(Request $request, Utilisateur $utilisateur): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $validatedData = $request->validate([
@@ -90,4 +104,14 @@ class UtilisateurController extends Controller
         return view('utilisateur.edit', compact('utilisateur'));
     }
 
+    /**
+     * Méthode qui affiche le profil de l'utilisateur connecté
+     */
+    public function getProfil(Request $request)
+    {
+        $utilisateur = Auth::user();
+
+        return response()->json([''=> $utilisateur]);
+    }
+    
 }
