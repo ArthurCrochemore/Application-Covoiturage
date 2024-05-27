@@ -18,32 +18,24 @@ import PageDetailTrajetReservation from './Pages/PageDetailTrajetReservation.vue
 
 const routes = [
     { path: '/app', component: PageDeRecherche,
-  props: route => ({
-    domiciles: route.query.domiciles,
-    villeDomiciles: route.query.villeDomiciles,
-    basesAeriennes: route.query.basesAeriennes,
-    villeBases: route.query.villeBases,
-    ptDepart: route.query.ptDepart,
-    ptArrive: route.query.ptArrive
+    props: route => ({
+        ptDepart: route.query.ptDepart,
+        ptArrive: route.query.ptArrive
   }) },
     { path: '/recherche', component: PageDeRecherche,
-  props: route => ({
-    domiciles: route.query.domiciles,
-    villeDomiciles: route.query.villeDomiciles,
-    basesAeriennes: route.query.basesAeriennes,
-    villeBases: route.query.villeBases,
-    ptDepart: route.query.ptDepart,
-    ptArrive: route.query.ptArrive
+    props: route => ({
+        ptDepart: route.query.ptDepart,
+        ptArrive: route.query.ptArrive
   }) },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
     props: route => ({
-      domicile: route.query.domicile,
-      villeDomicile: route.query.villeDomicile,
-      base: route.query.base,
-      villeBase: route.query.villeBase,
+      idBase: route.query.idBase,
+      idDomicile: route.query.idDomicile,
       booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile === 'true',
       typeTrajet: route.query.typeTrajet,
-      heure: route.query.heure
+      jours: route.query.jours,
+      heure: route.query.heure,
+      date: route.query.date
     })
   },
   { path: '/vos-trajets', component: PageTrajets },

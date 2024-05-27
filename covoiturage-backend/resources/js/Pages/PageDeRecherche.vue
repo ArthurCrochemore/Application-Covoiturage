@@ -6,24 +6,28 @@
     import axios from 'axios'
 
     const props = defineProps({
-        domiciles: Array,
-        villeDomiciles: Array,
-        basesAeriennes: Array,
-        villeBases: Array,
         ptDepart: String,
         ptArrive: String
     })
 
-    const villeDomiciles = ref('')
+    const domiciles = ref('')
     const basesAeriennes = ref('')
+
+    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
+    const departs = ref()
+    const arrives = ref()
 
     /**
      * Récupère tout les domiciles de la base de données
      */
      const recuperationDomiciles = async () => {
         try {
-            const response = await axios.get('/api/adresses/base-aerienne')
-            villeDomiciles.value = response.data
+            const response = await axios.get('/api/adresses/domicile')
+            domiciles.value = response.data
+
+            // Chargement dans le menu déroulant
+            arrives.value = domiciles.value
+        arrives.value = domiciles.value
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
@@ -34,24 +38,15 @@
      */
      const recuperationBases = async () => {
         try {
-            const response = await axios.get('/api/adresses/domicile')
+            const response = await axios.get('/api/adresses/base-aerienne')
             basesAeriennes.value = response.data
+
+            // Chargement dans le menu déroulant
+            departs.value = basesAeriennes.value
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
     }
-
-    /**
-     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
-     */
-    onMounted(() => {
-        recuperationDomiciles()
-        recuperationBases()
-    })
-
-    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
-    const departs = ref(villeDomiciles)
-    const arrives = ref(basesAeriennes)
 
     // Constantes des contenus des différents champs
     const depart = ref(props.ptDepart)
@@ -59,10 +54,30 @@
     const heure = ref()
     const date = ref()
 
-    // Constantes pour l'affichage des données de recherche
-    const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
-    const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
-    const booleenTrajetBaseDomicile = ref(0)
+
+    /**
+     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
+     */
+    onMounted(() => {
+        recuperationDomiciles()
+        recuperationBases()
+
+
+
+        // Récupération de la date et de l'heure actuelle
+        const maintenant = new Date()
+        const anneeActuelle = maintenant.getFullYear()
+        const moisActuel = maintenant.getMonth() + 1 // Les mois commencent à partir de 0
+        const jourActuel = maintenant.getDate()
+
+        date.value = `${anneeActuelle}-${moisActuel.toString().padStart(2, '0')}-${jourActuel.toString().padStart(2, '0')}`
+
+        const heureActuelle = maintenant.getHours()
+        const minuteActuelle = maintenant.getMinutes()
+
+        heure.value = `${heureActuelle.toString().padStart(2, '0')}:${minuteActuelle.toString().padStart(2, '0')}`
+
+    })
 
     // Gèrent le grisage de la date (trajet régulier)
     const dateId = ref(['non-grise', 'grise'])
@@ -74,25 +89,35 @@
         estGrise.value = !estGrise.value
     }
 
+    // Constantes pour l'affichage des données de recherche
+    const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
+    const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
+    const booleenTrajetBaseDomicile = ref(1)
+
     /**
      * Permet l'inversion du sens du trajet
      */
-    const basculerTypeDeTrajet = () => {
+     const basculerTypeDeTrajet = () => {
         booleenTrajetBaseDomicile.value = (booleenTrajetBaseDomicile.value + 1) % typesDeTrajet.value.length
         depart.value = ""
         arrive.value = ""
+        console.log(basesAeriennes.value)
 
         /* Echange des propositions d'adresse entre les champs départ et arrivé */
-        if (booleenTrajetBaseDomicile.value === 0) {
-            departs.value = props.domiciles.slice()
-            arrives.value = props.basesAeriennes.slice()
+        if (booleenTrajetBaseDomicile.value === 1) {
+            departs.value = basesAeriennes.value
+            arrives.value = domiciles.value
         } else {
-            departs.value = props.basesAeriennes.slice()
-            arrives.value = props.domiciles.slice()
+            departs.value = domiciles.value
+            arrives.value = basesAeriennes.value
         }
+
     }
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
+
+    const idDomicile = ref()
+    const idBase = ref()
 
     /**
      * Charge tout les trajets dans le résultats de recherche
@@ -100,18 +125,49 @@
     const recherche = () => {
         const trajetBaseDomicile = Boolean(booleenTrajetBaseDomicile);
 
-        router.push({
-            path: '/resultat-recherche',
-            query: {
-            domicile: 'Rue de la Fortilière, St Avertin',
-            villeDomicile: 'St Avertin',
-            base: "Base aerienne de Tours",
-            villeBase: "Tours",
-            booleenTrajetBaseDomicile: trajetBaseDomicile,
-            typeTrajet: 'Regulier',
-            heure: '10h50'
+        idDomicile.value = -1
+        idBase.value = -1
+
+        // On récupère les ids des champs départ/arrivé saisies
+        for (const domicileParam of domiciles.value) {
+            if (booleenTrajetBaseDomicile) {
+                if(domicileParam.Intitule == arrive.value) {
+                    idDomicile.value = domicileParam.Id_Adresse
+                }
+            } else {
+                if(domicileParam.Intitule == depart.value) {
+                    idDomicile.value = domicileParam.Id_Adresse
+                }
             }
-        });
+        }
+        for (const baseParam of basesAeriennes.value) {
+            if (booleenTrajetBaseDomicile) {
+                if(baseParam.Intitule == depart.value) {
+                    idBase.value = baseParam.Id_Adresse
+                }
+            } else {
+                if(baseParam.Intitule == arrive.value) {
+                    idBase.value = baseParam.Id_Adresse
+                }
+            }
+        }
+
+        // S'ils ont été trouvés :
+        if (idDomicile.value > -1 && idBase.value > -1) {
+            console.log(heure.value)
+            router.push({
+                path: '/resultat-recherche',
+                query: {
+                    idBase: idBase.value ,
+                    idDomicile: idDomicile.value ,
+                    booleenTrajetBaseDomicile: trajetBaseDomicile,
+                    typeTrajet: 'Regulier',
+                    jours: [true, false, false, true, false, false, true],
+                    heure: heure.value,
+                    date: date.value
+                }
+            });
+        }
     }
 </script>
 
@@ -124,14 +180,14 @@
       <div class="icone-map"></div>
       <input list="liste-departs" v-model="depart" type="text" class="label" id="depart-label" placeholder="Départ" />
       <datalist id="liste-departs">
-            <option v-for="option in departs" :value="option">{{option.Intitule}}</option>
+            <option v-for="option in departs" :value="option.Intitule">{{option.Intitule}}</option>
         </datalist>
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
       <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
         <datalist id="liste-arrives">
-            <option v-for="option in arrives" :value="option">{{option.Intitule}}</option>
+            <option v-for="option in arrives" :value="option.Intitule">{{option.Intitule}}</option>
         </datalist>
     </div>
     <div class="date-et-heure">
