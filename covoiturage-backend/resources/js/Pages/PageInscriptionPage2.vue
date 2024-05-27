@@ -7,9 +7,9 @@
     import axios from 'axios';
 
     const props = defineProps({
-    mail: String,
-    nid: String,
-    mdp: String
+        mail: String,
+        nid: String,
+        mdp: String
     })
 
     /* Constante pour les données saisies */

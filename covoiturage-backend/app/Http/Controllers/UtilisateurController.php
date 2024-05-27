@@ -25,6 +25,9 @@ class UtilisateurController extends Controller
 
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
+        // TODO :  doit prendre en compte l'addresse saisie
+        // TODO : selon cahier des charges, l'inscription crée une demande, puis c'est l'admin qui gère le "store" à partir de la demande
+
         $validatedData = $request->validate([
             'NID' => 'required|integer',
             'Nom' => 'required|string|max:50',

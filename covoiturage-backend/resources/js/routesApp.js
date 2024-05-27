@@ -67,7 +67,12 @@ const routes = [
   { path: '/modification-trajet', component: PageModificationTrajet },
   { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur },
   { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
-  { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation }
+  { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation,
+    props: route => ({
+        idTajet: route.query.idTrajet,
+        idDomicile: route.query.idDomicile
+    })
+   }
 ];
 
 const routerApp = createRouter({

@@ -55,6 +55,8 @@
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
+    const resultatsRecherche = ref('')
+
     /**
      * Récupère tout les trajets de la base de données
      */

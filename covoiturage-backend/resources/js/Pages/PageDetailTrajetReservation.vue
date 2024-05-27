@@ -26,18 +26,20 @@
 
   <script setup>
   import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
+  import axios from 'axios'
 
-  const trip = ref({});
-  const route = useRoute();
-  const router = useRouter(); // Récupération du router vue-router pour la navigation
+  const props = defineProps({
+        idTrajet: Int16Array,
+        idDomicile: Int16Array
+    })
 
   onMounted(() => {
     fetchTripDetails();
   });
 
-  function fetchTripDetails() {
-    const tripId = route.params.id;
+  const fetchTripDetails = async () =>  {
+    /*const tripId = route.params.id;
     trip.value = {
       id: tripId,
       date: '2024-01-16',
@@ -51,8 +53,21 @@ import { useRoute, useRouter } from 'vue-router';
       ],
       nbPassagers: 3,
       nbMaxPassagers: 5
-    };
+    };*/
+
+    try {
+        const response = await axios.get('/api/trajets/' + id)
+        trip.value = response.data
+    } catch (error) {
+        console.error('Error fetching trajets:', error)
+    }
   }
+
+  const trip = ref({});
+  const route = useRoute();
+  const router = useRouter(); // Récupération du router vue-router pour la navigation
+
+
 
   function goBack() {
     router.back();
@@ -75,8 +90,6 @@ import { useRoute, useRouter } from 'vue-router';
         afficherMessageFunc(error, "Erreur");
         console.error(error);
       });
-
-
   }
 
   </script>
