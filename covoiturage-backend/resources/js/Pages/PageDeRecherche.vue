@@ -153,7 +153,7 @@
         }
 
         // S'ils ont été trouvés :
-        if (idDomicile.value > -1 && idBase.value > -1) {
+        if (idDomicile.value > -1 && idBase.value > -1) { // TODO : peut etre verifie que l'heure et la date sont anterieures
             console.log(heure.value)
             router.push({
                 path: '/resultat-recherche',
@@ -161,12 +161,14 @@
                     idBase: idBase.value ,
                     idDomicile: idDomicile.value ,
                     booleenTrajetBaseDomicile: trajetBaseDomicile,
-                    typeTrajet: 'Regulier',
-                    jours: [true, false, false, true, false, false, true],
+                    typeTrajet: 'Regulier', // TODO : Gérer le statut 'Regulier' / 'Ponctuel'
+                    jours: [true, false, false, true, false, false, true], // TODO : Gérer la selction de jour en cas de 'Regulier' (voir dans la création de Trajet)
                     heure: heure.value,
                     date: date.value
                 }
             });
+        } else {
+            // TODO : gestion graphique pour les champs qui poses problemes
         }
     }
 </script>
