@@ -23,7 +23,14 @@
      * Charge l'affichage détaillé du trajet, où la réservation est possible
      */
     const ouvrir = () => {
-        router.push({path: '/detail-trajet-reservation', params: { id: idTrajet } });
+        console.log(idTrajet.value)
+
+        router.push({path: '/detail-trajet-reservation',
+            query: {
+                idTrajet: idTrajet.value,
+                idDomicile: 1 // TODO : idDomicile
+            }
+        });
     }
 </script>
 

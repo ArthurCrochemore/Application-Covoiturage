@@ -90,27 +90,74 @@ class TrajetController extends Controller
                 $ptDepart = null;
                 $ptArrive = null;
 
+                $heureDepart = null;
+                $heureArrive = null;
+
+                $type = null;
+
+
                 if ($domicile && $base) {
                     // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
                     if ($trajet->Domicile_Base) {
                         $ptDepart = $domicile->Intitule;
                         $ptArrive = $base->Intitule;
+
+                        $heureDepart = "";
+                        $heureArrive = $trajet->Heure_Depart;
                     } else {
                         $ptDepart = $base->Intitule;
                         $ptArrive = $domicile->Intitule;
+
+                        $heureDepart = $trajet->Heure_Depart;
+                        $heureArrive = "";
                     }
+                }
+
+                if ($domicile && $base) {
+                    // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                    if ($trajet->Domicile_Base) {
+                        $ptDepart = $domicile->Intitule;
+                        $ptArrive = $base->Intitule;
+
+                        $heureDepart = "";
+                        $heureArrive = $trajet->Heure_Depart;
+                    } else {
+                        $ptDepart = $base->Intitule;
+                        $ptArrive = $domicile->Intitule;
+
+                        $heureDepart = $trajet->Heure_Depart;
+                        $heureArrive = "";
+                    }
+                }
+
+                if($trajet->Trajet_Regulier) {
+                    $type = "Régulier";
+                } else {
+                    $type = "Ponctuel";
                 }
 
                 //Recuperer l'utilisateur
                 $utilisateur = $trajet->utilisateur;
 
+                // TODO : récupérer les passagers :
+                $passagers = []; // TODO : prendre en compte d'ou part le passager et ou il va
+                $nbPassagers = 0;
+
                 $result = [
+                    'idTrajet' => $trajet->Id_Trajet,
                     'ptDepart' => $ptDepart,
                     'ptArrive' => $ptArrive,
-                    'heureDepart' => $trajet->Heure_Depart,
+                    'typeTrajet' => $type,
+                    'heureDepart' => $heureDepart,
+                    'heureArrive' => $heureArrive,
                     'Date_Depart' => $trajet->Date_Depart,
                     'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
-                    'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null
+                    'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
+                    'passagers' => $passagers,
+                    'nbPassagers' => $nbPassagers,
+                    'nbMaxPassagers' => $trajet->Nbre_Places
+
+                    // TODO : Ajouter domicile de l'utilisateur est base du trajet
                 ];
 
                 return response()->json($result, 200);

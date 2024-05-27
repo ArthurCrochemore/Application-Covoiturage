@@ -1,9 +1,10 @@
 <!-- Représente l'affichage de un trajet pour un résultat de la recherche de trajets  -->
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import BlocResultatRecherche from './BlocResultatRecherche.vue'
+    import axios from 'axios'
 
     const props = defineProps({
         domicile: String,
@@ -12,8 +13,28 @@
         villeBase: String,
         booleenTrajetBaseDomicile: Boolean,
         typeTrajet: String,
-        heure: String,
-        resultats: Array // listes de tout les résultats de la recherche
+        heure: String
+    })
+
+    const resultatsRecherche = ref('')
+
+    /**
+     * Récupère tout les trajets de la base de données
+     */
+    const recuperationTrajets = async () => {
+        try {
+            const response = await axios.get('/api/trajets')
+            resultatsRecherche.value = response.data
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
+     */
+    onMounted(() => {
+        recuperationTrajets()
     })
 
     /* Constantes pour l'affichage des paramètres de la recherche */
@@ -78,7 +99,7 @@
     </div>
     <div class="bloc-principal">
       <BlocResultatRecherche
-            v-for="(resultat, index) in JSON.parse(resultats)"
+            v-for="(resultat, index) in resultatsRecherche"
             :key="index"
             :idTrajet="resultat.idTrajet"
             :ptDepart="resultat.ptDepart"
@@ -95,36 +116,35 @@
 </template>
 
 <style scoped>
+    .bloc-principal {
+        background-color: grey;
+        top: 100px;
+        bottom: 100px;
+        padding : 10px 0;
+        overflow-y: auto;
+    }
 
-.bloc-principal {
-    background-color: grey;
-    top: 100px;
-    bottom: 100px;
-    padding : 10px 0;
-    overflow-y: auto;
-}
+    .bloc-resultat {
+        margin : 5px 10%;
+        width : 80%;
+        height: 90px;
+    }
 
-.bloc-resultat {
-    margin : 5px 10%;
-    width : 80%;
-    height: 90px;
-}
+    .alerte {
+        background-color: #73c57b;
+        border-radius: 30px;
+        width : 80%;
+        height: 60px;
+        margin : 5px 10%;
+    }
 
-.alerte {
-    background-color: #73c57b;
-    border-radius: 30px;
-    width : 80%;
-    height: 60px;
-    margin : 5px 10%;
-}
+    .alerte:hover {
+        background-color: #7ccc84;
+    }
 
-.alerte:hover {
-    background-color: #7ccc84;
-}
-
-.alerte > h1{
-    text-align: center;
-    color : white;
-    margin : auto;
-}
+    .alerte > h1{
+        text-align: center;
+        color : white;
+        margin : auto;
+    }
 </style>

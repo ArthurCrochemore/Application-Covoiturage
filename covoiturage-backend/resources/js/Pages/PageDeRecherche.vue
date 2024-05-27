@@ -1,8 +1,7 @@
 <!-- Représente l'interface de recherche de trajets  -->
 
 <script setup>
-    import { ref, onMounted  } from 'vue'
-    import axios from 'axios'
+    import { ref  } from 'vue'
     import { useRouter } from 'vue-router'
 
     const props = defineProps({
@@ -14,9 +13,12 @@
         ptArrive: String
     })
 
+    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
     // TODO : à voir en fonction de  comment sont gérés les adresses (SI suppresion, supprimer aussi dans les props)
     const departs = ref(props.domiciles)
     const arrives = ref(props.basesAeriennes)
+
+    // Constantes pour le contenu des champs Départ/Arrivé
     const depart = ref(props.ptDepart)
     const arrive = ref(props.ptArrive)
 
@@ -56,18 +58,6 @@
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
     /**
-     * Récupère tout les trajets de la base de données
-     */
-    const fetchTrajets = async () => {
-        try {
-            const response = await axios.get('/api/trajets')
-            resultatsRecherche.value = response.data
-        } catch (error) {
-            console.error('Error fetching trajets:', error)
-        }
-    }
-
-    /**
      * Charge tout les trajets dans le résultats de recherche
      */
     const recherche = () => {
@@ -82,16 +72,10 @@
             villeBase: "Tours",
             booleenTrajetBaseDomicile: trajetBaseDomicile,
             typeTrajet: 'Regulier',
-            heure: '10h50',
-            resultats : JSON.stringify(resultatsRecherche.value)
+            heure: '10h50'
             }
         });
     }
-
-    // TODO : supprimer pour ne récupérer les données que lors de la recherche et pas avant
-    onMounted(() => {
-        fetchTrajets()
-    })
 </script>
 
 <template>
