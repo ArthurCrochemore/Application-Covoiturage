@@ -169,6 +169,19 @@ class TrajetController extends Controller
         }
     }
 
+    public function getAllTrajetsPassagers() {
+        // TODO : récupère tout les trajets dans lesquels l'utilisateur (utiliser l'id de Auth) est passager
+        // => Aussi, les trajets qui ont été réservés
+    }
+
+    public function getAllTrajetsConducteurs() {
+        // TODO : récupère tout les trajets dans lesquels l'utilisateur (utiliser l'id de Auth) est conducteur
+    }
+
+    public function getAllPropositionsTrajets() {
+        // TODO : récupère tout les trajets que l'utilisateur (utiliser l'id de Auth) a proposé
+    }
+
     public function updateTrajet(Request $request, $id)
     {
         try {
@@ -229,8 +242,6 @@ class TrajetController extends Controller
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
-
-
 
     public function createTrajet(Request $request)
     {

@@ -1,8 +1,9 @@
 <!-- Représente l'interface de recherche de trajets  -->
 
 <script setup>
-    import { ref  } from 'vue'
+    import { ref, onMounted  } from 'vue'
     import { useRouter } from 'vue-router'
+    import axios from 'axios'
 
     const props = defineProps({
         domiciles: Array,
@@ -13,14 +14,50 @@
         ptArrive: String
     })
 
-    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
-    // TODO : à voir en fonction de  comment sont gérés les adresses (SI suppresion, supprimer aussi dans les props)
-    const departs = ref(props.domiciles)
-    const arrives = ref(props.basesAeriennes)
+    const villeDomiciles = ref('')
+    const basesAeriennes = ref('')
 
-    // Constantes pour le contenu des champs Départ/Arrivé
+    /**
+     * Récupère tout les domiciles de la base de données
+     */
+     const recuperationDomiciles = async () => {
+        try {
+            const response = await axios.get('/api/adresses/base-aerienne')
+            villeDomiciles.value = response.data
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Récupère toutes les bases aériennes de la base de données
+     */
+     const recuperationBases = async () => {
+        try {
+            const response = await axios.get('/api/adresses/domicile')
+            basesAeriennes.value = response.data
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
+     */
+    onMounted(() => {
+        recuperationDomiciles()
+        recuperationBases()
+    })
+
+    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
+    const departs = ref(villeDomiciles)
+    const arrives = ref(basesAeriennes)
+
+    // Constantes des contenus des différents champs
     const depart = ref(props.ptDepart)
     const arrive = ref(props.ptArrive)
+    const heure = ref()
+    const date = ref()
 
     // Constantes pour l'affichage des données de recherche
     const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
@@ -87,14 +124,14 @@
       <div class="icone-map"></div>
       <input list="liste-departs" v-model="depart" type="text" class="label" id="depart-label" placeholder="Départ" />
       <datalist id="liste-departs">
-            <option v-for="option in departs" :value="option">{{option}}</option>
+            <option v-for="option in departs" :value="option">{{option.Intitule}}</option>
         </datalist>
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
       <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
         <datalist id="liste-arrives">
-            <option v-for="option in arrives" :value="option">{{option}}</option>
+            <option v-for="option in arrives" :value="option">{{option.Intitule}}</option>
         </datalist>
     </div>
     <div class="date-et-heure">
