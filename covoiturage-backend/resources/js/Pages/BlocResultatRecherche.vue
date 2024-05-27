@@ -5,7 +5,7 @@
     import { useRouter } from 'vue-router'
 
     const props = defineProps({
-        idTrajet : Int16Array,
+        idTrajet : Number,
         ptDepart: String,
         ptArrive: String,
         typeTrajet: String,

@@ -2,19 +2,24 @@
 
 <script setup>
     import { ref, onMounted } from 'vue'
-    import { useRouter } from 'vue-router'
+    import { useRouter, useRoute } from 'vue-router'
     import BlocResultatRecherche from './BlocResultatRecherche.vue'
     import axios from 'axios'
 
     const props = defineProps({
-        domicile: String,
-        villeDomicile: String,
-        base: String,
-        villeBase: String,
+        idBase: Number,
+        idDomicile: Number,
         booleenTrajetBaseDomicile: Boolean,
         typeTrajet: String,
-        heure: String
+        jours: Array,
+        heure: String,
+        date: String
     })
+
+    const route = useRoute();
+
+    const idBase = ref(route.query.idBase);
+    const idDomicile = ref(route.query.idDomicile);
 
     const resultatsRecherche = ref('')
 
@@ -30,16 +35,59 @@
         }
     }
 
+    const domicile = ref('')
+    const villeDomicile = ref('')
+    const base = ref('')
+    const villeBase = ref('')
+
+    const recuperationDomicile = async () => {
+        try {
+            const response = await axios.get('/api/adresses/domicile/' + idDomicile.value)
+            domicile.value = response.data.Intitule
+            villeDomicile.value = response.data.Ville
+
+            if (props.booleenTrajetBaseDomicile) {
+                arrive.value = villeDomicile.value
+            } else {
+                depart.value = villeDomicile.value
+            }
+
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    const recuperationBase = async () => {
+        try {
+            const response = await axios.get('/api/adresses/base-aerienne/' + idBase.value)
+            base.value = response.data.Intitule
+            villeBase.value = response.data.Ville
+
+            if (props.booleenTrajetBaseDomicile) {
+                depart.value = villeBase.value
+            } else {
+                arrive.value = villeBase.value
+            }
+
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /* Constantes pour l'affichage des paramètres de la recherche */
+    const depart = ref("")
+    const arrive = ref("")
+
     /**
      * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
      */
     onMounted(() => {
         recuperationTrajets()
+        recuperationDomicile()
+        recuperationBase()
     })
 
-    /* Constantes pour l'affichage des paramètres de la recherche */
-    const depart = ref(props.villeDomicile)
-    const arrive = ref(props.base)
+
 
     var directionTrajet = ref("Départ")
     if(props.booleenTrajetBaseDomicile) {
@@ -48,26 +96,26 @@
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
+    const ptDepart = ref('')
+    const ptArrive = ref('')
+
     /**
      * Ramène sur l'interface de recherche
      */
     const retour = () => {
+        if (props.booleenTrajetBaseDomicile) {
+            ptArrive.value = domicile.value
+            ptDepart.value = base.value
+        } else {
+            ptDepart.value = domicile.value
+            ptArrive.value = base.value
+        }
+
         router.push({
             path: '/recherche',
         query: {
-            // TODO : ne plus utiliser de props
-
-            domiciles: ["Rue de l'Allouette, Paris",
-            "Rue de la Fortilière, St Avertin",
-            "Rue Auguste Chevalier, Tours"],
-            villeDomiciles : ["Paris",
-                "St Avertin",
-                "Tours"
-            ],
-            basesAeriennes: ["Base aerienne de Tours"],
-            villeBases: ["Tours"],
-            ptDepart: props.domicile.value,
-            ptArrive: props.base.value
+            ptDepart: ptDepart.value,
+            ptArrive: ptArrive.value
             }
         });
     }
