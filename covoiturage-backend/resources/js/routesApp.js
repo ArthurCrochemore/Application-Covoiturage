@@ -41,10 +41,9 @@ const routes = [
       villeDomicile: route.query.villeDomicile,
       base: route.query.base,
       villeBase: route.query.villeBase,
-      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile,
+      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile === 'true',
       typeTrajet: route.query.typeTrajet,
-      heure: route.query.heure,
-      resultats: route.query.resultats
+      heure: route.query.heure
     })
   },
   { path: '/vos-trajets', component: PageTrajets },
@@ -67,7 +66,12 @@ const routes = [
   { path: '/modification-trajet', component: PageModificationTrajet },
   { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur },
   { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
-  { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation }
+  { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation,
+    props: route => ({
+        idTajet: route.query.idTrajet,
+        idDomicile: route.query.idDomicile
+    })
+   }
 ];
 
 const routerApp = createRouter({
