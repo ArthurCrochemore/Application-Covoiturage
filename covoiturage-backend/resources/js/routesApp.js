@@ -41,10 +41,9 @@ const routes = [
       villeDomicile: route.query.villeDomicile,
       base: route.query.base,
       villeBase: route.query.villeBase,
-      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile,
+      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile === 'true',
       typeTrajet: route.query.typeTrajet,
-      heure: route.query.heure,
-      resultats: route.query.resultats
+      heure: route.query.heure
     })
   },
   { path: '/vos-trajets', component: PageTrajets },
