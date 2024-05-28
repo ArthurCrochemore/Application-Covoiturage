@@ -25,13 +25,14 @@ const routes = [
     { path: '/recherche', component: PageDeRecherche,
     props: route => ({
         ptDepart: route.query.ptDepart,
-        ptArrive: route.query.ptArrive
+        ptArrive: route.query.ptArrive,
+        booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile,
   }) },
   { path: '/resultat-recherche', component: PageResultatsRecherche,
     props: route => ({
       idBase: route.query.idBase,
       idDomicile: route.query.idDomicile,
-      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile === 'true',
+      booleenTrajetBaseDomicile: route.query.booleenTrajetBaseDomicile,
       typeTrajet: route.query.typeTrajet,
       jours: route.query.jours,
       heure: route.query.heure,

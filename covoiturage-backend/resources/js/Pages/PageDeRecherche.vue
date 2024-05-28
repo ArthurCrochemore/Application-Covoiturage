@@ -3,13 +3,18 @@
 <script setup>
     import { ref, onMounted  } from 'vue'
     import { useRouter } from 'vue-router'
+    import { inject } from 'vue'
     import axios from 'axios'
 
     const props = defineProps({
         ptDepart: String,
-        ptArrive: String
+        ptArrive: String,
+        booleenTrajetBaseDomicile : String
     })
 
+    const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
+
+    // Constantes pour contenir toutes les adresses en fonction de leur type
     const domiciles = ref('')
     const basesAeriennes = ref('')
 
@@ -25,9 +30,12 @@
             const response = await axios.get('/api/adresses/domicile')
             domiciles.value = response.data
 
-            // Chargement dans le menu déroulant
-            arrives.value = domiciles.value
-        arrives.value = domiciles.value
+            // Chargement du contenu du menu déroulant chargé avec les domiciles
+            if (props.booleenTrajetBaseDomicile == 'true') {
+                arrives.value = domiciles.value
+            } else {
+                departs.value = domiciles.value
+            }
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
@@ -41,19 +49,22 @@
             const response = await axios.get('/api/adresses/base-aerienne')
             basesAeriennes.value = response.data
 
-            // Chargement dans le menu déroulant
-            departs.value = basesAeriennes.value
+            // Chargement du contenu du menu déroulant chargé avec les bases
+            if (props.booleenTrajetBaseDomicile === 'true') {
+                departs.value = basesAeriennes.value
+            } else {
+                arrives.value = basesAeriennes.value
+            }
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
     }
 
-    // Constantes des contenus des différents champs
+    // Constantes des contenus des différents champs Départ / Arrivé
     const depart = ref(props.ptDepart)
     const arrive = ref(props.ptArrive)
     const heure = ref()
     const date = ref()
-
 
     /**
      * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
@@ -61,8 +72,6 @@
     onMounted(() => {
         recuperationDomiciles()
         recuperationBases()
-
-
 
         // Récupération de la date et de l'heure actuelle
         const maintenant = new Date()
@@ -83,6 +92,7 @@
     const dateId = ref(['non-grise', 'grise'])
     const indexBouttonSwitch = ref(0)
     const estGrise = ref(false)
+    const trajetRegulier = ref(false)
 
     const changerIdGrise = () => {
         indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
@@ -90,18 +100,26 @@
     }
 
     // Constantes pour l'affichage des données de recherche
-    const typesDeTrajet = ref(['Trajet Base -> Domicile', 'Trajet Domicile -> Base'])
+    const typesDeTrajet = ref(['Trajet Domicile -> Base', 'Trajet Base -> Domicile'])
     const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
-    const booleenTrajetBaseDomicile = ref(1)
+
+    const temp = ref() // Utilisé pour l'échange de données
+
+    // Constante pour le sens du trajet
+    const booleenTrajetBaseDomicile = ref(0)
+    if (props.booleenTrajetBaseDomicile === 'true') {
+        booleenTrajetBaseDomicile.value = 1
+    }
 
     /**
      * Permet l'inversion du sens du trajet
      */
      const basculerTypeDeTrajet = () => {
         booleenTrajetBaseDomicile.value = (booleenTrajetBaseDomicile.value + 1) % typesDeTrajet.value.length
-        depart.value = ""
-        arrive.value = ""
-        console.log(basesAeriennes.value)
+
+        temp.value = depart.value
+        depart.value = arrive.value
+        arrive.value = temp.value
 
         /* Echange des propositions d'adresse entre les champs départ et arrivé */
         if (booleenTrajetBaseDomicile.value === 1) {
@@ -116,6 +134,7 @@
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
+    // Constantes pour les passer les ids des base et domicile choisi dans la recherche
     const idDomicile = ref()
     const idBase = ref()
 
@@ -123,14 +142,19 @@
      * Charge tout les trajets dans le résultats de recherche
      */
     const recherche = () => {
-        const trajetBaseDomicile = Boolean(booleenTrajetBaseDomicile);
+        const trajetBaseDomicile = ref();
+        if (booleenTrajetBaseDomicile.value === 1) {
+            trajetBaseDomicile.value = true
+        } else {
+            trajetBaseDomicile.value = false
+        }
 
         idDomicile.value = -1
         idBase.value = -1
 
         // On récupère les ids des champs départ/arrivé saisies
         for (const domicileParam of domiciles.value) {
-            if (booleenTrajetBaseDomicile) {
+            if (booleenTrajetBaseDomicile.value === 1) { // Si base
                 if(domicileParam.Intitule == arrive.value) {
                     idDomicile.value = domicileParam.Id_Adresse
                 }
@@ -141,7 +165,7 @@
             }
         }
         for (const baseParam of basesAeriennes.value) {
-            if (booleenTrajetBaseDomicile) {
+            if (booleenTrajetBaseDomicile.value === 1) {
                 if(baseParam.Intitule == depart.value) {
                     idBase.value = baseParam.Id_Adresse
                 }
@@ -154,13 +178,12 @@
 
         // S'ils ont été trouvés :
         if (idDomicile.value > -1 && idBase.value > -1) { // TODO : peut etre verifie que l'heure et la date sont anterieures
-            console.log(heure.value)
             router.push({
                 path: '/resultat-recherche',
                 query: {
                     idBase: idBase.value ,
                     idDomicile: idDomicile.value ,
-                    booleenTrajetBaseDomicile: trajetBaseDomicile,
+                    booleenTrajetBaseDomicile: trajetBaseDomicile.value,
                     typeTrajet: 'Regulier', // TODO : Gérer le statut 'Regulier' / 'Ponctuel'
                     jours: [true, false, false, true, false, false, true], // TODO : Gérer la selction de jour en cas de 'Regulier' (voir dans la création de Trajet)
                     heure: heure.value,
@@ -169,6 +192,7 @@
             });
         } else {
             // TODO : gestion graphique pour les champs qui poses problemes
+            afficherMessageFunc("La recherche a échouée, verifiez que votre saisie est correcte", "Erreur")
         }
     }
 </script>
@@ -214,21 +238,7 @@
   </div>
 </template>
 
-<script>
-    export default {
-
-    data() {
-        return {
-        heure: '',
-        date: '',
-        trajetRegulier: ''
-        }
-    }
-    }
-    </script>
-
-    <style scoped>
-
+<style scoped>
     .type-de-trajet {
         background-color: #dddddd;
         width: 90%;
@@ -407,8 +417,6 @@
     width: 100px;
     height: 100px;
     }
-
-
 </style>
 
 

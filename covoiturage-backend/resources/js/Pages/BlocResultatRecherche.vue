@@ -12,10 +12,12 @@
         heureDepart: String,
         heureArrive: String,
         nomConducteur: String,
-        uniteConducteur: String
+        uniteConducteur: String,
+        idDomicile: Number
     })
 
     const idTrajet = ref(props.idTrajet) // On stocke le props de l'id du trajet dans une constante pour puvoir l'utiliser dans la réservation
+    const idDomicile = ref(props.idDomicile)
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
@@ -28,7 +30,7 @@
         router.push({path: '/detail-trajet-reservation',
             query: {
                 idTrajet: idTrajet.value,
-                idDomicile: 1 // TODO : idDomicile
+                idDomicile: idDomicile.value
             }
         });
     }
