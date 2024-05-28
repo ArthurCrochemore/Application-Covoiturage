@@ -9,7 +9,7 @@
     const props = defineProps({
         idBase: Number,
         idDomicile: Number,
-        booleenTrajetBaseDomicile: Boolean,
+        booleenTrajetBaseDomicile: String,
         typeTrajet: String,
         jours: Array,
         heure: String,
@@ -28,6 +28,7 @@
      */
     const recuperationTrajets = async () => {
         try {
+            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
             const response = await axios.get('/api/trajets')
             resultatsRecherche.value = response.data
         } catch (error) {
@@ -35,18 +36,22 @@
         }
     }
 
+    /* Constantes pour les champs des adresses */
     const domicile = ref('')
     const villeDomicile = ref('')
     const base = ref('')
     const villeBase = ref('')
 
+    /**
+     * Récupère du paramètre domicile
+     */
     const recuperationDomicile = async () => {
         try {
             const response = await axios.get('/api/adresses/domicile/' + idDomicile.value)
             domicile.value = response.data.Intitule
             villeDomicile.value = response.data.Ville
 
-            if (props.booleenTrajetBaseDomicile) {
+            if (props.booleenTrajetBaseDomicile === "true") {
                 arrive.value = villeDomicile.value
             } else {
                 depart.value = villeDomicile.value
@@ -57,13 +62,16 @@
         }
     }
 
+    /**
+     * Récupère du paramètre base
+     */
     const recuperationBase = async () => {
         try {
             const response = await axios.get('/api/adresses/base-aerienne/' + idBase.value)
             base.value = response.data.Intitule
             villeBase.value = response.data.Ville
 
-            if (props.booleenTrajetBaseDomicile) {
+            if (props.booleenTrajetBaseDomicile === "true") {
                 depart.value = villeBase.value
             } else {
                 arrive.value = villeBase.value
@@ -87,11 +95,10 @@
         recuperationBase()
     })
 
-
-
-    var directionTrajet = ref("Départ")
-    if(props.booleenTrajetBaseDomicile) {
-        directionTrajet = ref("Arrivé")
+    /* Variable pour l'affichage de l'heure */
+    var directionTrajet = ref("Arrivé")
+    if(props.booleenTrajetBaseDomicile === "true") {
+        var directionTrajet = ref("Départ")
     }
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
@@ -103,7 +110,7 @@
      * Ramène sur l'interface de recherche
      */
     const retour = () => {
-        if (props.booleenTrajetBaseDomicile) {
+        if (props.booleenTrajetBaseDomicile === "true") {
             ptArrive.value = domicile.value
             ptDepart.value = base.value
         } else {
@@ -115,7 +122,8 @@
             path: '/recherche',
         query: {
             ptDepart: ptDepart.value,
-            ptArrive: ptArrive.value
+            ptArrive: ptArrive.value,
+            booleenTrajetBaseDomicile: props.booleenTrajetBaseDomicile
             }
         });
     }
@@ -157,6 +165,7 @@
             :heureArrive="resultat.heureArrive"
             :nomConducteur="resultat.nomConducteur"
             :uniteConducteur="resultat.uniteConducteur"
+            :idDomicile="idDomicile.value"
         />
         <div class="alerte"
       @click="alerte()"><h1>Créer une alerte</h1></div>
