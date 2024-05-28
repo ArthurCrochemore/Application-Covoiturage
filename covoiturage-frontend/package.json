@@ -23,7 +23,7 @@
     "node-forge": ">=1.3.0",
     "nth-check": ">=2.0.1",
     "v-digital-time-picker": "^0.2.0",
-    "vue": "^3.4.26",
+    "vue": "^3.4.27",
     "vue-router": "^4.3.2",
     "webpack-dev-middleware": ">=7.2.1"
   },
