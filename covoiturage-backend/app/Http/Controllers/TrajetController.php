@@ -128,6 +128,72 @@ public function getTrajet($id)
 }
 
 
+    // public function getAllTrajetsPassagers(id) {
+    //     // TODO : récupère tout les trajets dans lesquels l'utilisateur (utiliser l'id de Auth) est passager
+    //     // => Aussi, les trajets qui ont été réservés
+    // }
+
+    public function getAllTrajetsConducteurs($id)
+    {
+        try {
+            
+            $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])
+                ->where('Id_Conducteur', $id)
+                ->get();
+    
+            if ($trajets->isEmpty()) {
+                return response()->json(['message' => 'Aucun trajet trouvé pour ce conducteur'], 404);
+            }
+    
+            
+            $result = $trajets->map(function ($trajet) {
+                $domicile = $trajet->domicile;
+                $base = $trajet->base;
+    
+                $ptDepart = null;
+                $ptArrive = null;
+                $heureDepart = null;
+                $heureArrive = null;
+    
+                if ($domicile && $base) {
+                    if ($trajet->Domicile_Base) {
+                        $ptDepart = $domicile->Intitule;
+                        $ptArrive = $base->Intitule;
+                        $heureArrive = $trajet->Heure_Depart;
+                    } else {
+                        $ptDepart = $base->Intitule;
+                        $ptArrive = $domicile->Intitule;
+                        $heureDepart = $trajet->Heure_Depart;
+                    }
+                }
+    
+                $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+    
+                return [
+                    'idTrajet' => $trajet->Id_Trajet,
+                    'ptDepart' => $ptDepart,
+                    'ptArrive' => $ptArrive,
+                    'typeTrajet' => $type,
+                    'heureDepart' => $heureDepart,
+                    'heureArrive' => $heureArrive,
+                    'Date_Depart' => $trajet->Date_Depart,
+                    'nomConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Nom : null,
+                    'uniteConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Unite : null,
+                    'nbMaxPassagers' => $trajet->Nbre_Places
+                ];
+            });
+    
+            return response()->json($result, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+
+    // public function getAllPropositionsTrajets() {
+    //     // TODO : récupère tout les trajets que l'utilisateur (utiliser l'id de Auth) a proposé
+    // }
+
 
 
     public function updateTrajet(Request $request, $id)
