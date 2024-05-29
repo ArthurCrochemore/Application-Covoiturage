@@ -61,48 +61,72 @@ class TrajetController extends Controller
 public function getTrajet($id)
 {
     try {
-        // Recuperer le trajet 
-        $trajet = Trajet::with(['domicile', 'base', 'utilisateur'])->find($id);
+        // Retrieve the trajet
+        $trajet = Trajet::with(['domicile', 'base', 'utilisateur', 'reservations.utilisateur'])->find($id);
 
         if ($trajet) {
-            // Recuperer les objets Adresse pour Id_Domicile et Id_Base
+            // Retrieve the domicile and base addresses
             $domicile = $trajet->domicile;
             $base = $trajet->base;
 
             $ptDepart = null;
             $ptArrive = null;
+            $heureDepart = null;
+            $heureArrive = null;
 
             if ($domicile && $base) {
-                // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                // Determine the departure and arrival points based on Domicile_Base
                 if ($trajet->Domicile_Base) {
                     $ptDepart = $domicile->Intitule;
                     $ptArrive = $base->Intitule;
+                    $heureArrive = $trajet->Heure_Depart;
                 } else {
                     $ptDepart = $base->Intitule;
                     $ptArrive = $domicile->Intitule;
+                    $heureDepart = $trajet->Heure_Depart;
                 }
             }
 
-            //Recuperer l'utilisateur
+            $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+
+            // Information conducteur
             $utilisateur = $trajet->utilisateur;
 
+            // information passengers 
+            $passagers = $trajet->reservations->map(function($reservation) {
+                return [
+                    'nomPassager' => $reservation->utilisateur->Nom,
+                    'prenomPassager' => $reservation->utilisateur->Prenom,
+                    'adresse' => $reservation->adresse ? $reservation->adresse->Intitule : null,
+                ];
+            });
+
+            $nbPassagers = $passagers->count();
+
             $result = [
+                'idTrajet' => $trajet->Id_Trajet,
                 'ptDepart' => $ptDepart,
                 'ptArrive' => $ptArrive,
-                'heureDepart' => $trajet->Heure_Depart,
+                'typeTrajet' => $type,
+                'heureDepart' => $heureDepart,
+                'heureArrive' => $heureArrive,
                 'Date_Depart' => $trajet->Date_Depart,
                 'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
-                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null
+                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
+                'passagers' => $passagers,
+                'nbPassagers' => $nbPassagers,
+                'nbMaxPassagers' => $trajet->Nbre_Places
             ];
 
             return response()->json($result, 200);
         } else {
-            return response()->json(['message' => 'Trajet non trouve'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Trajet non trouvé'], 404);
         }
     } catch (\Exception $e) {
         return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
     }
 }
+
 
 
 
