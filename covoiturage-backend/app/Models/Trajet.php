@@ -32,8 +32,7 @@ class Trajet extends Model
         'Id_Base',
         'Nbre_Places',
         'Domicile_Base',
-        'Id_Jours',
-        'Id_Conducteur'
+        'Id_Jours'
     ];
 
     public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
