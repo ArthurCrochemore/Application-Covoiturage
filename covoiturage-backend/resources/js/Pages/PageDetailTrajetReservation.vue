@@ -11,7 +11,7 @@
 
       <h2 class="passengers-label">Passagers</h2>
       <div class="passenger-info" v-for="passenger in trip.passagers" :key="passenger.id">
-        <p class="name"><span class="label">Nom:</span> {{ passenger.Prenom }} {{ passenger.Nom }}</p>
+        <p class="name"><span class="label">Nom:</span> {{ passenger.prenomPassager }} {{ passenger.nomPassager }}</p>
         <p class="contact-info">
           <span class="phone"><span class="label">Téléphone:</span> {{ passenger.Numero_De_Telephone }}</span>
           <!-- span class="route">{{ passenger.from }} - {{ passenger.to }}</span -->
@@ -55,6 +55,8 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
     try {
         const response = await axios.get('/api/trajets/' + idTrajet.value)
         trip.value = response.data
+
+        console.log(trip.value)
     } catch (error) {
         console.error('Error fetching trajets:', error)
     }

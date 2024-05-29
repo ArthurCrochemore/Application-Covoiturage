@@ -1,6 +1,42 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios'
+
+
+    /**
+     * Récupère tout les trajets dont l'utilisateur est conducteur
+     */
+     const recuperationTrajetsConducteurs = async () => {
+        try {
+            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
+            const response = await axios.get('/api/trajets')
+            resultatsRecherche.value = response.data
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Récupère tout les trajets dont l'utilisateur est passager
+     */
+     const recuperationTrajetsPassagers = async () => {
+        try {
+            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
+            const response = await axios.get('/api/trajets')
+            resultatsRecherche.value = response.data
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
+     */
+     onMounted(() => {
+        recuperationTrajetsConducteurs()
+        recuperationTrajetsPassagers()
+    })
 
 const passengerTrips = ref([
   { id: 1, date: 'Lundi 16 Janvier', time: '8h00', from: 'Paris', to: 'Base Aérienne', person: 'Arthur Crochemore' },
