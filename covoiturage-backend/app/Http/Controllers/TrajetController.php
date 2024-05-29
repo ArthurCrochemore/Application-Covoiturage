@@ -5,6 +5,7 @@ use App\Models\Trajet;
 use App\Models\Adresse;
 use App\Models\Jours;
 use App\Models\Utilisateur;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -128,10 +129,76 @@ public function getTrajet($id)
 }
 
 
-    // public function getAllTrajetsPassagers(id) {
-    //     // TODO : récupère tout les trajets dans lesquels l'utilisateur (utiliser l'id de Auth) est passager
-    //     // => Aussi, les trajets qui ont été réservés
-    // }
+public function getAllTrajetsPassagers($id)
+{
+    try {
+        
+        $reservations = Reservation::with(['trajet.domicile', 'trajet.base', 'trajet.utilisateur'])
+            ->where('Id_Passager', $id)
+            ->get();
+
+        if ($reservations->isEmpty()) {
+            return response()->json(['message' => 'Aucun trajet trouvé pour ce passager'], 404);
+        }
+
+        $result = $reservations->map(function ($reservation) {
+            $trajet = $reservation->trajet;
+            if (!$trajet) {
+                return [
+                    'idTrajet' => null,
+                    'ptDepart' => null,
+                    'ptArrive' => null,
+                    'typeTrajet' => null,
+                    'heureDepart' => null,
+                    'heureArrive' => null,
+                    'Date_Depart' => null,
+                    'nomConducteur' => null,
+                    'uniteConducteur' => null,
+                    'nbMaxPassagers' => null
+                ];
+            }
+
+            $domicile = $trajet->domicile;
+            $base = $trajet->base;
+
+            $ptDepart = null;
+            $ptArrive = null;
+            $heureDepart = null;
+            $heureArrive = null;
+
+            if ($domicile && $base) {
+                if ($trajet->Domicile_Base) {
+                    $ptDepart = $domicile->Intitule;
+                    $ptArrive = $base->Intitule;
+                    $heureArrive = $trajet->Heure_Depart;
+                } else {
+                    $ptDepart = $base->Intitule;
+                    $ptArrive = $domicile->Intitule;
+                    $heureDepart = $trajet->Heure_Depart;
+                }
+            }
+
+            $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+
+            return [
+                'idTrajet' => $trajet->Id_Trajet,
+                'ptDepart' => $ptDepart,
+                'ptArrive' => $ptArrive,
+                'typeTrajet' => $type,
+                'heureDepart' => $heureDepart,
+                'heureArrive' => $heureArrive,
+                'Date_Depart' => $trajet->Date_Depart,
+                'nomConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Nom : null,
+                'uniteConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Unite : null,
+                'nbMaxPassagers' => $trajet->Nbre_Places
+            ];
+        });
+
+        return response()->json($result, 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+    }
+}
 
     public function getAllTrajetsConducteurs($id)
     {

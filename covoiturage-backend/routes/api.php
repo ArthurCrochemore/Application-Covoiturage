@@ -39,4 +39,6 @@ Route::get('/adresses/domicile', [AdresseController::class, 'GetAllDomicile']);
 
 Route::get('/trajets/conducteur/{id}', [TrajetController::class, 'getAllTrajetsConducteurs']);
 
+Route::get('/trajets/passager/{id}', [TrajetController::class, 'getAllTrajetsPassagers']);
+
 
