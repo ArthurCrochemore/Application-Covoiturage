@@ -25,7 +25,7 @@ class Alerte extends Model
         'Id_Utilisateur',
         'Id_Jours',
         'Id_Domicile',
-        'id_Base'
+        'id_Base' // TODO : rename
     ];
 
     public function trajet(): \Illuminate\Database\Eloquent\Relations\BelongsTo

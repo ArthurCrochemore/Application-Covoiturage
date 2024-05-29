@@ -22,6 +22,8 @@ class ReservationController extends Controller
 
             $Reservation = Reservation::create($ValidatedData);
 
+            // TODO : Ajouter domicile de l'utilisateur est base du trajet
+
             return redirect('/accueil')->with('success', 'Réservation créé avec succès!');
         }
 }

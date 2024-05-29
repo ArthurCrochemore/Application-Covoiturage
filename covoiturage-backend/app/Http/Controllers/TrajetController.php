@@ -156,8 +156,6 @@ class TrajetController extends Controller
                     'passagers' => $passagers,
                     'nbPassagers' => $nbPassagers,
                     'nbMaxPassagers' => $trajet->Nbre_Places
-
-                    // TODO : Ajouter domicile de l'utilisateur est base du trajet
                 ];
 
                 return response()->json($result, 200);

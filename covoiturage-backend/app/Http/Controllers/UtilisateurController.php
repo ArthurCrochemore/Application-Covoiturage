@@ -32,7 +32,7 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-        // TODO :  doit prendre en compte l'addresse saisie
+        // TODO : doit prendre en compte l'addresse saisie
         // TODO : selon cahier des charges, l'inscription crée une demande, puis c'est l'admin qui gère le "store" à partir de la demande
 
         $validatedData = $request->validate([
@@ -56,7 +56,6 @@ class UtilisateurController extends Controller
         }
     }
 
-
     /**
      * Méthode pour déconnecter l'utilisateur
      */
@@ -73,22 +72,16 @@ class UtilisateurController extends Controller
      */
     public function update(Request $request, Utilisateur $utilisateur): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
+        $utilisateur = Auth::get_class();
+
         $validatedData = $request->validate([
-            'NID' => 'required|string|max:10',
-            'Nom' => 'required|string|max:50',
-            'Prenom' => 'required|string|max:50',
+            'Mail' => 'required|email|max:50|unique:Utilisateur,Mail,' . $utilisateur->Id_Utilisateur,
             'Unite' => 'nullable|string|max:50',
             'Numero_De_Poste' => 'nullable|string|max:10',
+            'Prenom' => 'required|string|max:50',
+            'Nom' => 'required|string|max:50',
             'Numero_De_Tel' => 'nullable|string|max:50',
-            'Mail' => 'required|email|max:50|unique:utilisateur,Mail,' . $utilisateur->Id_Utilisateur,
-            'Mot_De_Passe' => 'nullable|string|min:6|max:50',
         ]);
-
-        if ($request->filled('Mot_De_Passe')) {
-            $validatedData['Mot_De_Passe'] = Hash::make($validatedData['Mot_De_Passe']);
-        } else {
-            unset($validatedData['Mot_De_Passe']);
-        }
 
         $utilisateur->update($validatedData);
 
@@ -113,5 +106,5 @@ class UtilisateurController extends Controller
 
         return response()->json([''=> $utilisateur]);
     }
-    
+
 }

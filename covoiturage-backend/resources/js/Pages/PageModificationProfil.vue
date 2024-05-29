@@ -50,7 +50,7 @@ const valider = async () => {
             Numero_De_Poste: numPosteValue.value,
             Prenom: prenomValue.value,
             Nom: nomFamilleValue.value,
-            Adresse_Postale: adressePostaleValue.value,
+            // Adresse_Postale: adressePostaleValue.value, TODO : à concidérer
             Numero_De_Tel: telephoneValue.value,
         });
         afficherMessageFunc("La demande de modification a été enregistrée avec succès", "Succès");

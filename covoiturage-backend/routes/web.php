@@ -51,10 +51,12 @@ Route::get('/test-timezone', function () {
     return now()->toTimeString();
 });
 
+Route::post('/utilisateur/update', [UtilisateurController::class, 'update'])->name('utilisateur.update');
+
 // Routes pour la modification du profil utilisateur
 Route::middleware('auth')->group(function () {
     Route::get('/utilisateur/profil', [UtilisateurController::class, 'edit'])->name('utilisateur.edit'); // Page de modification de profil
-    Route::post('/utilisateur/update', [UtilisateurController::class, 'update'])->name('utilisateur.update'); // Soumet les modifications de profil
+     // Soumet les modifications de profil
 });
 
 Route::get('/profil', [UtilisateurController::class, 'getProfil']);
