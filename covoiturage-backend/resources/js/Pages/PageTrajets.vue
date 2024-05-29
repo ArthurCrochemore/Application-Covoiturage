@@ -3,15 +3,16 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios'
 
+    const trajetsConducteur = ref()
+    const trajetsPassager = ref()
 
     /**
      * Récupère tout les trajets dont l'utilisateur est conducteur
      */
      const recuperationTrajetsConducteurs = async () => {
         try {
-            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
-            const response = await axios.get('/api/trajets')
-            resultatsRecherche.value = response.data
+            const response = await axios.get('/trajets/conducteur')
+            trajetsConducteur.value = response.data
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
@@ -22,9 +23,8 @@ import axios from 'axios'
      */
      const recuperationTrajetsPassagers = async () => {
         try {
-            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
-            const response = await axios.get('/api/trajets')
-            resultatsRecherche.value = response.data
+            const response = await axios.get('/trajets/passager')
+            trajetsPassager.value = response.data
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
@@ -75,21 +75,21 @@ function goToProposedDetails(tripId) {
     <div class="bloc-principal">
       <section>
         <h2>Trajets Passagers</h2>
-        <div v-for="trip in passengerTrips" :key="trip.id" class="trip-item" @click="goToPassengerDetails(trip.id)">
-          <div class="trip-date-time"><b>{{ trip.date }} à {{ trip.time }}</b></div>
+        <div v-for="trip in trajetsPassager " :key="trip.id" class="trip-item" @click="goToPassengerDetails(trip.id)">
+          <div class="trip-date-time"><b>{{ trip.Date_Depart }} à {{ trip.heureDepart }}</b></div>
           <div class="trip-details">
-            <div class="trip-route">{{ trip.from }} - {{ trip.to }}</div>
-            <div class="trip-person">Avec {{ trip.person }}</div>
+            <div class="trip-route">{{ trip.ptDepart }} - {{ trip.ptArrive }}</div>
+            <div class="trip-person">Avec {{ trip.nomConducteur }}</div>
           </div>
         </div>
       </section>
       <section>
         <h2>Trajets Conducteurs</h2>
-        <div v-for="trip in driverTrips" :key="trip.id" class="trip-item" @click="goToConductorDetails(trip.id)">
-          <div class="trip-date-time"><b>{{ trip.date }} à {{ trip.time }}</b></div>
+        <div v-for="trip in trajetsConducteur" :key="trip.id" class="trip-item" @click="goToConductorDetails(trip.id)">
+          <div class="trip-date-time"><b>{{ trip.Date_Depart }} à {{ trip.heureDepart }}</b></div>
           <div class="trip-details">
-            <div class="trip-route">{{ trip.from }} - {{ trip.to }}</div>
-            <div class="trip-status">{{ trip.passengers }} passagers - {{ trip.status }}</div>
+            <div class="trip-route">{{ trip.ptDepart }} - {{ trip.ptArrive }}</div>
+            <div class="trip-status">{{ trip.nbPassagers }} passagers - {{ trip.status }}</div>
           </div>
         </div>
       </section>

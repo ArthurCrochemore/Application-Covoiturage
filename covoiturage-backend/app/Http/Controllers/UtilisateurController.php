@@ -82,6 +82,7 @@ class UtilisateurController extends Controller
             'Prenom' => 'required|string|max:50',
             'Nom' => 'required|string|max:50',
             'Numero_De_Tel' => 'nullable|string|max:50',
+            // TODO : Gerer l'adresse
         ]);
 
         $utilisateur->update($validatedData);
