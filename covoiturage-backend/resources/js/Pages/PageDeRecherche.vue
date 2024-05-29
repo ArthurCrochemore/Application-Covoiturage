@@ -94,6 +94,14 @@
     const estGrise = ref(false)
     const trajetRegulier = ref(false)
 
+    const lundi = ref(true)
+    const mardi = ref(true)
+    const mercredi = ref(true)
+    const jeudi = ref(true)
+    const vendredi = ref(true)
+    const samedi = ref(true)
+    const dimanche = ref(true)
+
     const changerIdGrise = () => {
         indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
         estGrise.value = !estGrise.value
@@ -176,6 +184,11 @@
             }
         }
 
+        let typeTrajet = ref("Ponctuel")
+        if (trajetRegulier.value) {
+            typeTrajet.value = "Régulier"
+        }
+
         // S'ils ont été trouvés :
         if (idDomicile.value > -1 && idBase.value > -1) { // TODO : peut etre verifie que l'heure et la date sont anterieures
             router.push({
@@ -184,8 +197,8 @@
                     idBase: idBase.value ,
                     idDomicile: idDomicile.value ,
                     booleenTrajetBaseDomicile: trajetBaseDomicile.value,
-                    typeTrajet: 'Regulier', // TODO : Gérer le statut 'Regulier' / 'Ponctuel'
-                    jours: [true, false, false, true, false, false, true], // TODO : Gérer la selction de jour en cas de 'Regulier' (voir dans la création de Trajet)
+                    typeTrajet: typeTrajet.value,
+                    jours: [lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche],
                     heure: heure.value,
                     date: date.value
                 }
@@ -226,6 +239,22 @@
         <input type="time" v-model="heure">
       </div>
     </div>
+    <div v-if="trajetRegulier" class="jours" id="switchregulier">
+            <input type="checkbox" id="lundi" class="checkbox-input" v-model="lundi">
+            <label for="lundi" class="jour">Lundi</label>
+            <input type="checkbox" id="mardi" class="checkbox-input" v-model="mardi">
+            <label for="mardi" class="jour">Mardi</label>
+            <input type="checkbox" id="mercredi" class="checkbox-input" v-model="mercredi">
+            <label for="mercredi" class="jour">Mercredi</label>
+            <input type="checkbox" id="jeudi" class="checkbox-input" v-model="jeudi">
+            <label for="jeudi" class="jour">Jeudi</label>
+            <input type="checkbox" id="vendredi" class="checkbox-input" v-model="vendredi">
+            <label for="vendredi" class="jour">Vendredi</label>
+            <input type="checkbox" id="samedi" class="checkbox-input" v-model="samedi">
+            <label for="samedi" class="jour">Samedi</label>
+            <input type="checkbox" id="dimanche" class="checkbox-input" v-model="dimanche">
+            <label for="dimanche" class="jour">Dimanche</label>
+        </div>
     <div class="trajet-regulier">
       <div class="switch-container">
           <input type="checkbox" id="switch1" v-model="trajetRegulier" class="input-checkbox" @change="changerIdGrise">
@@ -416,6 +445,22 @@
     v-digital-time-picker {
     width: 100px;
     height: 100px;
+    }
+
+    .jours {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-top : 30px;
+        margin-left: 10%;
+        height: 50px;
+
+        justify-content: space-between;
+    }
+
+    .jour {
+        margin : auto;
+        color : black;
     }
 </style>
 
