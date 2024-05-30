@@ -96,7 +96,8 @@ public function getTrajet($id)
             $utilisateur = $trajet->utilisateur;
 
             // information passengers
-            $passagers = $trajet->reservations()->with(['utilisateur', 'adresse'])->get()->map(function($reservation) {                return [
+            $passagers = $trajet->reservations()
+            ->where('Statut', '!=', 2)->with(['utilisateur', 'adresse'])->get()->map(function($reservation) {                return [
                     'nomPassager' => $reservation->utilisateur->Nom,
                     'prenomPassager' => $reservation->utilisateur->Prenom,
                     'telephone' => $reservation->utilisateur->Numero_De_Telephone,
@@ -144,6 +145,7 @@ public function getAllTrajetsPassagers()
 
         $reservations = Reservation::with(['trajet.domicile', 'trajet.base', 'trajet.utilisateur'])
             ->where('Id_Passager', $id)
+            ->where('Statut', '!=', 2)
             ->get();
 
         if ($reservations->isEmpty()) {
@@ -246,8 +248,12 @@ public function getAllTrajetsPassagers()
                     }
                 }
 
+                $nouvellesDemandes = False;
+                if ($trajet->reservations->contains('Statut', 0)) {
+                    $nouvellesDemandes = True;
+                }
 
-                $passagers = $trajet->reservations->map(function ($reservation) {
+                $passagers = $trajet->reservations->where('Statut', '!=', 2)->map(function ($reservation) {
                     return [
                         'nomPassager' => $reservation->utilisateur->Nom,
                         'prenomPassager' => $reservation->utilisateur->Prenom,
@@ -285,6 +291,7 @@ public function getAllTrajetsPassagers()
                     'nbMaxPassagers' => $trajet->Nbre_Places,
                     'nbPassagers' => $nbPassagers,
                     'status' => $status,
+                    'nouvellesDemandes' => $nouvellesDemandes,
                 ];
             });
 

@@ -38,22 +38,6 @@ import axios from 'axios'
         recuperationTrajetsPassagers()
     })
 
-const passengerTrips = ref([
-  { id: 1, date: 'Lundi 16 Janvier', time: '8h00', from: 'Paris', to: 'Base Aérienne', person: 'Arthur Crochemore' },
-  { id: 2, date: 'Mardi 17 Janvier', time: '10h30', from: 'Base Aérienne', to: 'Nice', person: 'Caroline Petit' }
-])
-
-const driverTrips = ref([
-  { id: 1, date: 'Mercredi 18 Janvier', time: '8h00', from: 'Base Aérienne', to: 'Paris', passengers: '2/2', status: 'Complet' },
-  { id: 2, date: 'Jeudi 19 Janvier', time: '10h40', from: 'Nice', to: 'Base Aérienne', passengers: '1/3', status: 'Places disponibles' }
-])
-
-const proposedTrips = ref([
-  { id: 1, date: 'Venndredi 20 Janvier', time: '8h00', from: 'Base Aérienne', to: 'Base Terrestre', passengers: '0/5', status: 'En ligne' },
-
-
-])
-
 const router = useRouter() // Récupération du router vue-router pour la navigation
 
 function goToConductorDetails(idTrajet) {
@@ -88,7 +72,7 @@ function goToProposedDetails(tripId) {
       <section>
         <h2>Trajets Conducteurs</h2>
         <div v-for="trip in trajetsConducteur" :key="trip.idTrajet" class="trip-item" @click="goToConductorDetails(trip.idTrajet)">
-          <div class="trip-date-time"><b>{{ trip.date }}, {{ trip.heure }}</b></div>
+          <div class="trip-date-time"><b>{{ trip.date }}, {{ trip.heure }}</b> <div v-if="trip.nouvellesDemandes" class="cercle"></div></div>
           <div class="trip-details">
             <div class="trip-route">{{ trip.ptDepart }} - {{ trip.ptArrive }}</div>
             <div class="trip-status">{{ trip.nbPassagers }} / {{ trip.nbMaxPassagers }} Passagers - {{ trip.status }}</div>
@@ -161,4 +145,17 @@ function goToProposedDetails(tripId) {
         color: green;  /* Ensures visibility of passenger status */
         font-weight: bold;
     }
+
+    .cercle {
+    padding: 10px;
+    width: 20px;
+    color: #000;
+    float: right;
+    text-align: center;
+
+    background: url('assets/icons/trajet-rond.png');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 </style>
