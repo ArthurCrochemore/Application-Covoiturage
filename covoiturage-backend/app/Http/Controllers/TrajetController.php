@@ -82,11 +82,11 @@ public function getTrajet($id)
                 if ($trajet->Domicile_Base) {
                     $ptDepart = $domicile->Intitule;
                     $ptArrive = $base->Intitule;
-                    $heureArrive = $trajet->Heure_Depart;
+                    $heure = "Arrivé à la base à " . date('H\hi', strtotime($trajet->Heure_Depart));
                 } else {
                     $ptDepart = $base->Intitule;
                     $ptArrive = $domicile->Intitule;
-                    $heureDepart = $trajet->Heure_Depart;
+                    $heure = "Départ de la base à " . date('H\hi', strtotime($trajet->Heure_Depart));
                 }
             }
 
@@ -96,11 +96,12 @@ public function getTrajet($id)
             $utilisateur = $trajet->utilisateur;
 
             // information passengers
-            $passagers = $trajet->reservations->map(function($reservation) {
-                return [
+            $passagers = $trajet->reservations()->with(['utilisateur', 'adresse'])->get()->map(function($reservation) {                return [
                     'nomPassager' => $reservation->utilisateur->Nom,
                     'prenomPassager' => $reservation->utilisateur->Prenom,
-                    'adresse' => $reservation->adresse ? $reservation->adresse->Intitule : null,
+                    'telephone' => $reservation->utilisateur->Numero_De_Telephone,
+                    'unite' => $reservation->utilisateur->Unite,
+                    'adresse' => $reservation->adresse,
                 ];
             });
 
@@ -111,10 +112,10 @@ public function getTrajet($id)
                 'ptDepart' => $ptDepart,
                 'ptArrive' => $ptArrive,
                 'typeTrajet' => $type,
-                'heureDepart' => $heureDepart,
-                'heureArrive' => $heureArrive,
+                'heure' => $heure,
                 'Date_Depart' => $trajet->Date_Depart,
                 'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
+                'prenomConducteur' => $utilisateur ? $utilisateur->Prenom : null,
                 'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
                 'passagers' => $passagers,
                 'nbPassagers' => $nbPassagers,

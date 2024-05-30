@@ -3,18 +3,17 @@
       <button class="back-button" @click="goBack">&#8678; Retour</button>
       <h1>Trajet Passager</h1>
       <div>
-        <p><span class="label">ID du trajet:</span> {{ trip.idTrajet }}</p>
-        <p><span class="label">Date:</span> {{ trip.Date_Depart }}</p>
+        <div class="detail"><p><span class="label">ID du trajet:</span> {{ trip.idTrajet }}</p><p class="conducteur"> <span class="label">Conducteur:</span> {{ trip.prenomConducteur }} {{ trip.nomConducteur }} </p></div>
+        <div class="detail"><p><span class="label">Date:</span> {{ trip.Date_Depart }}</p><p class="conducteur"> <span class="label">Unite:</span> {{ trip.uniteConducteur }} </p></div>
         <p><span class="label">Départ:</span> {{ trip.ptDepart }}</p>
         <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}</p>
       </div>
 
       <h2 class="passengers-label">Passagers</h2>
-      <div class="passenger-info" v-for="passenger in trip.passagers" :key="passenger.id">
-        <p class="name"><span class="label">Nom:</span> {{ passenger.prenomPassager }} {{ passenger.nomPassager }}</p>
+      <div class="passenger-info" v-for="passager in trip.passagers" :key="passager.id">
+        <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} </p>
         <p class="contact-info">
-          <span class="phone"><span class="label">Téléphone:</span> {{ passenger.Numero_De_Telephone }}</span>
-          <!-- span class="route">{{ passenger.from }} - {{ passenger.to }}</span -->
+          <span class="route"><span class="label">Ville :</span> {{ passager.adresse.Ville }} </span>
         </p>
       </div>
 
@@ -151,8 +150,13 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
   }
 
   .route {
-    text-align: right;
+    text-align: left;
     flex: 1;
+  }
+
+  .detail {
+    display: flex;
+    justify-content: space-between;
   }
 
   .passenger-info {

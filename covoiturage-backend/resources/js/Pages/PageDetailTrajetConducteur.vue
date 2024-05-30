@@ -7,13 +7,14 @@
       <p><span class="label">Date:</span> {{ trip.Date_Depart }}</p>
       <p><span class="label">Départ:</span> {{ trip.ptDepart }}</p>
       <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}</p>
+      <p><span class="label"> {{ trip.heure }}</span></p>
     </div>
     <h2 class="passengers-label">Passagers</h2>
-    <div class="passenger-info" v-for="passenger in trip.passengers" :key="passenger.id">
-      <p class="name"><span class="label">Nom:</span> {{ passenger.prenomPassager }} {{ passenger.nomPassager }}</p>
+    <div class="passenger-info" v-for="passager in trip.passagers" :key="passager.id">
+      <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} </p>
       <p class="contact-info">
-        <span class="phone"><span class="label">Téléphone:</span> {{ passenger.Numero_De_Telephone }}</span>
-        <!--span class="route">{{ passenger.from }} - {{ passenger.to }}</span-->
+          <span class="phone"><span class="label">Téléphone :</span> {{ passager.telephone }}</span>
+          <span class="route"><span class="label">Adresse :</span> {{ passager.adresse.Intitule }} </span>
       </p>
     </div>
     <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
