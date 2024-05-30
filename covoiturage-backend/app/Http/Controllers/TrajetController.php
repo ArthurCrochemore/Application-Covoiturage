@@ -248,6 +248,10 @@ public function getAllTrajetsPassagers()
                     }
                 }
 
+                $nouvellesDemandes = False;
+                if ($trajet->reservations->contains('Statut', 0)) {
+                    $nouvellesDemandes = True;
+                }
 
                 $passagers = $trajet->reservations->where('Statut', '!=', 2)->map(function ($reservation) {
                     return [
@@ -287,6 +291,7 @@ public function getAllTrajetsPassagers()
                     'nbMaxPassagers' => $trajet->Nbre_Places,
                     'nbPassagers' => $nbPassagers,
                     'status' => $status,
+                    'nouvellesDemandes' => $nouvellesDemandes,
                 ];
             });
 
