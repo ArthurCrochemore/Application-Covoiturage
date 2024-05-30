@@ -29,4 +29,15 @@ class ReservationController extends Controller
 
             return redirect('/accueil')->with('success', 'Réservation créé avec succès!');
         }
+
+    public function getReservation($id)
+    {
+        try {
+            $reservation = Reservation::find($id);
+
+            return response()->json([''=> $reservation]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
 }

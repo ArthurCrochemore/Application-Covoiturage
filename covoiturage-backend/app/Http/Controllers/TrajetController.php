@@ -103,6 +103,7 @@ public function getTrajet($id)
                     'statut' => $reservation->Statut,
                     'unite' => $reservation->utilisateur->Unite,
                     'adresse' => $reservation->adresse,
+                    'idReservation' => $reservation->Id_Reservation,
                 ];
             });
 

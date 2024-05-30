@@ -9,8 +9,8 @@
       <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}</p>
       <p><span class="label"> {{ trip.heure }}</span></p>
     </div>
-    <h2 class="passengers-label">Passagers</h2>
-    <div class="passenger-info" v-for="passager in trip.passagers" :key="passager.id">
+    <h2 class="passengers-label" >Passagers</h2>
+    <div class="passenger-info" v-for="passager in trip.passagers" :key="passager.id" @click="voirReservation(passager)">
       <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} <div v-if="passager.statut == 0" class="cercle"></div></p>
       <span class="phone"><span class="label">Téléphone :</span> {{ passager.telephone }}</span>
       <p class="contact-info">
@@ -67,6 +67,12 @@ function modifyTrip() {
 
 function deleteTrip() {
   // Slay mais pas encore
+}
+
+function voirReservation(passager) {
+  if (passager.statut == 0)
+    router.push({path: '/reservation',
+    query: { idReservation: passager.idReservation } });
 }
 
 </script>

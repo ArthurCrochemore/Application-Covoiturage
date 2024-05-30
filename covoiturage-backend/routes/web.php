@@ -65,3 +65,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/profil', [UtilisateurController::class, 'getProfil']);
 
+Route::get('/reservation/{id}', [ReservationController::class, 'getReservation']);
+

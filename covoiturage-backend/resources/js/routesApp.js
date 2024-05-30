@@ -15,6 +15,7 @@ import PageModificationTrajet from './Pages/PageModificationTrajet.vue';
 import PageDetailTrajetConducteur from './Pages/PageDetailTrajetConducteur.vue';
 import PageDetailTrajetPassager from './Pages/PageDetailTrajetPassager.vue';
 import PageDetailTrajetReservation from './Pages/PageDetailTrajetReservation.vue';
+import PageReservation from './Pages/PageReservation.vue';
 
 const routes = [
     { path: '/app', component: PageDeRecherche,
@@ -71,7 +72,11 @@ const routes = [
         idTrajet: route.query.idTrajet,
         idDomicile: route.query.idDomicile
     })
-   }
+   },
+   { path: '/reservation', component: PageReservation,
+   props: route => ({
+    idReservation: route.query.idReservation
+})}
 ];
 
 const routerApp = createRouter({
