@@ -14,6 +14,7 @@
         <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} </p>
         <p class="contact-info">
           <span class="route"><span class="label">Ville :</span> {{ passager.adresse.Ville }} </span>
+          <span class="status"><span class="label"> {{ passager.statut }} </span></span>
         </p>
       </div>
 

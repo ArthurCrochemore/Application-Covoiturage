@@ -100,6 +100,7 @@ public function getTrajet($id)
                     'nomPassager' => $reservation->utilisateur->Nom,
                     'prenomPassager' => $reservation->utilisateur->Prenom,
                     'telephone' => $reservation->utilisateur->Numero_De_Telephone,
+                    'statut' => $reservation->Statut,
                     'unite' => $reservation->utilisateur->Unite,
                     'adresse' => $reservation->adresse,
                 ];

@@ -11,10 +11,10 @@
     </div>
     <h2 class="passengers-label">Passagers</h2>
     <div class="passenger-info" v-for="passager in trip.passagers" :key="passager.id">
-      <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} </p>
+      <p class="name"><span class="label">Nom:</span> {{ passager.prenomPassager }} {{ passager.nomPassager }}, <span class="label"> Unite :</span> {{ passager.unite }} <div v-if="passager.statut == 0" class="cercle"></div></p>
+      <span class="phone"><span class="label">Téléphone :</span> {{ passager.telephone }}</span>
       <p class="contact-info">
-          <span class="phone"><span class="label">Téléphone :</span> {{ passager.telephone }}</span>
-          <span class="route"><span class="label">Adresse :</span> {{ passager.adresse.Intitule }} </span>
+          <span class="route"><span class="label">Adresse :</span> {{ passager.adresse.Intitule }} <span v-if="passager.statut == 0" class="reservation">Réservation en attente ...</span></span>
       </p>
     </div>
     <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
@@ -135,9 +135,26 @@ h1 {
 }
 
 .route {
-  text-align: right;
+  text-align: left;
   flex: 1;
 }
+
+.cercle {
+    padding: 10px;
+    width: 20px;
+    color: #000;
+    float: right;
+    text-align: center;
+
+    background: url('assets/icons/trajet-rond.png');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .reservation {
+    float: right;
+  }
 
 .passenger-info {
   background-color: #f0f0f0;
