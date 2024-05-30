@@ -253,8 +253,13 @@ public function getAllTrajetsPassagers()
                 });
 
                 $nbPassagers = $passagers->count();
+                if ($trajet->Nbre_Places > $nbPassagers) {
+                    $status = "En ligne";
+                } else {
+                    $status = "Complet";
+                }
 
-                $status = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+                $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
 
                 if($trajet->Trajet_Regulier) {
                     $dateString = "Trajet Régulier"; // TODO : Gérer formattage de la date pour les trajets régulier (prochain trajet lundi par exemple)
