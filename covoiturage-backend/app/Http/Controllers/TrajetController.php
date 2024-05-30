@@ -39,12 +39,15 @@ class TrajetController extends Controller
                 }
             }
 
+            $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
 
             $utilisateur = $trajet->utilisateur;
 
             return [
+                'idTrajet' => $trajet->Id_Trajet,
                 'ptDepart' => $ptDepart,
                 'ptArrive' => $ptArrive,
+                'typeTrajet' => $type,
                 'heureDepart' => $trajet->Heure_Depart,
                 'Date_Depart' => $trajet->Date_Depart,
                 'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,

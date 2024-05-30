@@ -55,8 +55,6 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
     try {
         const response = await axios.get('/api/trajets/' + idTrajet.value)
         trip.value = response.data
-
-        console.log(trip.value)
     } catch (error) {
         console.error('Error fetching trajets:', error)
     }
@@ -69,10 +67,10 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
   }
 
   function reserver() {
+
     axios.post('/reserver-trajet', {
-        Id_Passager: 1, // TODO : remplir id
-        Id_Trajet: 1,
-        Id_Adresse: 1
+        Id_Trajet: idTrajet.value,
+        Id_Adresse: props.idDomicile
       })
       .then(response => {
         console.log(response);
