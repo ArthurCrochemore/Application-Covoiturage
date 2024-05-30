@@ -11,7 +11,7 @@
 
       <h2 class="passengers-label">Passagers</h2>
       <div class="passenger-info" v-for="passenger in trip.passagers" :key="passenger.id">
-        <p class="name"><span class="label">Nom:</span> {{ passenger.Prenom }} {{ passenger.Nom }}</p>
+        <p class="name"><span class="label">Nom:</span> {{ passenger.prenomPassager }} {{ passenger.nomPassager }}</p>
         <p class="contact-info">
           <span class="phone"><span class="label">Téléphone:</span> {{ passenger.Numero_De_Telephone }}</span>
           <!-- span class="route">{{ passenger.from }} - {{ passenger.to }}</span -->
@@ -67,10 +67,10 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
   }
 
   function reserver() {
+
     axios.post('/reserver-trajet', {
-        Id_Passager: 1, // TODO : remplir id
-        Id_Trajet: 1,
-        Id_Adresse: 1
+        Id_Trajet: idTrajet.value,
+        Id_Adresse: props.idDomicile
       })
       .then(response => {
         console.log(response);

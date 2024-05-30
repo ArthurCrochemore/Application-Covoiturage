@@ -28,7 +28,6 @@
      */
     const recuperationTrajets = async () => {
         try {
-            console.log("Booleen recu : " + props.booleenTrajetBaseDomicile)
             const response = await axios.get('/api/trajets')
             resultatsRecherche.value = response.data
         } catch (error) {
@@ -47,7 +46,7 @@
      */
     const recuperationDomicile = async () => {
         try {
-            const response = await axios.get('/api/adresses/domicile/' + idDomicile.value)
+            const response = await axios.get('/api/adresses/domicile/' + props.idDomicile)
             domicile.value = response.data.Intitule
             villeDomicile.value = response.data.Ville
 
@@ -67,7 +66,7 @@
      */
     const recuperationBase = async () => {
         try {
-            const response = await axios.get('/api/adresses/base-aerienne/' + idBase.value)
+            const response = await axios.get('/api/adresses/base-aerienne/' + props.idBase)
             base.value = response.data.Intitule
             villeBase.value = response.data.Ville
 
@@ -156,7 +155,6 @@
     <div class="bloc-principal">
       <BlocResultatRecherche
             v-for="(resultat, index) in resultatsRecherche"
-            :key="index"
             :idTrajet="resultat.idTrajet"
             :ptDepart="resultat.ptDepart"
             :ptArrive="resultat.ptArrive"
@@ -165,7 +163,7 @@
             :heureArrive="resultat.heureArrive"
             :nomConducteur="resultat.nomConducteur"
             :uniteConducteur="resultat.uniteConducteur"
-            :idDomicile="idDomicile.value"
+            :idDomicile="props.idDomicile"
         />
         <div class="alerte"
       @click="alerte()"><h1>Créer une alerte</h1></div>

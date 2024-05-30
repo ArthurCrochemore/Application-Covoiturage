@@ -70,23 +70,25 @@ class UtilisateurController extends Controller
     /**
      * Méthode pour mettre à jour le profil de l'utilisateur
      */
-    public function update(Request $request, Utilisateur $utilisateur): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    public function update(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-        $utilisateur = Auth::get_class();
+        $utilisateur = Auth::user();
 
+        // TODO : accepter meme email
         $validatedData = $request->validate([
-            'Mail' => 'required|email|max:50|unique:Utilisateur,Mail,' . $utilisateur->Id_Utilisateur,
+            'Mail' => 'required|email|unique:Utilisateur|max:50',
             'Unite' => 'nullable|string|max:50',
             'Numero_De_Poste' => 'nullable|string|max:10',
             'Prenom' => 'required|string|max:50',
             'Nom' => 'required|string|max:50',
             'Numero_De_Tel' => 'nullable|string|max:50',
+            // TODO : Gerer l'adresse
         ]);
 
         $utilisateur->update($validatedData);
 
         // Redirection après mise à jour
-        return redirect()->back()->with('success', 'Profil mis à jour avec succès!');
+        return redirect('/')->with('success', 'Vous avez été déconnecté avec succès.');
     }
 
     // Méthode pour afficher le formulaire de modification du profil
