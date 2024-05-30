@@ -35,7 +35,48 @@ class ReservationController extends Controller
         try {
             $reservation = Reservation::find($id);
 
-            return response()->json([''=> $reservation]);
+            return [
+                'nomPassager' => $reservation->utilisateur->Nom,
+                'prenomPassager' => $reservation->utilisateur->Prenom,
+                'unite' => $reservation->utilisateur->Unite,
+                'domicile' => $reservation->adresse ? $reservation->adresse->Intitule : null,
+            ];
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function accepterReservation($id)
+    {
+        try {
+            $reservation = Reservation::find($id);
+
+            if (!$reservation) {
+                return response()->json(['message' => 'Reservation not found'], 404);
+            }
+
+            $reservation->Statut = 1;
+            $reservation->save();
+
+            return response()->json(['message' => 'Reservation accepted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function refuserReservation($id)
+    {
+        try {
+            $reservation = Reservation::find($id);
+
+            if (!$reservation) {
+                return response()->json(['message' => 'Reservation not found'], 404);
+            }
+
+            $reservation->Statut = 2;
+            $reservation->save();
+
+            return response()->json(['message' => 'Reservation accepted successfully']);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }

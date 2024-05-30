@@ -67,3 +67,7 @@ Route::get('/profil', [UtilisateurController::class, 'getProfil']);
 
 Route::get('/reservation/{id}', [ReservationController::class, 'getReservation']);
 
+Route::post('/accepter-reservation/{id}', [ReservationController::class, 'accepterReservation']);
+
+Route::post('/refuser-reservation/{id}', [ReservationController::class, 'refuserReservation']);
+
