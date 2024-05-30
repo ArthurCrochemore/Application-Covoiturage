@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class TrajetController extends Controller
 {
@@ -126,12 +127,14 @@ public function getTrajet($id)
     }
 }
 
-
 public function getAllTrajetsPassagers()
 {
     try {
-        $passager = Auth::user();
-        $id = $passager->Id_Utilisateur;
+        $id = Auth::user()->Id_Utilisateur;
+
+        if (!is_numeric($id)) {
+            return response()->json(['message' => 'ID utilisateur invalide'], 400);
+        }
 
         $reservations = Reservation::with(['trajet.domicile', 'trajet.base', 'trajet.utilisateur'])
             ->where('Id_Passager', $id)
@@ -203,8 +206,11 @@ public function getAllTrajetsPassagers()
     public function getAllTrajetsConducteurs()
     {
         try {
-            $conducteur = Auth::user();
-            $id = $conducteur->id;
+            $id = Auth::user()->Id_Utilisateur;
+
+            if (!is_numeric($id)) {
+                return response()->json(['message' => 'ID utilisateur invalide'], 400);
+            }
 
             $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])
                 ->where('Id_Conducteur', $id)

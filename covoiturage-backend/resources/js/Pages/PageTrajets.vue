@@ -11,7 +11,7 @@ import axios from 'axios'
      */
      const recuperationTrajetsConducteurs = async () => {
         try {
-            const response = await axios.get('/trajets/conducteur')
+            const response = await axios.get('/trajets-conducteur')
             trajetsConducteur.value = response.data
         } catch (error) {
             console.error('Error fetching trajets:', error)
@@ -23,7 +23,7 @@ import axios from 'axios'
      */
      const recuperationTrajetsPassagers = async () => {
         try {
-            const response = await axios.get('/trajets/passager')
+            const response = await axios.get('/trajets-passager')
             trajetsPassager.value = response.data
         } catch (error) {
             console.error('Error fetching trajets:', error)

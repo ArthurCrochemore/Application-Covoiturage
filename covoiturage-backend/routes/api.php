@@ -37,8 +37,4 @@ Route::get('/adresses/base-aerienne', [AdresseController::class, 'GetAllBaseAeri
 //  Route pour recuperer tous les adresses Domicile
 Route::get('/adresses/domicile', [AdresseController::class, 'GetAllDomicile']);
 
-Route::get('/trajets/conducteur}', [TrajetController::class, 'getAllTrajetsConducteurs']);
-
-Route::get('/trajets/passager', [TrajetController::class, 'getAllTrajetsPassagers']);
-
 

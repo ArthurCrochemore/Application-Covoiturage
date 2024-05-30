@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UtilisateurController;
+use App\Http\Controllers\TrajetController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -56,7 +57,11 @@ Route::post('/utilisateur/update', [UtilisateurController::class, 'update'])->na
 // Routes pour la modification du profil utilisateur
 Route::middleware('auth')->group(function () {
     Route::get('/utilisateur/profil', [UtilisateurController::class, 'edit'])->name('utilisateur.edit'); // Page de modification de profil
-     // Soumet les modifications de profil
+
+    Route::get('/trajets-conducteur', [TrajetController::class, 'getAllTrajetsConducteurs']);
+
+    Route::get('/trajets-passager', [TrajetController::class, 'getAllTrajetsPassagers']);
 });
 
 Route::get('/profil', [UtilisateurController::class, 'getProfil']);
+
