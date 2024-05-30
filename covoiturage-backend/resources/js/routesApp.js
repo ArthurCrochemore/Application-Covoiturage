@@ -57,11 +57,18 @@ const routes = [
   },
   { path: '/rapport-bug', component: PageRapporterUnBug },
   { path: '/modification-trajet', component: PageModificationTrajet },
-  { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur },
-  { path: '/detail-trajet-passager', component: PageDetailTrajetPassager },
+  { path: '/detail-trajet-conducteur', component: PageDetailTrajetConducteur,
+  props: route => ({
+    idTrajet: route.query.idTrajet
+    })
+   },
+  { path: '/detail-trajet-passager', component: PageDetailTrajetPassager,
+  props: route => ({
+    idTrajet: route.query.idTrajet
+})},
   { path: '/detail-trajet-reservation', component: PageDetailTrajetReservation,
     props: route => ({
-        idTajet: route.query.idTrajet,
+        idTrajet: route.query.idTrajet,
         idDomicile: route.query.idDomicile
     })
    }

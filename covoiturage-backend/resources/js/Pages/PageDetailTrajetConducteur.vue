@@ -3,17 +3,17 @@
     <button class="back-button" @click="goBack">&#8678; Retour</button>
     <h1>Trajet Conducteur</h1>
     <div>
-      <p><span class="label">ID du trajet:</span> {{ trip.id }}</p>
-      <p><span class="label">Date:</span> {{ trip.date }}</p>
-      <p><span class="label">Départ:</span> {{ trip.timeDeparture }} {{ trip.from }}</p>
-      <p><span class="label">Arrivée:</span> {{ trip.timeArrival }} {{ trip.to }}</p>
+      <p><span class="label">ID du trajet:</span> {{ trip.idTrajet }}</p>
+      <p><span class="label">Date:</span> {{ trip.Date_Depart }}</p>
+      <p><span class="label">Départ:</span> {{ trip.ptDepart }}</p>
+      <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}</p>
     </div>
     <h2 class="passengers-label">Passagers</h2>
     <div class="passenger-info" v-for="passenger in trip.passengers" :key="passenger.id">
-      <p class="name"><span class="label">Nom:</span> {{ passenger.firstName }} {{ passenger.lastName }}</p>
+      <p class="name"><span class="label">Nom:</span> {{ passenger.prenomPassager }} {{ passenger.nomPassager }}</p>
       <p class="contact-info">
-        <span class="phone"><span class="label">Téléphone:</span> {{ passenger.phone }}</span>
-        <span class="route">{{ passenger.from }} - {{ passenger.to }}</span>
+        <span class="phone"><span class="label">Téléphone:</span> {{ passenger.Numero_De_Telephone }}</span>
+        <!--span class="route">{{ passenger.from }} - {{ passenger.to }}</span-->
       </p>
     </div>
     <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
@@ -26,34 +26,35 @@
 
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+  import { onMounted, ref } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import axios from 'axios'
+  import { inject } from 'vue'
+
+  const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
+
 
 const trip = ref({});
 const route = useRoute();
 const router = useRouter(); // Récupération du router vue-router pour la navigation
 
+const props = defineProps({
+    idTrajet: Number
+})
+
 onMounted(() => {
   fetchTripDetails();
 });
 
-function fetchTripDetails() {
-  const tripId = route.params.id;
-  trip.value = {
-    id: tripId,
-    date: '2024-01-16',
-    timeDeparture: '08:00',
-    from: 'Paris',
-    timeArrival: '10:25',
-    to: 'Lyon',
-    passengers: [
-      { id: 1, firstName: 'Arthur', lastName: 'Crochemore', phone: '0123456789', from: 'Paris', to: 'Lyon' },
-      { id: 2, firstName: 'Caroline', lastName: 'Petit', phone: '9876543210', from: 'Lyon', to: 'Marseille' }
-    ],
-    nbPassagers: 3,
-    nbMaxPassagers: 5
-  };
-}
+const fetchTripDetails = async () =>  {
+    console.log(route.query.idTrajet)
+    try {
+        const response = await axios.get('/api/trajets/' + route.query.idTrajet)
+        trip.value = response.data
+    } catch (error) {
+        console.error('Error fetching trajets:', error)
+    }
+  }
 
 function goBack() {
   router.back();

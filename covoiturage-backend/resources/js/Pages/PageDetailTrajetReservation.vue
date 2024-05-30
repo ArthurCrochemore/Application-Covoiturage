@@ -5,8 +5,8 @@
       <div>
         <p><span class="label">ID du trajet:</span> {{ trip.idTrajet }}</p>
         <p><span class="label">Date:</span> {{ trip.Date_Depart }}</p>
-        <p><span class="label">Départ:</span> {{ trip.ptDepart }}<!-- {{ trip.from }}--></p>
-        <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}<!-- {{ trip.to }}--></p>
+        <p><span class="label">Départ:</span> {{ trip.ptDepart }}</p>
+        <p><span class="label">Arrivée:</span> {{ trip.ptArrive }}</p>
       </div>
 
       <h2 class="passengers-label">Passagers</h2>
