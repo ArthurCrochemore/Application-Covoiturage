@@ -24,7 +24,7 @@ class Reservation extends Model
 
     public function utilisateur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Utilisateur::class, 'Id_Passager');
+        return $this->belongsTo(Utilisateur::class, 'Id_Passager', 'Id_Utilisateur');
     }
 
     public function trajet(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -33,7 +33,7 @@ class Reservation extends Model
     }
     public function adresse(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Trajet::class, 'Id_Adresse');
+        return $this->belongsTo(Adresse::class, 'Id_Adresse');
     }
 
     /**
