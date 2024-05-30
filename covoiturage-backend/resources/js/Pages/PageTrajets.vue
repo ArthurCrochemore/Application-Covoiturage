@@ -76,7 +76,7 @@ function goToProposedDetails(tripId) {
       <section>
         <h2>Trajets Passagers</h2>
         <div v-for="trip in trajetsPassager " :key="trip.id" class="trip-item" @click="goToPassengerDetails(trip.id)">
-          <div class="trip-date-time"><b>{{ trip.Date_Depart }} à {{ trip.heureDepart }}</b></div>
+          <div class="trip-date-time"><b>{{ trip.date }}, {{ trip.heure }}</b></div>
           <div class="trip-details">
             <div class="trip-route">{{ trip.ptDepart }} - {{ trip.ptArrive }}</div>
             <div class="trip-person">Avec {{ trip.nomConducteur }}</div>
@@ -86,10 +86,10 @@ function goToProposedDetails(tripId) {
       <section>
         <h2>Trajets Conducteurs</h2>
         <div v-for="trip in trajetsConducteur" :key="trip.id" class="trip-item" @click="goToConductorDetails(trip.id)">
-          <div class="trip-date-time"><b>{{ trip.Date_Depart }} à {{ trip.heureDepart }}</b></div>
+          <div class="trip-date-time"><b>{{ trip.date }}, {{ trip.heure }}</b></div>
           <div class="trip-details">
             <div class="trip-route">{{ trip.ptDepart }} - {{ trip.ptArrive }}</div>
-            <div class="trip-status">{{ trip.nbPassagers }} passagers - {{ trip.status }}</div>
+            <div class="trip-status">{{ trip.nbPassagers }} / {{ trip.nbMaxPassagers }} Passagers - {{ trip.status }}</div>
           </div>
         </div>
       </section>

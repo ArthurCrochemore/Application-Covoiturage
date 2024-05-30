@@ -169,34 +169,34 @@ public function getAllTrajetsPassagers()
 
             $ptDepart = null;
             $ptArrive = null;
-            $heureDepart = null;
-            $heureArrive = null;
+            $heure = null;
 
             if ($domicile && $base) {
                 if ($trajet->Domicile_Base) {
                     $ptDepart = $domicile->Intitule;
                     $ptArrive = $base->Intitule;
-                    $heureArrive = $trajet->Heure_Depart;
+                    $heure = "Arrivé à la base à " . date('H\hi', strtotime($trajet->Heure_Depart));
                 } else {
                     $ptDepart = $base->Intitule;
                     $ptArrive = $domicile->Intitule;
-                    $heureDepart = $trajet->Heure_Depart;
+                    $heure = "Départ de la base à " . date('H\hi', strtotime($trajet->Heure_Depart));
                 }
             }
 
             $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
 
+            $dateDepart = new \DateTime($trajet->Date_Depart);
+            $jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+            $mois = ["", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+            $dateString = $jours[$dateDepart->format('w')] . " " . $dateDepart->format('j') . " " . $mois[$dateDepart->format('n')];
+
             return [
                 'idTrajet' => $trajet->Id_Trajet,
+                'date' => $dateString,
                 'ptDepart' => $ptDepart,
                 'ptArrive' => $ptArrive,
-                'typeTrajet' => $type,
-                'heureDepart' => $heureDepart,
-                'heureArrive' => $heureArrive,
-                'Date_Depart' => $trajet->Date_Depart,
+                'heure' => $heure,
                 'nomConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Nom : null,
-                'uniteConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Unite : null,
-                'nbMaxPassagers' => $trajet->Nbre_Places
             ];
         });
 
@@ -223,31 +223,28 @@ public function getAllTrajetsPassagers()
                 return response()->json(['message' => 'Aucun trajet trouvé pour ce conducteur'], 404);
             }
 
-
             $result = $trajets->map(function ($trajet) {
                 $domicile = $trajet->domicile;
                 $base = $trajet->base;
 
                 $ptDepart = null;
                 $ptArrive = null;
-                $heureDepart = null;
-                $heureArrive = null;
+                $heure = null;
 
                 if ($domicile && $base) {
                     if ($trajet->Domicile_Base) {
                         $ptDepart = $domicile->Intitule;
                         $ptArrive = $base->Intitule;
-                        $heureArrive = $trajet->Heure_Depart;
+                        $heure = "Arrivé à la base à " . date('H\hi', strtotime($trajet->Heure_Depart));
                     } else {
                         $ptDepart = $base->Intitule;
                         $ptArrive = $domicile->Intitule;
-                        $heureDepart = $trajet->Heure_Depart;
+                        $heure = "Départ de la base à  " . date('H\hi', strtotime($trajet->Heure_Depart));
                     }
                 }
 
-                $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
 
-                $passagers = $trajet->reservations->map(function($reservation) {
+                $passagers = $trajet->reservations->map(function ($reservation) {
                     return [
                         'nomPassager' => $reservation->utilisateur->Nom,
                         'prenomPassager' => $reservation->utilisateur->Prenom,
@@ -257,20 +254,29 @@ public function getAllTrajetsPassagers()
 
                 $nbPassagers = $passagers->count();
 
+                $status = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+
+                if($trajet->Trajet_Regulier) {
+                    $dateString = "Trajet Régulier"; // TODO : Gérer formattage de la date pour les trajets régulier (prochain trajet lundi par exemple)
+                }
+                else {
+                    $dateDepart = new \DateTime($trajet->Date_Depart);
+                    $jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+                    $mois = ["", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+                    $dateString = $jours[$dateDepart->format('w')] . " " . $dateDepart->format('j') . " " . $mois[$dateDepart->format('n')];
+                }
+
 
                 return [
                     'idTrajet' => $trajet->Id_Trajet,
+                    'date' => $dateString,
                     'ptDepart' => $ptDepart,
                     'ptArrive' => $ptArrive,
-                    'typeTrajet' => $type,
-                    'heureDepart' => $heureDepart,
-                    'heureArrive' => $heureArrive,
-                    'Date_Depart' => $trajet->Date_Depart,
+                    'heure' => $heure,
                     'nomConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Nom : null,
-                    'uniteConducteur' => $trajet->utilisateur ? $trajet->utilisateur->Unite : null,
                     'nbMaxPassagers' => $trajet->Nbre_Places,
-                    'nbPassagers'=> $nbPassagers,
-                    'status' => $nbPassagers == $trajet->Nbre_Places,
+                    'nbPassagers' => $nbPassagers,
+                    'status' => $status,
                 ];
             });
 
