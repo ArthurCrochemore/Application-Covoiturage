@@ -1,71 +1,158 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+    import { ref, onMounted  } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { inject } from 'vue'
+    import axios from 'axios'
 
-import axios from 'axios';
-const router = useRouter() // Récupération du router vue-router pour la navigation
+    const props = defineProps({
+        ptDepart: String,
+        ptArrive: String,
+        booleenTrajetBaseDomicile : String
+    })
 
-const trajetRegulier = ref(false)
-const bagage = ref('Beaucoup')
-const nombrePassagers = ref(0)
-const description = ref('')
-const date = ref('')
-const heure = ref('')
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
-const dateId = ref(['non-grise', 'grise'])
-const indexBouttonSwitch = ref(0)
-const estGrise = ref(false)
+    const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
-const changerIdGrise = () => {
-    indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
-    estGrise.value = !estGrise.value
-}
+    // Constantes pour contenir toutes les adresses en fonction de leur type
+    const domiciles = ref('')
+    const basesAeriennes = ref('')
 
-const inversionDepartArrivee = () => {
-    const depart = document.getElementById('depart-label').value;
-    const arrive = document.getElementById('arrive-label').value;
-    document.getElementById('depart-label').value = arrive;
-    document.getElementById('arrive-label').value = depart;
-}
+    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
+    const departs = ref()
+    const arrives = ref()
 
-const creerTrajet = () => {
-    // Création d'un objet contenant les données du trajet à envoyer
-    const trajetData = {
-        DateDepart: date.value,
-        HeureDepart: heure.value,
-        NbrePlaces: nombrePassagers.value,
-        QteBagages: bagage.value,
-        Description: description.value,
-        TrajetRegulier: trajetRegulier.value,
-        Statut: 0,
-        DomicileBase: false, 
-        IdDomicile: 1, 
-        IdBase: 1, 
-        IdJours: [0,0,0,0,0,0,0], 
-        IdConducteur: 1,
-    };
+    /**
+     * Récupère tout les domiciles de la base de données
+     */
+     const recuperationDomiciles = async () => {
+        try {
+            const response = await axios.get('/api/adresses/domicile')
+            domiciles.value = response.data
 
-    axios.post('/api/trajets', trajetData)
-    .then(() => router.push('/creation-suivant'))
-    .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
-}
+            // Chargement du contenu du menu déroulant chargé avec les domiciles
+            if (props.booleenTrajetBaseDomicile == 'true') {
+                arrives.value = domiciles.value
+            } else {
+                departs.value = domiciles.value
+            }
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    /**
+     * Récupère toutes les bases aériennes de la base de données
+     */
+     const recuperationBases = async () => {
+        try {
+            const response = await axios.get('/api/adresses/base-aerienne')
+            basesAeriennes.value = response.data
+
+            // Chargement du contenu du menu déroulant chargé avec les bases
+            if (props.booleenTrajetBaseDomicile === 'true') {
+                departs.value = basesAeriennes.value
+            } else {
+                arrives.value = basesAeriennes.value
+            }
+        } catch (error) {
+            console.error('Error fetching trajets:', error)
+        }
+    }
+
+    // Constantes des contenus des différents champs Départ / Arrivé
+    const depart = ref(props.ptDepart)
+    const arrive = ref(props.ptArrive)
+    const heure = ref()
+    const date = ref()
+
+    /**
+     * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
+     */
+    onMounted(() => {
+        recuperationDomiciles()
+        recuperationBases()
+
+        // Récupération de la date et de l'heure actuelle
+        const maintenant = new Date()
+        const anneeActuelle = maintenant.getFullYear()
+        const moisActuel = maintenant.getMonth() + 1 // Les mois commencent à partir de 0
+        const jourActuel = maintenant.getDate()
+
+        date.value = `${anneeActuelle}-${moisActuel.toString().padStart(2, '0')}-${jourActuel.toString().padStart(2, '0')}`
+
+        const heureActuelle = maintenant.getHours()
+        const minuteActuelle = maintenant.getMinutes()
+
+        heure.value = `${heureActuelle.toString().padStart(2, '0')}:${minuteActuelle.toString().padStart(2, '0')}`
+
+    })
+
+    const trajetRegulier = ref(false)
+    const bagage = ref('Beaucoup')
+    const nombrePassagers = ref(0)
+    const description = ref('')
+
+    const dateId = ref(['non-grise', 'grise'])
+    const indexBouttonSwitch = ref(0)
+    const estGrise = ref(false)
+
+    const changerIdGrise = () => {
+        indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
+        estGrise.value = !estGrise.value
+    }
+
+    const inversionDepartArrivee = () => {
+        const depart = document.getElementById('depart-label').value;
+        const arrive = document.getElementById('arrive-label').value;
+        document.getElementById('depart-label').value = arrive;
+        document.getElementById('arrive-label').value = depart;
+    }
+
+    const creerTrajet = () => {
+        // Création d'un objet contenant les données du trajet à envoyer
+        const trajetData = {
+            DateDepart: date.value,
+            HeureDepart: heure.value,
+            NbrePlaces: nombrePassagers.value,
+            QteBagages: bagage.value,
+            Description: description.value,
+            TrajetRegulier: trajetRegulier.value,
+            Statut: 0,
+            DomicileBase: false,
+            IdDomicile: 1,
+            IdBase: 1,
+            IdJours: [0,0,0,0,0,0,0],
+            IdConducteur: 1,
+        };
+
+        axios.post('/api/trajets', trajetData)
+        .then(() => router.push('/creation-suivant'))
+        .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
+    }
 
 </script>
 
 <template>
-    <div class="bloc-de-creation">
+    <div class="bloc-principal">
         <div class="titre-bloc">
             <h1 class="intitule-creation">Création d'un trajet</h1>
         </div>
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
-            <input type="text" class="label" id="depart-label" placeholder="Départ" />
+            <input list="liste-departs" v-model="depart" type="text" class="label" id="depart-label" placeholder="Départ" />
+            <datalist id="liste-departs">
+                    <option v-for="option in departs" :value="option.Intitule">{{option.Intitule}}</option>
+            </datalist>
         </div>
         <div class="icone-arrows" @click="inversionDepartArrivee">
         </div>
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
-            <input type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+            <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+            <datalist id="liste-arrives">
+                <option v-for="option in arrives" :value="option.Intitule">{{option.Intitule}}</option>
+            </datalist>
         </div>
         <div class="date-et-heure">
             <div class="trajet-regulier">
@@ -420,29 +507,6 @@ input {
 v-digital-time-picker {
     width: 100px;
     height: 100px;
-}
-
-@media (max-height: 750px) {
-    .entete {
-        height: 60px;
-    }
-
-    .retour {
-        background-size: 30px 30px;
-
-    }
-
-    .entete>h1 {
-        font-size: medium;
-        width: 100%;
-        color: black;
-        text-align: center;
-    }
-
-    .bloc-de-creation {
-        bottom: 80px;
-        top: 80px;
-    }
 }
 
 @media (max-width : 1300px) {
