@@ -13,11 +13,65 @@ use Illuminate\Support\Facades\Auth;
 
 class TrajetController extends Controller
 {
-    public function getAllTrajets()
+    public function getAllTrajetsPonctuel($date)
 {
     try {
         // Recuperer tous les trajets avec les relations nécessaires
-        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])->get();
+        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])
+            ->whereDate('Date_Depart', $date)
+            ->where('Statut', false)
+            ->get();
+
+
+        $result = $trajets->map(function ($trajet) {
+
+            $domicile = $trajet->domicile;
+            $base = $trajet->base;
+
+            $ptDepart = null;
+            $ptArrive = null;
+
+            if ($domicile && $base) {
+                // Determiner les de dpt et d'arrivee  en fonction de Domicile_Base
+                if ($trajet->Domicile_Base) {
+                    $ptDepart = $domicile->Intitule;
+                    $ptArrive = $base->Intitule;
+                } else {
+                    $ptDepart = $base->Intitule;
+                    $ptArrive = $domicile->Intitule;
+                }
+            }
+
+            $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
+
+            $utilisateur = $trajet->utilisateur;
+
+            return [
+                'idTrajet' => $trajet->Id_Trajet,
+                'ptDepart' => $ptDepart,
+                'ptArrive' => $ptArrive,
+                'typeTrajet' => $type,
+                'heureDepart' => $trajet->Heure_Depart,
+                'Date_Depart' => $trajet->Date_Depart,
+                'nomConducteur' => $utilisateur ? $utilisateur->Nom : null,
+                'uniteConducteur' => $utilisateur ? $utilisateur->Unite : null,
+            ];
+        });
+
+        return response()->json($result, 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+    }
+}
+
+public function getAllTrajetsRegulier()
+{
+    try {
+        // Recuperer tous les trajets avec les relations nécessaires
+        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])
+            ->where('Trajet_Regulier', true)
+            ->where('Statut', false)
+            ->get();
 
 
         $result = $trajets->map(function ($trajet) {

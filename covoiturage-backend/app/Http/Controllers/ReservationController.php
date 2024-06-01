@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Trajet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,25 @@ class ReservationController extends Controller
             $ValidatedData['Date_Reservation'] = $DateNow;
             $ValidatedData['Statut'] = 0;
 
+            $trajet = Trajet::find($ValidatedData['Id_Trajet']);
+
+            // On récupère le nb de passager
+            $nbPassagers = $trajet->reservations()
+                ->where('Statut', '!=', 2)
+                ->count();
+
+            // On vérifie qu'il n'y a pas de problemes
+            if ($nbPassagers >= $trajet->Nbre_Places) {
+                return redirect('/accueil')->with('error', 'La capacité du trajet est déjà atteinte.');
+            }
+
             $Reservation = Reservation::create($ValidatedData);
+
+            // On change l'etat du trajet si le nb de place max a été atteint
+            if ($nbPassagers + 1 >= $trajet->Nbre_Places) {
+                $trajet->Statut = true;
+                $trajet->save();
+            }
 
             // TODO : Ajouter domicile de l'utilisateur est base du trajet
 
@@ -72,6 +91,11 @@ class ReservationController extends Controller
             if (!$reservation) {
                 return response()->json(['message' => 'Reservation not found'], 404);
             }
+
+            // On change le statut du trajet, il redevient visible s'il était complet
+            $trajet = Trajet::find($reservation->Id_Trajet);
+            $trajet->Statut = false;
+            $trajet->save();
 
             $reservation->Statut = 2;
             $reservation->save();

@@ -23,13 +23,20 @@
 
     const resultatsRecherche = ref('')
 
+    const response = ref()
+
     /**
      * Récupère tout les trajets de la base de données
      */
     const recuperationTrajets = async () => {
         try {
-            const response = await axios.get('/api/trajets')
-            resultatsRecherche.value = response.data
+            if (props.typeTrajet === "Ponctuel"){
+                const response = await axios.get('/api/recherche-trajets/' + props.date)
+                resultatsRecherche.value = response.data
+            } else {
+                const response = await axios.get('/api/recherche-trajets')
+                resultatsRecherche.value = response.data
+            }
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
@@ -89,6 +96,7 @@
      * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
      */
     onMounted(() => {
+        console.log(props.date);
         recuperationTrajets()
         recuperationDomicile()
         recuperationBase()
