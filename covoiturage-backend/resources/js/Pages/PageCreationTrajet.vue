@@ -21,7 +21,7 @@
 
     const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
-    // Constantes pour contenir toutes les adresses en fonction de leur type
+    // Constantes pour contenir toutes les adresses en fonction de leur type (domicile ou base)
     const domiciles = ref('')
     const basesAeriennes = ref('')
     const departs = ref()
@@ -97,7 +97,6 @@
     const indexBouttonSwitch = ref(0)
     const estGrise = ref(false)
 
-
     const changerIdGrise = () => {
         indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
         estGrise.value = !estGrise.value
@@ -105,15 +104,15 @@
 
     const temp = ref() // Utilisé pour l'échange de données
 
-
+    /**
+     * Permet l'inversion du sens du trajet
+     */
     const basculerTypeDeTrajet = () => {
         temp.value = depart.value
         depart.value = arrive.value
         arrive.value = temp.value
 
         booleenTrajetBaseDomicile.value = !booleenTrajetBaseDomicile.value
-        console.log("Bool : " + booleenTrajetBaseDomicile.value)
-
 
         /* Echange des propositions d'adresse entre les champs départ et arrivé */
         if (trajetRegulier) {
@@ -125,20 +124,11 @@
         }
     }
 
+    /**
+     * Envoie les données de la page à la page suivante
+     */
     const pageSuivante = () => {
-        // Création d'un objet contenant les données du trajet à envoyer
-        console.log(depart.value)
-        console.log(arrive.value)
-        console.log(Number(booleenTrajetBaseDomicile.value))
-        console.log(Number(trajetRegulier.value))
-        console.log(date.value)
-        console.log(heure.value)
-        console.log(bagage.value)
-        console.log(nombrePassagers.value)
-        console.log(description.value)
-
         var jours = [lundi.value, mardi.value, mercredi.value, jeudi.value, vendredi.value, samedi.value, dimanche.value]
-        console.log(jours)
 
         router.push({
                 path: '/creation-suivant',
@@ -156,7 +146,6 @@
                 }
             });
     }
-
 </script>
 
 <template>
@@ -241,333 +230,284 @@
 </template>
 
 
-<style scoped>
-
-.bloc-de-creation {
-    width: 60%;
-    height: auto;
-    position: fixed;
-    top: 50px;
-    bottom: 150px;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 40px;
-}
-
-.titre-bloc {
-    background-color: #dddddd;
-    width: 90%;
-    height: 80px;
-    margin: auto 5%;
-    border-radius: 30px;
-}
-
-.intitule-creation {
-    color: black;
-    text-align: center;
-    font-size: 30px;
-    margin-top: 12px;
-}
-
-.bloc-label-depart-arrive {
-    display: flex;
-    flex-direction: row;
-    height: 50px;
-    width: 75%;
-    margin-left: 12.5%;
-    justify-content: space-between;
-}
-
-.icone-map {
-    background: url('assets/icons/navigation-map-marker.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
-}
-
-.icone-arrows {
-    background: url('assets/icons/fleches-bidirection.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
-    margin-left: 20%;
-}
-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.label {
-    border: none;
-    border-bottom: 1px solid #dddddd;
-    height: 50px;
-    width: 100%;
-}
-
-.bagage {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    margin-left: 10%;
-    height: 50px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.passagers {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    margin-left: 10%;
-    height: 50px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-input[type="number"] {
-    width: 20%;
-    padding: 5px;
-    margin-top: 5px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    text-align: center;
-    color: black;
-}
-
-.description-area {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    margin-top: 10px;
-    margin-left: 10%;
-    height: 50px;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.text-area{
-    width: 80%;
-    padding: 5px;
-    margin-left: 10%;
-    color: black;
-    border: 1px solid black;
-    border-radius: 5px;
-
-}
-
-.date-et-heure {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    margin-top: 10px;
-    margin-left: 10%;
-    height: 50px;
-
-    justify-content: space-between;
-}
-
-.bloc-date,
-.bloc-heure {
-    display: flex;
-    flex-direction: row;
-}
-
-input[type="date"],
-input[type="time"] {
-    width: 100%;
-    height: 40px;
-    float: right;
-    color: black;
-    border: 1px solid black;
-    border-radius: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-input[type="time"] {
-    clear: both;
-}
-
-.icone-date {
-    background: url('assets/icons/recherche-calendrier.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
-    padding-right: 50px;
-    padding-bottom: 10px;
-}
-
-.icone-heure {
-    background: url('assets/icons/recherche-horloge.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
-    padding-right: 50px;
-    padding-bottom: 10px;
-}
-
-.input-checkbox {
-    display: none;
-}
-
-.switch-label {
-    display: block;
-    width: 50px;
-    height: 30px;
-    background-color: #ccc;
-    border-radius: 20px;
-    position: relative;
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-.input-checkbox:checked+.switch-label {
-    background-color: #007bff;
-}
-
-.switch-label::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 22px;
-    height: 22px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-
-.input-checkbox:checked+.switch-label::after {
-    transform: translateX(20px);
-}
-
-#grise {
-    filter: opacity(50%);
-    transition: filter 0.5s ease;
-}
-
-#non-grise {
-    filter: opacity(100%);
-    transition: filter 0.5s ease;
-}
-
-p {
-    border-top: 5px;
-    color: black;
-}
-
-.trajet-regulier {
-    display: flex;
-    flex-direction: row;
-    height: 50px;
-    width: 250px;
-    margin-left: 0%;
-    text-align: center;
-    justify-content: flex-start;
-
-}
-
-.intitule-trajet-regulier {
-    margin-left: 2%;
-}
-
-.checkbox-label {
-    color: black;
-    font-size: 20px	;
-}
-
-.checkbox-label2 {
-    color: black;
-    font-size: 20px	;
-    margin-right: 5%;
-    margin-left: 2%;
-
-}
-
-.switch-container {
-    display: flex;
-    align-items: center;
-    margin-left: 2.5%;
-    position: relative;
-    align-items: baseline;
-
-
-}
-
-.switch-container#switchregulier {
-    color: black;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.suivant {
-    background-color: #bbbbbb;
-    width: 120px;
-    height: 40px;
-    margin: auto;
-    border-radius: 10px;
-}
-
-.intitule-suivant {
-    padding-top: 3px;
-    text-align: center;
-}
-
-p,
-input {
-    font-size: 20px;
-}
-
-v-digital-time-picker {
-    width: 100px;
-    height: 100px;
-}
-
-@media (max-width : 1300px) {
-    .bloc-de-creation {
-        width: 70%;
-        left: 15%;
-    }
-}
-
-@media (max-width : 900px) {
-    .bloc-de-creation {
-        width: 80%;
-        left: 10%;
-    }
-}
-
-@media (max-width : 800px) {
-    .bloc-de-creation {
-        width: 85%;
-        left: 7.5%;
-    }
-}
-
-@media (max-width : 700px) {
-    .bloc-de-creation {
+    <style scoped>
+    .titre-bloc {
+        background-color: #dddddd;
         width: 90%;
-        left: 5%;
+        height: 80px;
+        margin: auto 5%;
+        border-radius: 30px;
     }
-}
 
-@media (max-width : 600px) {
-    .bloc-de-creation {
-        width: 96%;
-        left: 2%;
+    .intitule-creation {
+        color: black;
+        text-align: center;
+        font-size: 30px;
+        margin-top: 12px;
     }
-}
+
+    .bloc-label-depart-arrive {
+        display: flex;
+        flex-direction: row;
+        height: 50px;
+        width: 75%;
+        margin-left: 12.5%;
+        justify-content: space-between;
+    }
+
+    .icone-map {
+        background: url('assets/icons/navigation-map-marker.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
+    }
+
+    .icone-arrows {
+        background: url('assets/icons/fleches-bidirection.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
+        margin-left: 20%;
+    }
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .label {
+        border: none;
+        border-bottom: 1px solid #dddddd;
+        height: 50px;
+        width: 100%;
+    }
+
+    .bagage {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-left: 10%;
+        height: 50px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .passagers {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-left: 10%;
+        height: 50px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    input[type="number"] {
+        width: 20%;
+        padding: 5px;
+        margin-top: 5px;
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+        text-align: center;
+        color: black;
+    }
+
+    .description-area {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-top: 10px;
+        margin-left: 10%;
+        height: 50px;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .text-area{
+        width: 80%;
+        padding: 5px;
+        margin-left: 10%;
+        color: black;
+        border: 1px solid black;
+        border-radius: 5px;
+
+    }
+
+    .date-et-heure {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-top: 10px;
+        margin-left: 10%;
+        height: 50px;
+
+        justify-content: space-between;
+    }
+
+    .bloc-date,
+    .bloc-heure {
+        display: flex;
+        flex-direction: row;
+    }
+
+    input[type="date"],
+    input[type="time"] {
+        width: 100%;
+        height: 40px;
+        float: right;
+        color: black;
+        border: 1px solid black;
+        border-radius: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    input[type="time"] {
+        clear: both;
+    }
+
+    .icone-date {
+        background: url('assets/icons/recherche-calendrier.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
+        padding-right: 50px;
+        padding-bottom: 10px;
+    }
+
+    .icone-heure {
+        background: url('assets/icons/recherche-horloge.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
+        padding-right: 50px;
+        padding-bottom: 10px;
+    }
+
+    .input-checkbox {
+        display: none;
+    }
+
+    .switch-label {
+        display: block;
+        width: 50px;
+        height: 30px;
+        background-color: #ccc;
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .input-checkbox:checked+.switch-label {
+        background-color: #007bff;
+    }
+
+    .switch-label::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 22px;
+        height: 22px;
+        background-color: white;
+        border-radius: 50%;
+        transition: transform 0.3s;
+    }
+
+    .input-checkbox:checked+.switch-label::after {
+        transform: translateX(20px);
+    }
+
+    #grise {
+        filter: opacity(50%);
+        transition: filter 0.5s ease;
+    }
+
+    #non-grise {
+        filter: opacity(100%);
+        transition: filter 0.5s ease;
+    }
+
+    p {
+        border-top: 5px;
+        color: black;
+    }
+
+    .trajet-regulier {
+        display: flex;
+        flex-direction: row;
+        height: 50px;
+        width: 250px;
+        margin-left: 0%;
+        text-align: center;
+        justify-content: flex-start;
+
+    }
+
+    .intitule-trajet-regulier {
+        margin-left: 2%;
+    }
+
+    .checkbox-label {
+        color: black;
+        font-size: 20px	;
+    }
+
+    .checkbox-label2 {
+        color: black;
+        font-size: 20px	;
+        margin-right: 5%;
+        margin-left: 2%;
+
+    }
+
+    .switch-container {
+        display: flex;
+        align-items: center;
+        margin-left: 2.5%;
+        position: relative;
+        align-items: baseline;
+
+
+    }
+
+    .switch-container#switchregulier {
+        color: black;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .suivant {
+        background-color: #bbbbbb;
+        width: 120px;
+        height: 40px;
+        margin: auto;
+        border-radius: 10px;
+    }
+
+    .intitule-suivant {
+        padding-top: 3px;
+        text-align: center;
+    }
+
+    p,
+    input {
+        font-size: 20px;
+    }
+
+    v-digital-time-picker {
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
