@@ -375,8 +375,8 @@ public function getAllTrajetsPassagers()
             $validatedData = $request->validate([
                 'Date_Depart' => 'required|date',
                 'Heure_Depart' => 'required|date_format:H:i',
-                'Nbre_Places' => 'required|integer|min=0',
-                'Qte_Bagages' => 'required|integer|min=0',
+                'Nbre_Places' => 'required|integer|min:0',
+                'Qte_Bagages' => 'required|integer|min:0',
                 'Description' => 'required|string|max:255',
                 'Trajet_Regulier' => 'required|boolean',
                 'Domicile_Base' => 'required|boolean',

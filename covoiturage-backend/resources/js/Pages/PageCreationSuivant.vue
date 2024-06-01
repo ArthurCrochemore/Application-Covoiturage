@@ -21,20 +21,14 @@
     const showAddCityDialog = ref(false)
     const newCity = ref('')
     const villesAjoutees = ref([])
+    const jours = ref([])
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
 
+    const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère l'affichage de messages généraux sur App_Connexion.vue
 
     onMounted(() => {
-        console.log(props.ptDepart)
-        console.log(props.ptArrive)
-        console.log(props.trajetRegulier)
-        console.log(props.date)
-        console.log(props.heure)
-        console.log(props.bagages)
-        console.log(props.nombrePassagers)
-        console.log(props.description)
-        console.log(props.jours)
+        jours.value = [props.jours[0] == "true", props.jours[1] == "true", props.jours[2] == "true", props.jours[3] == "true", props.jours[4] == "true", props.jours[5] == "true", props.jours[6] == "true"]
     })
 
     const retour = () => {
@@ -53,14 +47,6 @@
                     description : props.description
                 }
             });
-    }
-
-    const confirmerCreationTrajet = () => {
-        showDialog.value = false;
-        console.log("Trajet créé");
-        router.push({
-            path: '/vos-trajets'
-        });
     }
 
     const ajouterVille = () => {
@@ -86,7 +72,7 @@
                 Domicile_Base: props.booleenTrajetBaseDomicile,
                 ptDepart : props.ptDepart,
                 ptArrive: props.ptArrive,
-                jours: props.jours
+                jours: jours.value
         })
         .then(response => {
             console.log(response);
@@ -100,6 +86,11 @@
             afficherMessageFunc(error, "Erreur");
             console.error(error);
         });
+    }
+
+    const confirmerCreationTrajet = () => {
+        showDialog.value = false;
+        creerTrajet();
     }
 
 </script>
