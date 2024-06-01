@@ -36,4 +36,5 @@ Vous accéder alors à l'interface de connexion, et pouvez vous créer un compte
 ##
 
 Cheffe de Projet, Caroline Petit
+
 Arthur Crochemore, Cyril Jacques, Mohamed Sid Brahim, Jaafar Ghiffi et Adrien Amoroso
