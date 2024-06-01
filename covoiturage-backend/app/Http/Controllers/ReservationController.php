@@ -21,7 +21,7 @@ class ReservationController extends Controller
             ]);
             $ValidatedData["Id_Passager"] = $id;
             $ValidatedData['Date_Reservation'] = $DateNow;
-            $ValidatedData['Statut'] = 1;
+            $ValidatedData['Statut'] = 0;
 
             $Reservation = Reservation::create($ValidatedData);
 
