@@ -28,9 +28,6 @@ Route::get('/trajets/{id}', [TrajetController::class, 'getTrajet']);
 // Route pour mettre à jour un trajet par son ID
 Route::put('/trajets/{id}', [TrajetController::class, 'updateTrajet']);
 
-// Route pour la création d'un trajet
-Route::post('/trajets', [TrajetController::class, 'createTrajet']);
-
 // Route pour recuperer tous les adresses Base Aerienne
 Route::get('/adresses/base-aerienne', [AdresseController::class, 'GetAllBaseAerienne']);
 

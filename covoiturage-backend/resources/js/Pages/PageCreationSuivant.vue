@@ -1,38 +1,106 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+    import { ref, onMounted  } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { inject } from 'vue'
+    import axios from 'axios'
 
-const showDialog = ref(false)
-const showAddCityDialog = ref(false)
-const newCity = ref('')
-const villesAjoutees = ref([])
+    const props = defineProps({
+        ptDepart: String,
+        ptArrive: String,
+        booleenTrajetBaseDomicile: Number,
+        trajetRegulier: Number,
+        date : String,
+        heure : String,
+        jours : Array,
+        bagages: Number,
+        nombrePassagers : Number,
+        description : String
+    })
 
-const router = useRouter() // Récupération du router vue-router pour la navigation
+    const showDialog = ref(false)
+    const showAddCityDialog = ref(false)
+    const newCity = ref('')
+    const villesAjoutees = ref([])
 
-const retour = () => {
-  router.push({
-    path: '/creation-trajet'
-  });
-}
+    const router = useRouter() // Récupération du router vue-router pour la navigation
 
-const confirmerCreationTrajet = () => {
-    showDialog.value = false;
-    console.log("Trajet créé");
+
+    onMounted(() => {
+        console.log(props.ptDepart)
+        console.log(props.ptArrive)
+        console.log(props.trajetRegulier)
+        console.log(props.date)
+        console.log(props.heure)
+        console.log(props.bagages)
+        console.log(props.nombrePassagers)
+        console.log(props.description)
+        console.log(props.jours)
+    })
+
+    const retour = () => {
     router.push({
-        path: '/vos-trajets'
-    });
-}
+        path: '/creation-trajet',
+                query: {
+                    ptDepart: props.ptDepart,
+                    ptArrive: props.ptArrive,
+                    booleenTrajetBaseDomicile : props.booleenTrajetBaseDomicile,
+                    trajetRegulier: props.trajetRegulier,
+                    date : props.date,
+                    heure : props.heure,
+                    jours : props.jours,
+                    bagages: props.bagages,
+                    nombrePassagers : props.nombrePassagers,
+                    description : props.description
+                }
+            });
+    }
 
-const ajouterVille = () => {
-  console.log("Ville ajoutée :", newCity.value)
-  villesAjoutees.value.push(newCity.value)
-  newCity.value = ''
-  showAddCityDialog.value = false
-}
+    const confirmerCreationTrajet = () => {
+        showDialog.value = false;
+        console.log("Trajet créé");
+        router.push({
+            path: '/vos-trajets'
+        });
+    }
 
-const supprimerVille = (index) => {
-  villesAjoutees.value.splice(index, 1)
-}
+    const ajouterVille = () => {
+    console.log("Ville ajoutée :", newCity.value)
+    villesAjoutees.value.push(newCity.value)
+    newCity.value = ''
+    showAddCityDialog.value = false
+    }
+
+    const supprimerVille = (index) => {
+    villesAjoutees.value.splice(index, 1)
+    }
+
+    const creerTrajet = () => {
+
+        axios.post('/create-trajets', {
+                Date_Depart: props.date,
+                Heure_Depart: props.heure,
+                Nbre_Places: props.nombrePassagers,
+                Qte_Bagages: props.bagages,
+                Description: props.description,
+                Trajet_Regulier: props.trajetRegulier,
+                Domicile_Base: props.booleenTrajetBaseDomicile,
+                ptDepart : props.ptDepart,
+                ptArrive: props.ptArrive,
+                jours: props.jours
+        })
+        .then(response => {
+            console.log(response);
+            afficherMessageFunc("Le trajet a été crée avec succès", "Succès");
+            router.push({
+                path: '/vos-trajets'
+
+            });
+        })
+        .catch(error => {
+            afficherMessageFunc(error, "Erreur");
+            console.error(error);
+        });
+    }
 
 </script>
 <template>

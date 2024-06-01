@@ -1,5 +1,5 @@
 <template>
-    <div class="trip-details">
+    <div class="bloc-principal">
       <button class="back-button" @click="goBack">&#8678; Retour</button>
       <h1>Trajet Passager</h1>
       <div>
@@ -70,17 +70,7 @@ const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère
   </script>
 
   <style scoped>
-  .trip-details {
-    width: 60%;
-    height: auto;
-    position: fixed;
-    top: 150px;
-    bottom: 150px;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 40px;
+  .bloc-principal {
     padding: 20px;
     overflow-y: auto;
     color: black;

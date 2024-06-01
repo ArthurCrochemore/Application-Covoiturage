@@ -94,6 +94,12 @@
     const estGrise = ref(false)
     const trajetRegulier = ref(false)
 
+    const changerIdGrise = () => {
+        indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
+        estGrise.value = !estGrise.value
+    }
+
+    // Constantes de jours pour les trajets réguliers
     const lundi = ref(true)
     const mardi = ref(true)
     const mercredi = ref(true)
@@ -101,11 +107,6 @@
     const vendredi = ref(true)
     const samedi = ref(true)
     const dimanche = ref(true)
-
-    const changerIdGrise = () => {
-        indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
-        estGrise.value = !estGrise.value
-    }
 
     // Constantes pour l'affichage des données de recherche
     const typesDeTrajet = ref(['Trajet Domicile -> Base', 'Trajet Base -> Domicile'])

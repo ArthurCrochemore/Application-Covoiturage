@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/trajets-conducteur', [TrajetController::class, 'getAllTrajetsConducteurs']);
 
     Route::get('/trajets-passager', [TrajetController::class, 'getAllTrajetsPassagers']);
+
+    // Route pour la création d'un trajet
+    Route::post('/create-trajets', [TrajetController::class, 'createTrajet']);
 });
 
 Route::get('/profil', [UtilisateurController::class, 'getProfil']);

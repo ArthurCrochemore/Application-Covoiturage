@@ -372,43 +372,64 @@ public function getAllTrajetsPassagers()
     public function createTrajet(Request $request)
     {
         try {
-            // Assurer que les donnes sont valide
             $validatedData = $request->validate([
                 'Date_Depart' => 'required|date',
                 'Heure_Depart' => 'required|date_format:H:i',
-                'Nbre_Places' => 'required|integer',
-                'Qte_Bagages' => 'required|integer',
-                'Description' => 'nullable|string|max:300',
+                'Nbre_Places' => 'required|integer|min=0',
+                'Qte_Bagages' => 'required|integer|min=0',
+                'Description' => 'required|string|max:255',
                 'Trajet_Regulier' => 'required|boolean',
-                'Statut' => 'required|boolean',
                 'Domicile_Base' => 'required|boolean',
-                'Id_Domicile' => 'required|exists:Adresse,Id_Adresse',
-                'Id_Base' => 'required|exists:Adresse,Id_Adresse',
-                'Id_Jours' => 'required|array|size:7',
-                'Id_Jours.*' => 'required|boolean',
-                'Id_Conducteur' => 'required|exists:Utilisateur,Id_Utilisateur',
+                'ptDepart' => 'required|string|max:255',
+                'ptArrive' => 'required|string|max:255',
+                'jours' => 'required|array|size:7',
+                'jours.*' => 'required|boolean',
             ]);
 
-            // Cree un Jour
-            $joursData = [
-                'Lundi' => $validatedData['Id_Jours'][0],
-                'Mardi' => $validatedData['Id_Jours'][1],
-                'Mercredi' => $validatedData['Id_Jours'][2],
-                'Jeudi' => $validatedData['Id_Jours'][3],
-                'Vendredi' => $validatedData['Id_Jours'][4],
-                'Samedi' => $validatedData['Id_Jours'][5],
-                'Dimanche' => $validatedData['Id_Jours'][6],
-            ];
-            $jours = Jours::create($joursData);
+            $conducteur = Auth::user();
 
+            $adresseDepart = Adresse::where('Intitule', $validatedData['ptDepart'])->first();
+            $adresseArrive = Adresse::where('Intitule', $validatedData['ptArrive'])->first();
+            if ($validatedData['Domicile_Base']) {
+                $base = $adresseDepart;
+                $domicile = $adresseArrive;
+            } else {
+                $base = $adresseArrive;
+                $domicile = $adresseDepart;
+            }
 
-            $validatedData['Id_Jours'] = $jours->Id_Jours;
+            if (!$adresseDepart || !$adresseArrive) {
+                return response()->json(['message' => 'Address not found'], 404);
+            }
 
-            // Creation du trajet
-            $trajet = Trajet::create($validatedData);
+            $jours = Jours::firstOrCreate([
+                'Lundi' => $validatedData['jours'][0],
+                'Mardi' => $validatedData['jours'][1],
+                'Mercredi' => $validatedData['jours'][2],
+                'Jeudi' => $validatedData['jours'][3],
+                'Vendredi' => $validatedData['jours'][4],
+                'Samedi' => $validatedData['jours'][5],
+                'Dimanche' => $validatedData['jours'][6],
+            ]);
 
+            $trajet = new Trajet([
+                'Date_Depart' => $validatedData['Date_Depart'],
+                'Heure_Depart' => $validatedData['Heure_Depart'],
+                'Qte_Bagages' => $validatedData['Qte_Bagages'],
+                'Description' => $validatedData['Description'],
+                'Trajet_Regulier' => $validatedData['Trajet_Regulier'],
+                'Statut' => false,
+                'Nbre_Places' => $validatedData['Nbre_Places'],
+                'Domicile_Base' => $validatedData['Domicile_Base'],
+                'Id_Domicile' => $domicile->Id_Adresse,
+                'Id_Base' => $base->Id_Adresse,
+                'Id_Jours' => $jours->Id_Jours,
+                'Id_Conducteur' => $conducteur->Id_Utilisateur,
+            ]);
 
-            return response()->json([], 201);
+            $trajet->save();
+
+            return response()->json(['message' => 'Trajet created successfully', 'trajet' => $trajet], 201);
         } catch (\Exception $e) {
 
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
