@@ -45,6 +45,40 @@
     }
   });
 }
+
+  const ouvrirCreation = (lien, id) => {
+    updateSelection(id);
+
+    // Récupération de la date et de l'heure actuelle
+    const maintenant = new Date()
+    const anneeActuelle = maintenant.getFullYear()
+    const moisActuel = maintenant.getMonth() + 1 // Les mois commencent à partir de 0
+    const jourActuel = maintenant.getDate()
+
+    var date = ref(`${anneeActuelle}-${moisActuel.toString().padStart(2, '0')}-${jourActuel.toString().padStart(2, '0')}`)
+
+    const heureActuelle = maintenant.getHours()
+    const minuteActuelle = maintenant.getMinutes()
+
+    var heure = ref(`${heureActuelle.toString().padStart(2, '0')}:${minuteActuelle.toString().padStart(2, '0')}`)
+
+    router.push({
+    path: lien,
+        query: {
+            ptDepart: "",
+            ptArrive: "",
+            booleenTrajetBaseDomicile : 0,
+            trajetRegulier: 0,
+            date : date.value,
+            heure : heure.value,
+            jours : [true, true, true, true, true, true, true],
+            bagages: 1,
+            nombrePassagers : 0,
+            description : ""
+        }
+    });
+}
+
 </script>
 
 <template>
@@ -58,7 +92,7 @@
     <div
       class="enfant-navigation-bar"
       :class="{ selectionne: idSelectione === 'creation' }"
-      @click="ouvrir('/creation-trajet', 'creation')"
+      @click="ouvrirCreation('/creation-trajet', 'creation')"
       classe-icone="creation"
     ></div>
     <div

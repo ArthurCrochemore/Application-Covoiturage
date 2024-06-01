@@ -7,7 +7,14 @@
     const props = defineProps({
         ptDepart: String,
         ptArrive: String,
-        booleenTrajetBaseDomicile : String
+        booleenTrajetBaseDomicile: Number,
+        trajetRegulier: Number,
+        date : String,
+        heure : String,
+        jours : Array,
+        bagages: Number,
+        nombrePassagers : Number,
+        description : String
     })
 
     const router = useRouter() // Récupération du router vue-router pour la navigation
@@ -17,10 +24,27 @@
     // Constantes pour contenir toutes les adresses en fonction de leur type
     const domiciles = ref('')
     const basesAeriennes = ref('')
-
-    // Constantes contenant les adresses proposées dans les champs Départ/Arrivé
     const departs = ref()
     const arrives = ref()
+
+    // Initialisation des constantes vis à vis des props
+    const depart = ref(props.ptDepart)
+    const arrive = ref(props.ptArrive)
+    const booleenTrajetBaseDomicile = ref(Boolean(Number(props.booleenTrajetBaseDomicile)))
+    const heure = ref(props.heure)
+    const date = ref(props.date)
+    const bagage = ref(props.bagages)
+    const nombrePassagers = ref(props.nombrePassagers)
+    const description = ref(props.description)
+    const trajetRegulier = ref(Boolean(Number(props.trajetRegulier)))
+
+    const lundi = ref(props.jours[0])
+    const mardi = ref(props.jours[1])
+    const mercredi = ref(props.jours[2])
+    const jeudi = ref(props.jours[3])
+    const vendredi = ref(props.jours[4])
+    const samedi = ref(props.jours[5])
+    const dimanche = ref(props.jours[6])
 
     /**
      * Récupère tout les domiciles de la base de données
@@ -31,7 +55,7 @@
             domiciles.value = response.data
 
             // Chargement du contenu du menu déroulant chargé avec les domiciles
-            if (props.booleenTrajetBaseDomicile == 'true') {
+            if (props.booleenTrajetBaseDomicile == '1') {
                 arrives.value = domiciles.value
             } else {
                 departs.value = domiciles.value
@@ -50,7 +74,7 @@
             basesAeriennes.value = response.data
 
             // Chargement du contenu du menu déroulant chargé avec les bases
-            if (props.booleenTrajetBaseDomicile === 'true') {
+            if (props.booleenTrajetBaseDomicile === '1') {
                 departs.value = basesAeriennes.value
             } else {
                 arrives.value = basesAeriennes.value
@@ -60,75 +84,77 @@
         }
     }
 
-    // Constantes des contenus des différents champs Départ / Arrivé
-    const depart = ref(props.ptDepart)
-    const arrive = ref(props.ptArrive)
-    const heure = ref()
-    const date = ref()
-
     /**
      * Appellé au chargement de la page, récupère alors tout les trajets (TODO : faire une recherche à paramètres)
      */
     onMounted(() => {
         recuperationDomiciles()
         recuperationBases()
-
-        // Récupération de la date et de l'heure actuelle
-        const maintenant = new Date()
-        const anneeActuelle = maintenant.getFullYear()
-        const moisActuel = maintenant.getMonth() + 1 // Les mois commencent à partir de 0
-        const jourActuel = maintenant.getDate()
-
-        date.value = `${anneeActuelle}-${moisActuel.toString().padStart(2, '0')}-${jourActuel.toString().padStart(2, '0')}`
-
-        const heureActuelle = maintenant.getHours()
-        const minuteActuelle = maintenant.getMinutes()
-
-        heure.value = `${heureActuelle.toString().padStart(2, '0')}:${minuteActuelle.toString().padStart(2, '0')}`
-
     })
 
-    const trajetRegulier = ref(false)
-    const bagage = ref('Beaucoup')
-    const nombrePassagers = ref(0)
-    const description = ref('')
-
+    // Gèrent le grisage de la date (trajet régulier)
     const dateId = ref(['non-grise', 'grise'])
     const indexBouttonSwitch = ref(0)
     const estGrise = ref(false)
+
 
     const changerIdGrise = () => {
         indexBouttonSwitch.value = (indexBouttonSwitch.value + 1) % dateId.value.length
         estGrise.value = !estGrise.value
     }
 
-    const inversionDepartArrivee = () => {
-        const depart = document.getElementById('depart-label').value;
-        const arrive = document.getElementById('arrive-label').value;
-        document.getElementById('depart-label').value = arrive;
-        document.getElementById('arrive-label').value = depart;
+    const temp = ref() // Utilisé pour l'échange de données
+
+
+    const basculerTypeDeTrajet = () => {
+        temp.value = depart.value
+        depart.value = arrive.value
+        arrive.value = temp.value
+
+        booleenTrajetBaseDomicile.value = !booleenTrajetBaseDomicile.value
+        console.log("Bool : " + booleenTrajetBaseDomicile.value)
+
+
+        /* Echange des propositions d'adresse entre les champs départ et arrivé */
+        if (trajetRegulier) {
+            departs.value = basesAeriennes.value
+            arrives.value = domiciles.value
+        } else {
+            departs.value = domiciles.value
+            arrives.value = basesAeriennes.value
+        }
     }
 
-    const creerTrajet = () => {
+    const pageSuivante = () => {
         // Création d'un objet contenant les données du trajet à envoyer
-        const trajetData = {
-            DateDepart: date.value,
-            HeureDepart: heure.value,
-            NbrePlaces: nombrePassagers.value,
-            QteBagages: bagage.value,
-            Description: description.value,
-            TrajetRegulier: trajetRegulier.value,
-            Statut: 0,
-            DomicileBase: false,
-            IdDomicile: 1,
-            IdBase: 1,
-            IdJours: [0,0,0,0,0,0,0],
-            IdConducteur: 1,
-        };
+        console.log(depart.value)
+        console.log(arrive.value)
+        console.log(Number(booleenTrajetBaseDomicile.value))
+        console.log(Number(trajetRegulier.value))
+        console.log(date.value)
+        console.log(heure.value)
+        console.log(bagage.value)
+        console.log(nombrePassagers.value)
+        console.log(description.value)
 
-        axios.post('/api/trajets', trajetData)
-        .then(() => router.push('/creation-suivant'))
-        .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
+        var jours = [lundi.value, mardi.value, mercredi.value, jeudi.value, vendredi.value, samedi.value, dimanche.value]
+        console.log(jours)
+
+        router.push({
+                path: '/creation-suivant',
+                query: {
+                    ptDepart: depart.value,
+                    ptArrive: arrive.value,
+                    booleenTrajetBaseDomicile: Number(booleenTrajetBaseDomicile.value),
+                    trajetRegulier: Number(trajetRegulier.value),
+                    date : date.value,
+                    heure : heure.value,
+                    jours : jours,
+                    bagages: bagage.value,
+                    nombrePassagers : nombrePassagers.value,
+                    description : description.value
+                }
+            });
     }
 
 </script>
@@ -145,7 +171,7 @@
                     <option v-for="option in departs" :value="option.Intitule">{{option.Intitule}}</option>
             </datalist>
         </div>
-        <div class="icone-arrows" @click="inversionDepartArrivee">
+        <div class="icone-arrows" @click="basculerTypeDeTrajet">
         </div>
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
@@ -175,19 +201,19 @@
             </div>
         </div>
         <div v-if="trajetRegulier" class="switch-container" id="switchregulier">
-            <input type="checkbox" id="lundi" class="checkbox-input" value="1">
+            <input type="checkbox" id="lundi" class="checkbox-input" v-model="lundi">
             <label for="lundi" class="checkbox-label2">Lundi</label>
-            <input type="checkbox" id="mardi" class="checkbox-input" value="1">
+            <input type="checkbox" id="mardi" class="checkbox-input" v-model="mardi">
             <label for="mardi" class="checkbox-label2">Mardi</label>
-            <input type="checkbox" id="mercredi" class="checkbox-input" value="1">
+            <input type="checkbox" id="mercredi" class="checkbox-input" v-model="mercredi">
             <label for="mercredi" class="checkbox-label2">Mercredi</label>
-            <input type="checkbox" id="jeudi" class="checkbox-input" value="1">
+            <input type="checkbox" id="jeudi" class="checkbox-input" v-model="jeudi">
             <label for="jeudi" class="checkbox-label2">Jeudi</label>
-            <input type="checkbox" id="vendredi" class="checkbox-input" value="1">
+            <input type="checkbox" id="vendredi" class="checkbox-input" v-model="vendredi">
             <label for="vendredi" class="checkbox-label2">Vendredi</label>
-            <input type="checkbox" id="samedi" class="checkbox-input" value="1">
+            <input type="checkbox" id="samedi" class="checkbox-input" v-model="samedi">
             <label for="samedi" class="checkbox-label2">Samedi</label>
-            <input type="checkbox" id="dimanche" class="checkbox-input" value="1">
+            <input type="checkbox" id="dimanche" class="checkbox-input" v-model="dimanche">
             <label for="dimanche" class="checkbox-label2">Dimanche</label>
         </div>
 
@@ -208,7 +234,7 @@
             <label class="checkbox-label">Description:</label>
             <textarea class="text-area" v-model="description"></textarea>
         </div>
-        <div class="suivant" @click="creerTrajet">
+        <div class="suivant" @click="pageSuivante">
             <p class="intitule-suivant">Suivant</p>
         </div>
     </div>
