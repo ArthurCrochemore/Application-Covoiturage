@@ -35,7 +35,6 @@
         console.log(props.nombrePassagers)
         console.log(props.description)
         console.log(props.jours)
-
     })
 
     const retour = () => {
@@ -76,25 +75,31 @@
     }
 
     const creerTrajet = () => {
-        // Création d'un objet contenant les données du trajet à envoyer
-        const trajetData = {
-            DateDepart: date.value,
-            HeureDepart: heure.value,
-            NbrePlaces: nombrePassagers.value,
-            QteBagages: bagage.value,
-            Description: description.value,
-            TrajetRegulier: trajetRegulier.value,
-            Statut: 0,
-            DomicileBase: false,
-            IdDomicile: 1,
-            IdBase: 1,
-            IdJours: [0,0,0,0,0,0,0],
-            IdConducteur: 1,
-        };
 
-        axios.post('/api/trajets', trajetData)
-        .then(() => router.push('/creation-suivant'))
-        .catch(() => alert('Une erreur est survenue lors de la création du trajet'));
+        axios.post('/create-trajets', {
+                Date_Depart: props.date,
+                Heure_Depart: props.heure,
+                Nbre_Places: props.nombrePassagers,
+                Qte_Bagages: props.bagages,
+                Description: props.description,
+                Trajet_Regulier: props.trajetRegulier,
+                Domicile_Base: props.booleenTrajetBaseDomicile,
+                ptDepart : props.ptDepart,
+                ptArrive: props.ptArrive,
+                jours: props.jours
+        })
+        .then(response => {
+            console.log(response);
+            afficherMessageFunc("Le trajet a été crée avec succès", "Succès");
+            router.push({
+                path: '/vos-trajets'
+
+            });
+        })
+        .catch(error => {
+            afficherMessageFunc(error, "Erreur");
+            console.error(error);
+        });
     }
 
 </script>
