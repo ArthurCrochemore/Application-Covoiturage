@@ -16,20 +16,20 @@ Pour pour pouvoir lancer l'application, vous devez configurer sur votre machine 
 - Pour le frontend, **Node** (21.6.0) (et **Vue.JS** (5.0.8)) : https://www.youtube.com/watch?v=tsDGFUiNZog
 
 Une fois fait, vous devez saisir les commandes suivantes depuis une console ouverte dans le dossier _Application_ :
-```composer install```
-```npm install```
-```php artisan key:generate```
+- ```composer install```
+- ```npm install```
+- ```php artisan key:generate```
 
 Vous devez ensuite créer une base de données _covoiturage_ (depuis **pgAdmin** par exemple), ainsi qu'un schéma dans cette base de données nommé _covoiturage_ également.
 
 Vous pouvez ensuite automatiser la création des tables de cette base de donnée, ainsi que la génération de données fictives en saisissant ces 2 commandes depuis la console précédemment ouverte :
-```php artisan migrate```
-```php artisan db:seed```
+- ```php artisan migrate```
+- ```php artisan db:seed```
 
 # Lancement de l'application
 A partir de 2 consoles ouvertes dans le dossier _Application_, vous pouvez lancer l'application en saisissant les 2 commandes suivantes dans chacunes des 2 consoles :
-```php artisan serve```
-```npm run dev```
+- ```php artisan serve```
+- ```npm run dev```
 
 Vous accéder alors à l'interface de connexion, et pouvez vous créer un compte et naviguer dans l'application.
 
