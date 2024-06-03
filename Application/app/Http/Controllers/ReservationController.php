@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Trajet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,26 @@ class ReservationController extends Controller
             $ValidatedData["Id_Passager"] = $id;
             $ValidatedData['Date_Reservation'] = $DateNow;
             $ValidatedData['Statut'] = 0;
+
+            $trajet = Trajet::find($ValidatedData['Id_Trajet']);
+
+            // Le trajet n'a pas été trouvé => erreur
+            if (!$trajet) {
+                return redirect()->back()->withErrors(['Id_Trajet' => 'Trajet introuvable.']);
+            }
+
+            $nbPassagers = $trajet->reservations()
+                ->where('Statut', '!=', 2)
+                ->count();
+
+            if ($nbPassagers + 1 >= $trajet->Nbre_Places) {
+                if ($nbPassagers + 1 > $trajet->Nbre_Places) {
+                    return redirect()->back()->withErrors(['places' => 'Le nombre de places disponibles a déjà été atteint.']);
+                }
+
+                $trajet->Statut = 1;
+                $trajet->save();
+            }
 
             $Reservation = Reservation::create($ValidatedData);
 

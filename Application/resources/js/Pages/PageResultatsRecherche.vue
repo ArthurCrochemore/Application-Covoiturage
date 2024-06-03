@@ -28,7 +28,7 @@
      */
     const recuperationTrajets = async () => {
         try {
-            const response = await axios.get('/api/trajets')
+            const response = await axios.get('/api/recherche-trajets/' + props.date)
             resultatsRecherche.value = response.data
         } catch (error) {
             console.error('Error fetching trajets:', error)

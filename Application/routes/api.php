@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Route pour recuperer tous les trajets
-Route::get('trajets', [TrajetController::class, 'getAllTrajets']);
+Route::get('/recherche-trajets/{date}', [TrajetController::class, 'getAllTrajets']);
 
 // Route pour récupérer un trajet par son ID
 Route::get('/trajets/{id}', [TrajetController::class, 'getTrajet']);
