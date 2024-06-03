@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class TrajetController extends Controller
 {
-    public function getAllTrajets()
+    public function getAllTrajets($date)
 {
     try {
         // Recuperer tous les trajets avec les relations nécessaires
-        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])->get();
+        $trajets = Trajet::with(['domicile', 'base', 'utilisateur'])
+            ->where('Statut', '=', true) // On exclut les trajets complets
+            ->get();
 
 
         $result = $trajets->map(function ($trajet) {
