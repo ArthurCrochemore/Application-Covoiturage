@@ -73,7 +73,7 @@
             heure : heure.value,
             jours : [true, true, true, true, true, true, true],
             bagages: 1,
-            nombrePassagers : 0,
+            nombrePassagers : 3,
             description : ""
         }
     });
