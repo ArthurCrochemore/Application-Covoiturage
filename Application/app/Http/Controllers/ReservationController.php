@@ -40,7 +40,7 @@ class ReservationController extends Controller
                     return redirect()->back()->withErrors(['places' => 'Le nombre de places disponibles a déjà été atteint.']);
                 }
 
-                $trajet->Statut = 1;
+                $trajet->Statut = false;
                 $trajet->save();
             }
 
@@ -95,6 +95,12 @@ class ReservationController extends Controller
             }
 
             $reservation->Statut = 2;
+
+            $trajet = Trajet::find($reservation->Id_Trajet);
+            $trajet->Statut = true; // Si le trajet était complet, il redevient visible
+
+            $trajet->save();
+
             $reservation->save();
 
             return response()->json(['message' => 'Reservation accepted successfully']);
