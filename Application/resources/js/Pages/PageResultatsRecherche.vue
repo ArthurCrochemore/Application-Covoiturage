@@ -28,8 +28,13 @@
      */
     const recuperationTrajets = async () => {
         try {
-            const response = await axios.get('/api/recherche-trajets/' + props.date)
-            resultatsRecherche.value = response.data
+            if (props.typeTrajet === "Ponctuel") {
+                const response = await axios.get('/api/recherche-trajets/' + props.date)
+                resultatsRecherche.value = response.data
+            } else {
+                const response = await axios.get('/api/recherche-trajets')
+                resultatsRecherche.value = response.data
+            }
         } catch (error) {
             console.error('Error fetching trajets:', error)
         }
