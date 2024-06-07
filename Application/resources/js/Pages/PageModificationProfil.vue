@@ -109,6 +109,11 @@ const valider = async () => {
 </template>
 
 <style scoped>
+.bloc-principal {
+    top: 150px;
+    bottom: 150px;
+}
+
 .entete>h1 {
     margin: auto;
 }

@@ -244,10 +244,15 @@ public function getAllTrajetsPassagers()
 
             $type = $trajet->Trajet_Regulier ? "Régulier" : "Ponctuel";
 
-            $dateDepart = new \DateTime($trajet->Date_Depart);
-            $jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-            $mois = ["", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-            $dateString = $jours[$dateDepart->format('w')] . " " . $dateDepart->format('j') . " " . $mois[$dateDepart->format('n')];
+            if($trajet->Trajet_Regulier) {
+                $dateString = "Trajet Régulier"; // TODO : Gérer formattage de la date pour les trajets régulier (prochain trajet lundi par exemple)
+            }
+            else {
+                $dateDepart = new \DateTime($trajet->Date_Depart);
+                $jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+                $mois = ["", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+                $dateString = $jours[$dateDepart->format('w')] . " " . $dateDepart->format('j') . " " . $mois[$dateDepart->format('n')];
+            }
 
             return [
                 'idTrajet' => $trajet->Id_Trajet,

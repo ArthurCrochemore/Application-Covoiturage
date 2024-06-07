@@ -18,8 +18,7 @@
       </div>
       <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
       <div class="action-buttons">
-        <button class="modify-button" @click="modifyTrip">Modifier</button>
-        <button class="delete-button" @click="deleteTrip">Supprimer</button>
+        <button class="delete-button" @click="annuler">Annuler</button>
       </div>
     </div>
   </template>
@@ -59,12 +58,8 @@ const afficherMessageFunc = inject('afficherMessageFunc'); // Fonction qui gère
     router.back();
   }
 
-  function modifyTrip() {
+  function annuler() {
     // Pas encore
-  }
-
-  function deleteTrip() {
-    // Slay mais pas encore
   }
 
   </script>
