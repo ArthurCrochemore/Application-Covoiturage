@@ -1,4 +1,8 @@
 # Application-Covoiturage
+
+Lien vers le rapport : https://docs.google.com/document/d/1FEmSVF4R3Rnt58qpSaxe9GPGTrwyP19YiY8fTl6tdC8/edit
+##
+
 Ce projet a été proposé par la **base aérienne de Tours**. L'objectif de ce projet est de développer une PWA pour une application de covoiturage pour les trajets base-domicile des employés de la base. Il s'agit de la première version du projet, qui sera très poursuivi puis déployé.
 
 Divers spécifications ont été réalisées au cours de ce projet que voici :
@@ -14,6 +18,8 @@ Pour pour pouvoir lancer l'application, vous devez configurer sur votre machine 
 - Pour le backend, **Php** (8.2.16) et **Composer** (2.7.2) : https://www.youtube.com/watch?v=pS0U-PsXUlg
 - Pour la base de données, **PostgreSQL** (16.2) : https://www.postgresql.org/download/
 - Pour le frontend, **Node** (21.6.0) (et **Vue.JS** (5.0.8)) : https://www.youtube.com/watch?v=tsDGFUiNZog
+
+Lors de la configuration de PostgreSQL, faites bien attention à définir votre username comme postgres et votre mot de passe comme password. Si vous n’avez pas cela, vous devrez modifier les champs DB_USERNAME et DB_PASSWORD de votre fichier .env.
 
 Une fois fait, vous devez saisir les commandes suivantes depuis une console ouverte dans le dossier _Application_ :
 - ```composer install```
