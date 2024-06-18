@@ -477,7 +477,7 @@ public function getAllTrajetsPassagers()
                 'Qte_Bagages' => $validatedData['Qte_Bagages'],
                 'Description' => $validatedData['Description'],
                 'Trajet_Regulier' => $validatedData['Trajet_Regulier'],
-                'Statut' => false,
+                'Statut' => true, 
                 'Nbre_Places' => $validatedData['Nbre_Places'],
                 'Domicile_Base' => $validatedData['Domicile_Base'],
                 'Id_Domicile' => $domicile->Id_Adresse,
@@ -494,4 +494,31 @@ public function getAllTrajetsPassagers()
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function supprimerTrajet($id)
+    {
+        $userId = Auth::user()->Id_Utilisateur;
+
+        $trajet = Trajet::where('Id_Trajet', $id)
+                        ->where('Id_Conducteur', $userId)
+                        ->first();
+
+        if (!$trajet) {
+            return response()->json(['error' => 'Trajet introuvable ou non autorisé'], 404);
+        }
+
+        // Vérifier s'il y a des réservations
+        $reservations = Reservation::where('Id_Trajet', $id)->get();
+        if ($reservations->isNotEmpty()) {
+            // Supprimer les réservations associées
+            foreach ($reservations as $reservation) {
+                $reservation->delete();
+            }
+        }
+
+        $trajet->delete();
+
+        return response()->json(['success' => 'Trajet supprimé avec succès'], 200);
+    }
+
 }

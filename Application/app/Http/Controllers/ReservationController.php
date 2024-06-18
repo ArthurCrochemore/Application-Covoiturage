@@ -12,6 +12,7 @@ class ReservationController extends Controller
 {
     public function ReserverTrajet(Request $request)
         {
+            
             $id = Auth::user()->Id_Utilisateur;
 
             $DateNow = now();
@@ -31,6 +32,14 @@ class ReservationController extends Controller
                 return redirect()->back()->withErrors(['Id_Trajet' => 'Trajet introuvable.']);
             }
 
+            //Verifier si l'utilisateur a deja reservé le trajet 
+            if (Reservation::where('Id_Passager', $id)->where('Id_Trajet', $ValidatedData['Id_Trajet'])->exists()) {
+                //Afficher le message d'erreur dans la console 
+                Log::info('Vous avez déjà réservé ce trajet.');
+                
+                return response()->json(['error' => 'Vous avez déjà réservé ce trajet.'], 404);
+            }
+
             $nbPassagers = $trajet->reservations()
                 ->where('Statut', '!=', 2)
                 ->count();
@@ -40,7 +49,7 @@ class ReservationController extends Controller
                     return redirect()->back()->withErrors(['places' => 'Le nombre de places disponibles a déjà été atteint.']);
                 }
 
-                $trajet->Statut = false;
+                $trajet->Statut = false; // Si le trajet est complet, il n'est plus visible
                 $trajet->save();
             }
 
@@ -108,4 +117,33 @@ class ReservationController extends Controller
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function annulerReservation(Request $request)
+    {
+        $userId = Auth::user()->Id_Utilisateur;
+        $validatedData = $request->validate([
+            'Id_Trajet' => 'required|integer|exists:Trajet,Id_Trajet',
+        ]);
+
+        $reservation = Reservation::where('Id_Trajet', $validatedData['Id_Trajet'])
+                                  ->where('Id_Passager', $userId)
+                                  ->first();
+
+        if (!$reservation) {
+            return response()->json(['error' => 'Réservation introuvable'], 404);
+        }
+
+        $reservation->delete();
+
+        // Mettre à jour le statut du trajet si nécessaire
+        $trajet = Trajet::find($validatedData['Id_Trajet']);
+        $nbPassagers = $trajet->reservations()->where('Statut', '!=', 2)->count();
+        if ($nbPassagers < $trajet->Nbre_Places) {
+            $trajet->Statut = true;
+            $trajet->save();
+        }
+
+        return response()->json(['success' => 'Réservation annulée avec succès'], 200);
+    }
+    
 }

@@ -6,6 +6,8 @@ use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 class UtilisateurController extends Controller
 {
@@ -22,7 +24,6 @@ class UtilisateurController extends Controller
 
             return redirect()->intended('/accueil'); //à définir pour l'url
         }
-
         return response()->json(['errors' => ['Mot_De_Passe' => 'Email ou mot de passe incorrect.']], 422);
     }
 
@@ -32,8 +33,9 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-        // TODO : doit prendre en compte l'addresse saisie
+        // TODO : doit prendre en compte l'adresse saisie
         // TODO : selon cahier des charges, l'inscription crée une demande, puis c'est l'admin qui gère le "store" à partir de la demande
+
 
         $validatedData = $request->validate([
             'NID' => 'required|integer',
@@ -106,7 +108,21 @@ class UtilisateurController extends Controller
     {
         $utilisateur = Auth::user();
 
-        return response()->json([''=> $utilisateur]);
+        return response()->json(['' => $utilisateur]);
     }
+
+    /**
+     * Méthode pour vérifier si un email existe déjà
+     */
+    public function verifierEmail($email)
+{
+    $utilisateur = Utilisateur::where('Mail', $email)->exists();
+    
+    return $utilisateur ? 'true' : 'false';
+}
+
+
+
+
 
 }

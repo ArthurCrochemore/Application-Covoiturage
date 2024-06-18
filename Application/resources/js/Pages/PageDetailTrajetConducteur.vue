@@ -65,8 +65,18 @@ function modifyTrip() {
   router.push({path: '/modification-trajet'});
 }
 
-function deleteTrip() {
-  // Slay mais pas encore
+async function deleteTrip() {
+  try {
+    const response = await axios.delete('/api/trajets/' + route.query.idTrajet);
+    afficherMessageFunc("Le trajet a été supprimé avec succès", "Succès");
+    router.push({
+      path: '/vos-trajets',
+    });
+  } catch (error) {
+    console.error(error);
+    afficherMessageFunc(error.response?.data?.error || 'Erreur inconnue', "Erreur");
+    errorMessage.value = error.response?.data?.error || 'Erreur inconnue';
+  }
 }
 
 function voirReservation(passager) {
