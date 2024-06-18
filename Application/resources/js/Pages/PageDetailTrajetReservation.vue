@@ -19,7 +19,7 @@
 
       <p class="passenger-count">{{ trip.nbPassagers }}/{{ trip.nbMaxPassagers }} passagers</p>
       <div class="action-buttons">
-        <button class="reserver-button" @click="reserver">Reserver</button>
+        <button class="reserver-button" @click="reserver">Réserver</button>
       </div>
     </div>
   </template>
@@ -40,6 +40,7 @@
 
 const route = useRoute();
 const router = useRouter(); // Récupération du router vue-router pour la navigation
+const errorMessage = ref(null);
 
     const idTrajet = ref(route.query.idTrajet);
     const idDomicile = ref(route.query.idDomicile);
@@ -79,8 +80,9 @@ const router = useRouter(); // Récupération du router vue-router pour la navig
         });
       })
       .catch(error => {
-        afficherMessageFunc(error, "Erreur");
+        // afficherMessageFunc(error, "Erreur");
         console.error(error);
+        afficherMessageFunc(error.response?.data?.error || 'Erreur inconnue', "Erreur");
       });
   }
 

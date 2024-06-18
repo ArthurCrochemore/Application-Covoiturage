@@ -30,9 +30,11 @@
         try {
             if (props.typeTrajet === "Ponctuel") {
                 const response = await axios.get('/api/recherche-trajets/' + props.date)
+                //console.log("result",response.data) 
                 resultatsRecherche.value = response.data
             } else {
                 const response = await axios.get('/api/recherche-trajets')
+                //console.log("result",response.data) 
                 resultatsRecherche.value = response.data
             }
         } catch (error) {
@@ -52,6 +54,8 @@
     const recuperationDomicile = async () => {
         try {
             const response = await axios.get('/api/adresses/domicile/' + props.idDomicile)
+            //console.log("result",response.data) 
+
             domicile.value = response.data.Intitule
             villeDomicile.value = response.data.Ville
 

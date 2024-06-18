@@ -183,7 +183,7 @@ const pageSuivante = () => {
         <div class="bloc-label-depart-arrive">
             <div class="icone-map"></div>
             <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label"
-                placeholder="Arrivé" />
+                placeholder="Arrivée" />
             <datalist id="liste-arrives">
                 <option v-for="option in arrives" :value="option.Intitule">{{ option.Intitule }}</option>
             </datalist>

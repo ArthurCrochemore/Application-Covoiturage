@@ -110,7 +110,7 @@
 
     // Constantes pour l'affichage des données de recherche
     const typesDeTrajet = ref(['Trajet Domicile -> Base', 'Trajet Base -> Domicile'])
-    const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivé"])
+    const heureDepartArrive = ref(['Heure de Départ', "Heure d'Arrivée"])
 
     const temp = ref() // Utilisé pour l'échange de données
 
@@ -225,7 +225,7 @@
     </div>
     <div class="bloc-label-depart-arrive">
       <div class="icone-map"></div>
-      <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivé" />
+      <input list="liste-arrives" v-model="arrive" type="text" class="label" id="arrive-label" placeholder="Arrivée" />
         <datalist id="liste-arrives">
             <option v-for="option in arrives" :value="option.Intitule">{{option.Intitule}}</option>
         </datalist>

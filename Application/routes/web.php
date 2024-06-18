@@ -25,6 +25,7 @@ Route::get('/', function () {
     }
 });
 
+//Cette route permet de rediriger l'utilisateur vers la page d'accueil de l'application lorsqu'il est connecté
 Route::get('/app', function () {
     if (auth()->check()) {
         return view('welcomeApp');
@@ -32,6 +33,7 @@ Route::get('/app', function () {
         return redirect('/');
     }
 });
+
 
 Route::get('/admin', function () {
     return view('welcomeAdmin');
@@ -47,7 +49,14 @@ Route::get('/accueil', function () {return view('testAuth.accueil');})->name('ac
 
 Route::post('/utilisateur', [UtilisateurController::class, 'store'])->name('inscription');
 
+Route::get('/verifier-email/{email}', [UtilisateurController::class, 'verifierEmail']);
+
 Route::post('/reserver-trajet', [ReservationController::class, 'ReserverTrajet']);
+
+Route::post('/annuler-reservation', [ReservationController::class, 'annulerReservation']);
+
+Route::delete('/api/trajets/{id}', [TrajetController::class, 'supprimerTrajet']);
+
 Route::get('/test-timezone', function () {
     return now()->toTimeString();
 });
